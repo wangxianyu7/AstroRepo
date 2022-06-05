@@ -1,0 +1,3 @@
+### Mutual inclination
+from https://doi.org/10.1051/0004-6361/201935944.
+$\cos i_{\mathrm{bc}}=\cos i_{\mathrm{b}} \cos i_{\mathrm{c}}+\sin i_{\mathrm{b}} \sin i_{\mathrm{c}} \cos \left(\phi_{\mathrm{b}}-\phi_{\mathrm{c}}\right)$
