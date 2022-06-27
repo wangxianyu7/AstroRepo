@@ -12,3 +12,8 @@
 
 #### Normalization
 - https://github.com/arpita308/NEID_Tutorials
+
+### Stellar modelling
+
+#### Correct routine to install isochrones
+https://github.com/timothydmorton/isochrones/issues/138 
