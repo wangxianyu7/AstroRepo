@@ -16,9 +16,8 @@
 ### Stellar modelling
 
 #### Correct routine to install isochrones
-https://github.com/timothydmorton/isochrones/issues/138 
+- https://github.com/timothydmorton/isochrones/issues/138 
 
 #### VESPA install yml
-https://github.com/alexteachey/MoonPy/blob/master/env_setup_files/vespa_for_linux.yml
-
-Note: if conda can find vespa=0.5.1, you can comment out it and install it munually.  
+- https://github.com/alexteachey/MoonPy/blob/master/env_setup_files/vespa_for_linux.yml
+  Note: if conda can find vespa=0.5.1, you can comment out it and install it munually.  
