@@ -34,4 +34,8 @@
 - https://research.iac.es/sieinvens/siepedia/pmwiki.php?n=Tutorials.SystemiconMac
 #### exostriker
 - https://github.com/3fon3fonov/exostriker
-#### 
+
+### Lomb-Scargle periodogram
+#### (online) generalised Lomb-Scargle periodogram
+- http://www.astro.physik.uni-goettingen.de/~zechmeister/GLS/gls.html  (online)
+- https://pyastronomy.readthedocs.io/en/latest/pyTimingDoc/pyPeriodDoc/gls.html (offline)
