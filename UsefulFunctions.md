@@ -26,6 +26,14 @@ Ref:
 2. https://www.aanda.org/articles/aa/pdf/2019/12/aa36942-19.pdf
      
      
+### Get all astronomical sites
+
+```
+all_site_list = list(set(astropy.coordinates.EarthLocation.get_site_names()))
+for site_name in all_site_list:
+    site_info = EarthLocation.of_site(site_name)  
+    print(site_name,':', site_info.info.name,site_info.geodetic.lat.degree  , site_info.geodetic.lon.degree  )#geodetic
+```    
 ### Thiele–Innes constants and Orbital Elements
 
 $$
