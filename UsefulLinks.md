@@ -26,3 +26,12 @@
   https://github.com/timothydmorton/VESPA/issues/26
 #### The Kepler DR25 Robovetter
 - https://github.com/nasa/kepler-robovetter
+
+
+### TTV modelling & Photodynamical fit
+#### Systemicv2
+- https://github.com/stefano-meschiari/Systemic2
+- https://research.iac.es/sieinvens/siepedia/pmwiki.php?n=Tutorials.SystemiconMac
+#### exostriker
+- https://github.com/3fon3fonov/exostriker
+#### 
