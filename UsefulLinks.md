@@ -1,3 +1,12 @@
+### Database
+
+#### RV database
+- https://dace.unige.ch/radialVelocities/ from Paul
+- https://arxiv.org/abs/2001.05942 A public HARPS radial velocity database corrected for systematic errors
+
+#### TTV database
+- https://transit-timing.github.io/  8,667 transit timing measurements for 382 systems
+
 ### Programming languages
 #### Fortran
 - http://micro.ustc.edu.cn/Fortran/ZJDing/ (in Chinese)
