@@ -75,3 +75,4 @@ $$
 Ref:
 1. https://iopscience.iop.org/article/10.3847/1538-3881/aa8d6f/pdf
 
+### Rotation period
