@@ -15,6 +15,13 @@
 
 ### Spectrum analysis
 
+
+### Lamost Spec
+- https://github.com/hypergravity/laspec
+
+### APOGEE DR16 IR Spec
+- https://dr16.sdss.org/infrared/spectrum/search
+
 #### Least-Squares deconvolution (LSD)
 - https://github.com/TVanReeth/Least-squares-deconvolution
 - https://github.com/IvS-KULeuven/IvSPythonRepository (recommanded)
