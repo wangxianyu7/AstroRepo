@@ -21,6 +21,7 @@
 
 #### APOGEE DR16 IR Spec
 - https://dr16.sdss.org/infrared/spectrum/search
+- https://data.sdss.org/datamodel/files/APOGEE_ASPCAP/APRED_VERS/ASPCAP_VERS/TELESCOPE/FIELD/aspcapStar.html data format
 
 #### Least-Squares deconvolution (LSD)
 - https://github.com/TVanReeth/Least-squares-deconvolution
