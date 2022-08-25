@@ -16,10 +16,10 @@
 ### Spectrum analysis
 
 
-### Lamost Spec
+#### Lamost Spec
 - https://github.com/hypergravity/laspec
 
-### APOGEE DR16 IR Spec
+#### APOGEE DR16 IR Spec
 - https://dr16.sdss.org/infrared/spectrum/search
 
 #### Least-Squares deconvolution (LSD)
