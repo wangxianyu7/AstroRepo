@@ -52,6 +52,14 @@
 #### exostriker
 - https://github.com/3fon3fonov/exostriker
 
+
+### Nbody Simulation 
+#### Gravitational Encounters in N-body simulations with GPU Acceleration
+- https://arxiv.org/abs/1404.2324
+- https://genga.readthedocs.io/en/latest/InitialConditions.html
+
+
+
 ### Lomb-Scargle periodogram
 #### (online) generalised Lomb-Scargle periodogram
 - http://www.astro.physik.uni-goettingen.de/~zechmeister/GLS/gls.html  (online)
