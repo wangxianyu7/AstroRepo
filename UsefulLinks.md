@@ -27,6 +27,10 @@
 - https://github.com/TVanReeth/Least-squares-deconvolution
 - https://github.com/IvS-KULeuven/IvSPythonRepository (recommanded)
 
+#### Wavelet
+- https://github.com/alsauve/scaleogram 
+
+
 #### Normalization
 - https://github.com/arpita308/NEID_Tutorials
 
