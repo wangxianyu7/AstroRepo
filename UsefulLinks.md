@@ -56,12 +56,21 @@
 #### exostriker
 - https://github.com/3fon3fonov/exostriker
 
+#### nauyaca using ptemcee (effective!)
+- https://github.com/EliabCanul/nauyaca
+### NbodyGradient
+- https://github.com/ericagol/NbodyGradient.jl
+
 
 ### Nbody Simulation 
 #### Gravitational Encounters in N-body simulations with GPU Acceleration
 - https://arxiv.org/abs/1404.2324
 - https://genga.readthedocs.io/en/latest/InitialConditions.html
+#### Integration WIHT GPU
+- https://www.cise.ufl.edu/research/SurfLab/swarmng/TutorialIntegrator.html
 
+#### TTVFaster with gradient calculation
+- https://github.com/nwtuchow/TTVFaster
 
 
 ### Lomb-Scargle periodogram
