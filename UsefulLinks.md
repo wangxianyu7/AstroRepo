@@ -58,8 +58,16 @@
 
 #### nauyaca using ptemcee (effective!)
 - https://github.com/EliabCanul/nauyaca
-### NbodyGradient
+#### NbodyGradient
 - https://github.com/ericagol/NbodyGradient.jl
+
+#### TTVMCMC (test some mcmc performance for TTV fitting)
+- https://github.com/nwtuchow/TTVMCMC
+
+#### TTVFaster with gradient calculation
+- https://github.com/nwtuchow/TTVFaster
+#### TIDYMESS (simualtion with tidy effect, may useful for simulation in the near future)
+- arXiv:2209.03955
 
 
 ### Nbody Simulation 
@@ -69,8 +77,6 @@
 #### Integration WIHT GPU
 - https://www.cise.ufl.edu/research/SurfLab/swarmng/TutorialIntegrator.html
 
-#### TTVFaster with gradient calculation
-- https://github.com/nwtuchow/TTVFaster
 
 
 ### Lomb-Scargle periodogram
