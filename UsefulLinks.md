@@ -67,6 +67,7 @@
 
 #### TTVFaster with gradient calculation
 - https://github.com/nwtuchow/TTVFaster
+- Will be very helpful when do HMC in the TTV + RV fit.
 #### TIDYMESS (simualtion with tidy effect, may useful for simulation in the near future)
 - arXiv:2209.03955
 
