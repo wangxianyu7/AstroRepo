@@ -35,6 +35,7 @@
 
 #### Normalization
 - https://github.com/arpita308/NEID_Tutorials
+- https://github.com/RozanskiT/HANDY.  interactiva GUI supported
 
 ### Stellar modelling
 
