@@ -27,9 +27,8 @@
 - https://github.com/TVanReeth/Least-squares-deconvolution
 - https://github.com/IvS-KULeuven/IvSPythonRepository (recommanded)
 
-#### Wavelet
-- https://github.com/alsauve/scaleogram 
-
+#### Keck Spec archive
+- https://koa.ipac.caltech.edu/cgi-bin/KOA/nph-KOAlogin
 
 #### Normalization
 - https://github.com/arpita308/NEID_Tutorials
@@ -38,6 +37,8 @@
 
 #### Correct routine to install isochrones
 - https://github.com/timothydmorton/isochrones/issues/138 
+
+
 
 ### Validation
 #### VESPA install yml
@@ -79,13 +80,19 @@
 
 
 
-### Lomb-Scargle periodogram
+### Find period from data 
 #### (online) generalised Lomb-Scargle periodogram
 - http://www.astro.physik.uni-goettingen.de/~zechmeister/GLS/gls.html  (online)
 - https://pyastronomy.readthedocs.io/en/latest/pyTimingDoc/pyPeriodDoc/gls.html (offline)
 
 #### Understanding the Lomb-Scargle Periodogram
 - https://arxiv.org/pdf/1703.09824.pdf
+
+#### Wavelet
+- https://github.com/alsauve/scaleogram 
+
+#### ACF
+- https://github.com/rae-holcomb/SpinSpotter
 
 ### MCMC
 #### The Markov-chain Monte Carlo Interactive Gallery
