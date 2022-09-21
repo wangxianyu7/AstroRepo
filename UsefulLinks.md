@@ -105,3 +105,10 @@
 #### PINTS (Probabilistic Inference on Noisy Time-Series)
 - https://github.com/pints-team/pints
 
+### Schedule Tools
+
+#### Object visibility
+- http://catserver.ing.iac.es/staralt/index.php
+#### definition of bright, dark, gray night
+- https://www.ing.iac.es//PR/newsletter/news6/tel1.html
+
