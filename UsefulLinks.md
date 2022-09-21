@@ -37,6 +37,10 @@
 - https://github.com/arpita308/NEID_Tutorials
 - https://github.com/RozanskiT/HANDY.  interactiva GUI supported
 
+#### iSpec status
+- https://github.com/marblestation/iSpec/blob/a513ad6e5ef84709518d11369241aef59b2f183d/ispec/modeling/mpfit.py
+
+
 ### Stellar modelling
 
 #### Correct routine to install isochrones
