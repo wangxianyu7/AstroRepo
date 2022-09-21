@@ -41,7 +41,8 @@
 
 #### Correct routine to install isochrones
 - https://github.com/timothydmorton/isochrones/issues/138 
-
+#### LDC calculation
+- https://github.com/ucl-exoplanets/ExoTETHyS/
 
 
 ### Validation
