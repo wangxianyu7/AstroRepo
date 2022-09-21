@@ -76,3 +76,26 @@ Ref:
 1. https://iopscience.iop.org/article/10.3847/1538-3881/aa8d6f/pdf
 
 ### Rotation period
+
+
+
+### Calculate a/Rs
+
+```
+import astropy.constants as c
+import astropy.units as u
+period = 10*u.d
+st_mass = 1*c.M_sun
+st_rad = 1*c.R_sun
+R = (c.G*st_mass*(period)**2/4/3.1415926**2 )**(1/3)
+print((R/st_rad).to(''))
+```
+### Calculate RM Amplitude
+
+```
+pl_ror = 0.1
+vsini = 10
+b = 0
+RM_amp = 2/3*pl_ror**2*vsini*1000*(1-b**2)**0.5
+print(RM_amp,'m/s')
+```
