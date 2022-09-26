@@ -76,13 +76,14 @@ Ref:
 1. https://iopscience.iop.org/article/10.3847/1538-3881/aa8d6f/pdf
 
 ### Rotation period
+```
 import astropy.constants as c
 import astropy.units as u
 period = 12.727272727*u.d
 st_rad = 0.77*c.R_sun
 vrot = 2*3.1415926535/period*st_rad
 print(vrot.to('km/s'))
-
+```
 
 ### Calculate a/Rs
 
