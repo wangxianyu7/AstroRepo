@@ -24,3 +24,11 @@ Useful Refs；
 
 ### Diffuser things
 - Can we train a D2NN and use 3D printer to print it out to replace Diffuser？
+
+### exoplanet in open cluster
+
+- Have there been any exoplanets discovered in globular star clusters?
+- - simple answer is they are too far. see [this](https://astronomy.com/magazine/ask-astro/2021/03/ask-astro-have-there-been-any-exoplanets-discovered-in-globular-star-clusters).
+
+
+
