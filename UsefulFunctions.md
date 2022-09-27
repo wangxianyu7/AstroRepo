@@ -105,3 +105,19 @@ b = 0
 RM_amp = 2/3*pl_ror**2*vsini*1000*(1-b**2)**0.5
 print(RM_amp,'m/s')
 ```
+### format axis
+
+```
+from matplotlib.ticker import MultipleLocator, \
+    FormatStrFormatter, AutoMinorLocator
+def ticksetax(ax, labelsize=15, ticksize=12, tickwidth=1.5, ticklength=5):
+    ax.tick_params(direction='in', which='both',  width=2,colors='k', bottom='True',top='True', left='True', right='True', labelsize=15)
+    ax.spines['bottom'].set_linewidth(2)
+    ax.spines['left'].set_linewidth(2)
+    ax.spines['right'].set_linewidth(2)
+    ax.spines['top'].set_linewidth(2)
+    ax.xaxis.set_minor_locator(AutoMinorLocator())
+    ax.yaxis.set_minor_locator(AutoMinorLocator())
+
+
+```
