@@ -30,5 +30,8 @@ Useful Refs；
 - Have there been any exoplanets discovered in globular star clusters?
 - - simple answer is they are too far. see [this](https://astronomy.com/magazine/ask-astro/2021/03/ask-astro-have-there-been-any-exoplanets-discovered-in-globular-star-clusters).
 
+### O' Connel in binaries
 
-
+- May be related to mutual spin angle? If this is true, small effect should be shown in low mass ratio binaries.
+- - [Characteristics of Kepler Eclipsing Binaries Displaying a Significant O'Connell Effect](https://ui.adsabs.harvard.edu/abs/2022ApJS..262...10K/abstract)
+- - [Spin nutation in binary systems due to general relativistic and quadrupole effects](https://adsabs.harvard.edu/full/1982ApJ...253..309B)
