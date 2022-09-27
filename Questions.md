@@ -35,3 +35,8 @@ Useful Refs；
 - May be related to mutual spin angle? If this is true, small effect should be shown in low mass ratio binaries.
 - - [Characteristics of Kepler Eclipsing Binaries Displaying a Significant O'Connell Effect](https://ui.adsabs.harvard.edu/abs/2022ApJS..262...10K/abstract)
 - - [Spin nutation in binary systems due to general relativistic and quadrupole effects](https://adsabs.harvard.edu/full/1982ApJ...253..309B)
+- - Gravity darken effect？
+
+
+
+
