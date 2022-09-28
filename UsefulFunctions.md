@@ -118,6 +118,4 @@ def ticksetax(ax, labelsize=15, ticksize=12, tickwidth=1.5, ticklength=5):
     ax.spines['top'].set_linewidth(2)
     ax.xaxis.set_minor_locator(AutoMinorLocator())
     ax.yaxis.set_minor_locator(AutoMinorLocator())
-
-
 ```
