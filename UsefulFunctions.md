@@ -119,3 +119,12 @@ def ticksetax(ax, labelsize=15, ticksize=12, tickwidth=1.5, ticklength=5):
     ax.xaxis.set_minor_locator(AutoMinorLocator())
     ax.yaxis.set_minor_locator(AutoMinorLocator())
 ```
+
+### Install Rebound on M1 mac
+```
+conda create -n intel_env
+conda activate intel_env
+conda config --env --set subdir osx-64
+conda install python
+```
+
