@@ -143,3 +143,15 @@ def get_interpolate_data(x, y, newx):
     return f(newx)
 ```
 
+### multi plot
+
+```
+import matplotlib.gridspec as gridspec
+plt.figure(figsize=(12, 5))
+nrow = 2
+ncol = 1
+gs = gridspec.GridSpec(nrow, ncol, width_ratios=None, height_ratios=(2,1))
+plt.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=0,hspace=0)
+ax = plt.subplot(gs[0])
+
+```
