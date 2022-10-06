@@ -128,3 +128,18 @@ conda config --env --set subdir osx-64
 conda install python
 ```
 
+
+
+
+### interpolate 1d
+
+
+```
+import matplotlib.pyplot as plt
+from scipy import interpolate
+
+def get_interpolate_data(x, y, newx):
+    f = interpolate.interp1d(x, y, fill_value="extrapolate", kind='quadratic')
+    return f(newx)
+```
+
