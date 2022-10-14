@@ -123,6 +123,10 @@
 ### Proposal Tools
 #### NEID exopsure calculator
 - http://neid-etc.tuc.noirlab.edu/calc_shell/calculate_rv
+
+### WYIN time table
+- https://noirlab.edu/science/observing-noirlab/scheduling/mso-telescopes
+
 #### PFS
 - NEID RV precision/(1.5~2.0)
 
