@@ -118,3 +118,12 @@
 - https://www.ing.iac.es//PR/newsletter/news6/tel1.html
 #### Moon Position and Distance Calculation
 - https://pyastronomy.readthedocs.io/en/latest/pyaslDoc/aslDoc/moon.html
+
+
+### Proposal Tools
+#### NEID exopsure calculator
+- http://neid-etc.tuc.noirlab.edu/calc_shell/calculate_rv
+#### PFS
+- NEID RV precision/(1.5~2.0)
+
+
