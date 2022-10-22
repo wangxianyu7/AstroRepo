@@ -155,3 +155,24 @@ plt.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=0,hspac
 ax = plt.subplot(gs[0])
 
 ```
+
+
+### linear LQ
+
+
+```
+import numpy as np
+def linear_lq(x, y, yerr):
+    A = np.vander(x, 2)
+    C = np.diag(yerr * yerr)
+    ATA = np.dot(A.T, A / (yerr**2)[:, None])
+    cov = np.linalg.inv(ATA)
+    w = np.linalg.solve(ATA, np.dot(A.T, y / yerr**2))
+    # print("Least-squares estimates:")
+    # print("m = {0:.3f} ± {1:.3f}".format(w[0], np.sqrt(cov[0, 0])))
+    # print("b = {0:.3f} ± {1:.3f}".format(w[1], np.sqrt(cov[1, 1])))
+    slope = w[0]; intercept = w[1]; slope_err = np.sqrt(cov[0, 0]); intercept_err = np.sqrt(cov[1, 1])
+    return slope, intercept, slope_err, intercept_err
+
+```
+
