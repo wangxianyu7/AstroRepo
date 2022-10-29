@@ -1,3 +1,145 @@
+## skewed normal distribution
+
+
+
+```
+import numpy as np
+from scipy.optimize import minimize
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import minimize, basinhopping
+from scipy.stats import skewnorm
+
+def calculate_skewed_normal_params(median, lower_err, upper_err):
+    '''
+    Fits a screwed normal distribution via its CDF to the [16,50,84]-percentiles
+    
+    Inputs:
+    -------
+    median : float
+        the median value that was reported
+    lower_err : float
+        the lower errorbar that was reported
+    upper_err : float
+        the upper errorbar that was reported
+    size : int
+        the number of samples to be drawn
+        
+    Returns:
+    --------
+    alpha : float
+        the skewness parameter
+    loc : float
+        the mean of the fitted skewed normal distribution
+    scale : float
+        the std of the fitted skewed normal distribution
+    '''
+    
+    lower_err = np.abs(lower_err)
+    upper_err = np.abs(upper_err)
+    reference = np.array([(median-lower_err), median, (median+upper_err)])
+    
+    
+    def fake_lnlike(p):
+        alpha, loc, scale = p
+        
+        #::: way 1: easier to read, but slower; fake log likelihood
+        # eq1 = skewnorm.ppf(0.5, alpha, loc=loc, scale=scale) - median 
+        # eq2 = skewnorm.ppf(0.15865, alpha, loc=loc, scale=scale) - (median-lower_err)
+        # eq3 = skewnorm.ppf(0.84135, alpha, loc=loc, scale=scale) - (median+upper_err)
+        # fake_lnlike = 0.5 * np.log( eq1**2 + eq2**2 + eq3**2 ) #fake log likelihod
+        
+        #::: way 2: pythonic; simple chi squared
+        ppf = skewnorm.ppf([0.15865, 0.5, 0.84135], alpha, loc=loc, scale=scale) #np array
+        fake_lnlike = np.sum( (ppf - reference)**2 ) #simple chi squared
+        
+        #::: way 2: pythonic; fake log likehood, just 'cause we're feeling fancy
+        # ppf = skewnorm.ppf([0.15865, 0.5, 0.84135], alpha, loc=loc, scale=scale) #np array
+        # fake_lnlike = 0.5 * np.log( np.sum( (ppf - reference)**2 ) ) #fake log likelihod
+        
+        if np.isnan(fake_lnlike): 
+            return np.inf
+        else:
+            return fake_lnlike
+
+
+    #TODO: 
+    #scipy minimize is really bad because it depends so strongly on the initial guess
+    #and likes to get stuck in a local minima, which is the worst possible outcome
+    #for our purpose here. We only use it because it is fast. Think about replacing
+    #it with something more robust in the future though, maybe a short MCMC chain or the like.
+    #The alpha_guess hack below seems to get around its weakness in finding the right alpha for now.
+
+        
+    #::: initial guess for loc and scale
+    loc_guess = median
+    scale_guess = np.mean([lower_err, upper_err])
+    # print('\n')
+
+    
+    #::: way 1: choose alpha_guess depending on the errors and hope for the best
+    # if lower_err == upper_err:
+    #     alpha_guess = 0
+    # elif lower_err < upper_err:
+    #     alpha_guess = 1
+    # elif lower_err > upper_err:
+    #     alpha_guess = -1
+    # initial_guess = (median, sigma_guess, alpha_guess) #sigma, omega, alpha 
+    # sol = minimize(fake_lnlike, initial_guess, bounds=[(None,None), (0,None), (None,None)]) 
+    # sigma, omega, alpha = sol.x
+    
+    
+    #::: way 2: choose a few different alpha_guesses and compare (similar to basinhopping optimization)
+    # initial_guess1 = None #just for printing
+    sol = None
+    for alpha_guess in [-10,-1,0,1,10]:
+        initial_guess1 = (alpha_guess, loc_guess, scale_guess)
+        sol1 = minimize(fake_lnlike, initial_guess1, bounds=[(None,None), (None,None), (0,None)]) 
+        # print('sol1.fun', sol1.fun)
+        if (sol is None) or (sol1.fun < sol.fun):
+            # initial_guess = initial_guess1 #just for printing
+            sol = sol1
+            
+            
+    # print('best initial_guess:', initial_guess)
+    # print('best solution:', sol)
+    
+    
+    alpha, loc, scale = sol.x
+    return alpha, loc, scale
+
+def simulate_PDF(median, lower_err, upper_err, size=1, plot=True):
+    '''
+    Simulates a draw of posterior samples from a value and asymmetric errorbars
+    by assuming the underlying distribution is a skewed normal distribution.
+    
+    Developed to estimate PDFs from literature exoplanet parameters that did not report their MCMC chains.
+    
+    Inputs:
+    -------
+    median : float
+        the median value that was reported
+    lower_err : float
+        the lower errorbar that was reported
+    upper_err : float
+        the upper errorbar that was reported
+    size : int
+        the number of samples to be drawn
+        
+    Returns:
+    --------
+    samples : array of float
+        the samples drawn from the simulated skrewed normal distribution
+    '''
+    
+    alpha, loc, scale = calculate_skewed_normal_params(median, lower_err, upper_err)
+    samples = skewnorm.rvs(alpha, loc=loc, scale=scale, size=size)
+    return samples
+
+
+```
+
+
 ### Mutual inclination
 
 $\cos i_{\mathrm{bc}}=\cos i_{\mathrm{b}} \cos i_{\mathrm{c}}+\sin i_{\mathrm{b}} \sin i_{\mathrm{c}} \cos \left(\Omega_{\mathrm{b}}-\Omega_{\mathrm{c}}\right)$.   
