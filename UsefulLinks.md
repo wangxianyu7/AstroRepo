@@ -131,3 +131,5 @@
 - NEID RV precision/(1.5~2.0)
 
 
+### MSO Telescope Schedules
+https://noirlab.edu/science/observing-noirlab/scheduling/mso-telescopes
