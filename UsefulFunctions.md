@@ -318,3 +318,22 @@ def linear_lq(x, y, yerr):
 
 ```
 
+
+### update Colab python version to 3.8
+
+```
+#install python 3.8
+!sudo apt-get update -y
+!sudo apt-get install python3.8
+
+#change alternatives
+!sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
+!sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
+!sudo apt-get install python3-pip
+!python -m pip install --upgrade pip
+#check python version
+!python --version
+#3.8
+
+```
+
