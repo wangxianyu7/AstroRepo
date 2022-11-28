@@ -336,4 +336,10 @@ def linear_lq(x, y, yerr):
 #3.8
 
 ```
+### allesfitter requirement
+
+```
+pip install numpy matplotlib seaborn scipy astropy statsmodels emcee corner tqdm ellc dynesty celerite
+```
+
 
