@@ -2,7 +2,7 @@
 
 
 
-```
+```Python
 import numpy as np
 from scipy.optimize import minimize
 import numpy as np
@@ -144,7 +144,7 @@ def simulate_PDF(median, lower_err, upper_err, size=1, plot=True):
 
 $\cos i_{\mathrm{bc}}=\cos i_{\mathrm{b}} \cos i_{\mathrm{c}}+\sin i_{\mathrm{b}} \sin i_{\mathrm{c}} \cos \left(\Omega_{\mathrm{b}}-\Omega_{\mathrm{c}}\right)$.   
 
-```
+```Python
 import numpy as np
 i_b = np.radians(90)
 i_c = np.radians(90)
@@ -171,7 +171,7 @@ Ref:
      
 ### Get all astronomical sites
 
-```
+```Python
 import astropy
 from astropy.coordinates import EarthLocation
 all_site_list = list(set(astropy.coordinates.EarthLocation.get_site_names()))
@@ -218,7 +218,7 @@ Ref:
 1. https://iopscience.iop.org/article/10.3847/1538-3881/aa8d6f/pdf
 
 ### Rotation period
-```
+```Python
 import astropy.constants as c
 import astropy.units as u
 period = 12.727272727*u.d
@@ -229,7 +229,7 @@ print(vrot.to('km/s'))
 
 ### Calculate a/Rs
 
-```
+```Python
 import astropy.constants as c
 import astropy.units as u
 period = 10*u.d
@@ -240,7 +240,7 @@ print((R/st_rad).to(''))
 ```
 ### Calculate RM Amplitude
 
-```
+```Python
 pl_ror = 0.1
 vsini = 10
 b = 0
@@ -249,7 +249,7 @@ print(RM_amp,'m/s')
 ```
 ### format axis
 
-```
+```Python
 from matplotlib.ticker import MultipleLocator, \
     FormatStrFormatter, AutoMinorLocator
 def ticksetax(ax, labelsize=15, ticksize=12, tickwidth=1.5, ticklength=5):
@@ -276,7 +276,7 @@ conda install python
 ### interpolate 1d
 
 
-```
+```Python
 import matplotlib.pyplot as plt
 from scipy import interpolate
 
@@ -286,8 +286,7 @@ def get_interpolate_data(x, y, newx):
 ```
 
 ### multi plot
-
-```
+```Python
 import matplotlib.gridspec as gridspec
 plt.figure(figsize=(12, 5))
 nrow = 2
@@ -302,7 +301,7 @@ ax = plt.subplot(gs[0])
 ### linear LQ
 
 
-```
+```Python
 import numpy as np
 def linear_lq(x, y, yerr):
     A = np.vander(x, 2)
