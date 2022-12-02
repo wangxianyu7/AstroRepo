@@ -339,7 +339,15 @@ def linear_lq(x, y, yerr):
 ### allesfitter requirement
 
 ```
-pip install numpy matplotlib seaborn scipy astropy statsmodels emcee corner tqdm ellc dynesty celerite h5py
+pip install numpy matplotlib seaborn scipy astropy statsmodels emcee corner tqdm ellc dynesty celerite h5py rebound
+```
+
+### install ellc
+
+```
+
+conda install --name normal -c conda-forge ellc
+
 ```
 
 
