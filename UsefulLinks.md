@@ -109,6 +109,12 @@
 - https://chi-feng.github.io/mcmc-demo/
 #### PINTS (Probabilistic Inference on Noisy Time-Series)
 - https://github.com/pints-team/pints
+#### PyCBC (includes ptemcee)
+ - https://pycbc.org/pycbc/latest/html/index.html
+#### bilby (includes ptemcee)
+- https://lscsoft.docs.ligo.org/bilby/index.html
+
+
 
 ### Schedule Tools
 
