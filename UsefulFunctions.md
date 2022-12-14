@@ -349,4 +349,27 @@ conda install --name normal -c conda-forge ellc
 
 ```
 
+### RV amplitude
+
+```Python
+import numpy as np
+import astropy.constants as constants
+import astropy.units as units
+
+pi = 3.1415926
+
+st_mass = 1*constants.M_sun
+pl_mass = 1*constants.M_jup
+period = 4*units.d
+
+sini = np.sin(np.radians(90))
+e = 0
+
+
+
+K = (2*pi*constants.G/period/(st_mass+pl_mass)**2)**(1/3)*pl_mass*sini/(1-e**2)**0.5
+K = K.to('m/s')
+K
+```
+
 
