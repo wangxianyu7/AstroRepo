@@ -355,21 +355,34 @@ conda install --name normal -c conda-forge ellc
 import numpy as np
 import astropy.constants as constants
 import astropy.units as units
-
 pi = 3.1415926
-
 st_mass = 1*constants.M_sun
 pl_mass = 1*constants.M_jup
 period = 4*units.d
-
 sini = np.sin(np.radians(90))
 e = 0
-
-
-
 K = (2*pi*constants.G/period/(st_mass+pl_mass)**2)**(1/3)*pl_mass*sini/(1-e**2)**0.5
 K = K.to('m/s')
 K
 ```
 
-
+### get single transit file from a long-candence TESS light curve
+```Python
+time, flux, fluxerr = np.loadtxt('TESS.TESS.csv', unpack=True, usecols=(0,1,2), delimiter=',')
+period = 8.803843
+t0 = 2456883.4236
+epoch_min = np.ceil((time.min() - t0)/period)
+epoch_max = np.floor((time.max() - t0)/period)
+epochs = np.arange(epoch_min, epoch_max + 1)
+i = 0
+for epoch in epochs:
+    mask = (time > t0 + epoch*period - 0.1*period) & (time < t0 + epoch*period + 0.1*period)
+    if np.min(flux[mask]) > 0.996:
+        continue
+    i = i + 1
+    print('Transit',i)
+    plt.figure(figsize=(10, 5))
+    plt.scatter(time[mask], flux[mask])
+    plt.show()
+    np.savetxt('TESS'+str(i)+'.TESS.csv', np.c_[time[mask], flux[mask], fluxerr[mask]], delimiter=',', fmt='%f', header='time,flux,fluxerr')
+```
