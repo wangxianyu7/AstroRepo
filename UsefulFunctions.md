@@ -389,7 +389,7 @@ for epoch in epochs:
 
 
 ### GP (Matern Kernel) detrend
-```
+```Python
 plt.figure(figsize=(15, 5))
 plt.scatter(time, trend_lc1, s=1, c='k', alpha=1,zorder=100)
 
