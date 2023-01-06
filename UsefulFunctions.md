@@ -386,3 +386,73 @@ for epoch in epochs:
     plt.show()
     np.savetxt('TESS'+str(i)+'.TESS.csv', np.c_[time[mask], flux[mask], fluxerr[mask]], delimiter=',', fmt='%f', header='time,flux,fluxerr')
 ```
+
+
+### GP (Matern Kernel) detrend
+```
+plt.figure(figsize=(15, 5))
+plt.scatter(time, trend_lc1, s=1, c='k', alpha=1,zorder=100)
+
+from scipy.optimize import minimize
+import celerite
+from celerite import terms
+
+def get_matern_params(x, y, yerr):
+    # Set up the GP model
+    kernel = terms.Matern32Term(log_sigma=1., log_rho=1.)
+    gp = celerite.GP(kernel, mean=np.nanmean(y)) 
+    gp.compute(x, yerr)
+    print("Initial log-likelihood: {0}".format(gp.log_likelihood(y)))
+
+    # Define a cost function
+    def neg_log_like(params, y, gp):
+        gp.set_parameter_vector(params)
+        return -gp.log_likelihood(y)
+
+    def grad_neg_log_like(params, y, gp):
+        gp.set_parameter_vector(params)
+        return -gp.grad_log_likelihood(y)[1]
+
+    # Fit for the maximum likelihood parameters
+    initial_params = gp.get_parameter_vector()
+    bounds = gp.get_parameter_bounds()
+    soln = minimize(neg_log_like, initial_params, jac=grad_neg_log_like,
+                    method="L-BFGS-B", bounds=bounds, args=(y, gp))
+    gp.set_parameter_vector(soln.x)
+    print("Final log-likelihood: {0}".format(-soln.fun))
+
+    # Make the maximum likelihood prediction
+    # t = np.linspace(-5, 5, 500)
+    t = x
+    mu, var = gp.predict(y, t, return_var=True)
+    std = np.sqrt(var)
+
+    # Plot the data
+    color = "#ff7f0e"
+    # plt.errorbar(x, y, yerr=yerr, fmt=".r", capsize=0,ms=1, alpha=0.5)
+    plt.plot(t, mu, color=color)
+    plt.fill_between(t, mu+std, mu-std, color=color, alpha=0.3, edgecolor="none")
+    plt.ylabel(r"$y$")
+    plt.xlabel(r"$t$")
+    # plt.xlim(-5, 5)
+    plt.gca().yaxis.set_major_locator(plt.MaxNLocator(5))
+    plt.title("maximum likelihood prediction");
+    print(soln.x)
+    log_sigma = soln.x[0]
+    log_rho = soln.x[1]
+    soln_dict = {'log_sigma':log_sigma, 'log_rho':log_rho}
+    return soln_dict
+
+
+flatten_lc1, trend_lc1 = flatten(time, flux, kernel_size=5, return_trend=True, method='gp', kernel='matern',robust=True)
+
+x = time
+y = trend_lc1
+yerr = 0.0001+flatten_lc1*0
+
+get_matern_params(x, y, yerr)
+
+
+
+```
+
