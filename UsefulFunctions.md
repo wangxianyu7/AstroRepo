@@ -456,3 +456,11 @@ get_matern_params(x, y, yerr)
 
 ```
 
+### get_rsuma
+
+```Python
+rr = 0.1
+ar = 20
+rsuma = (1+rr)/ar
+```
+
