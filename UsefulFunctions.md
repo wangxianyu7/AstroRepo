@@ -463,4 +463,36 @@ rr = 0.1
 ar = 20
 rsuma = (1+rr)/ar
 ```
+### iSpec retrun code meanings
 
+
+```
+from https://github.com/segasai/astrolibpy/blob/master/mpfit/mpfit.py line 754
+	 .status
+		An integer status code is returned.  All values greater than zero can
+		represent success (however .status == 5 may indicate failure to
+		converge). It can have one of the following values:
+		-16
+		   A parameter or function value has become infinite or an undefined
+		   number.  This is usually a consequence of numerical overflow in the
+		   user's model function, which must be avoided.
+		-15 to -1
+		   These are error codes that either MYFUNCT or iterfunct may return to
+		   terminate the fitting process.  Values from -15 to -1 are reserved
+		   for the user functions and will not clash with MPFIT.
+		0  Improper input parameters.
+		1  Both actual and predicted relative reductions in the sum of squares
+		   are at most ftol.
+		2  Relative error between two consecutive iterates is at most xtol
+		3  Conditions for status = 1 and status = 2 both hold.
+		4  The cosine of the angle between fvec and any column of the jacobian
+		   is at most gtol in absolute value.
+		5  The maximum number of iterations has been reached.
+		6  ftol is too small. No further reduction in the sum of squares is
+		   possible.
+		7  xtol is too small. No further improvement in the approximate solution
+		   x is possible.
+		8  gtol is too small. fvec is orthogonal to the columns of the jacobian
+		   to machine precision.
+
+```
