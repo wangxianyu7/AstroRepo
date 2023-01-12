@@ -145,3 +145,6 @@ https://noirlab.edu/science/observing-noirlab/scheduling/mso-telescopes
 
 - https://airmass.org/chart/obsid:kpno/date:2022-11-04/object:IC%201805/ra:38.175000/dec:61.450000 airmass
 
+### TESS data quality flag
+
+- https://outerspace.stsci.edu/display/TESS/2.0+-+Data+Product+Overview
