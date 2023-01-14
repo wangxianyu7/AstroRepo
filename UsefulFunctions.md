@@ -496,3 +496,11 @@ from https://github.com/segasai/astrolibpy/blob/master/mpfit/mpfit.py line 754
 		   to machine precision.
 
 ```
+
+### Google Spreadsheet filter functions
+
+```
+=OR(G:G>8, ISBLANK(G:G)=TRUE)
+
+
+```
