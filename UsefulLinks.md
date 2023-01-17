@@ -148,3 +148,6 @@ https://noirlab.edu/science/observing-noirlab/scheduling/mso-telescopes
 ### TESS data quality flag
 
 - https://outerspace.stsci.edu/display/TESS/2.0+-+Data+Product+Overview
+
+### weather website
+- https://www.meteoblue.com/en/weather/week/kitt-peak_united-states_5301146
