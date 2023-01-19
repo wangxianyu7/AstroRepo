@@ -151,3 +151,6 @@ https://noirlab.edu/science/observing-noirlab/scheduling/mso-telescopes
 
 ### weather website
 - https://www.meteoblue.com/en/weather/week/kitt-peak_united-states_5301146
+
+### filters
+- http://svo2.cab.inta-csic.es/svo/theory/fps3/index.php?mode=browse&gname=2MASS
