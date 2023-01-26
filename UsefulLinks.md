@@ -104,7 +104,7 @@
 #### ACF
 - https://github.com/rae-holcomb/SpinSpotter
 
-### MCMC
+### MCMC & Nested sampling
 #### The Markov-chain Monte Carlo Interactive Gallery
 - https://chi-feng.github.io/mcmc-demo/
 #### PINTS (Probabilistic Inference on Noisy Time-Series)
@@ -114,7 +114,8 @@
 #### bilby (includes ptemcee)
 - https://lscsoft.docs.ligo.org/bilby/index.html
 
-
+#### Dynesty examples
+- https://notebook.community/joshspeagle/dynesty/demos/Examples%20--%20Linear%20Regression
 
 ### Schedule Tools
 
