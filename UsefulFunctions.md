@@ -504,3 +504,80 @@ from https://github.com/segasai/astrolibpy/blob/master/mpfit/mpfit.py line 754
 
 
 ```
+
+### hjd_utc_to_bjd_tdb_mid
+
+Modified from https://github.com/WarwickAstro/time-conversions/blob/master/convert_times.py
+
+```Python
+### logz 
+# print(dres.logz[-1], dres.logzerr[-1])
+import logging
+import numpy as np
+from astropy.time import Time
+from astropy.coordinates import (
+    SkyCoord,
+    EarthLocation
+    )
+import astropy.units as u
+def getLightTravelTimes(ra, dec, time_to_correct):
+    """
+    Get the light travel times to the helio- and
+    barycentres
+
+    Parameters
+    ----------
+    ra : str
+        The Right Ascension of the target in hourangle
+        e.g. 16:00:00
+    dec : str
+        The Declination of the target in degrees
+        e.g. +20:00:00
+    time_to_correct : astropy.Time object
+        The time of observation to correct. The astropy.Time
+        object must have been initialised with an EarthLocation
+
+    Returns
+    -------
+    ltt_bary : float
+        The light travel time to the barycentre
+    ltt_helio : float
+        The light travel time to the heliocentre
+
+    Raises
+    ------
+    None
+    """
+    target = SkyCoord(ra, dec, unit=(u.hourangle, u.deg), frame='icrs')
+    ltt_bary = time_to_correct.light_travel_time(target)
+    ltt_helio = time_to_correct.light_travel_time(target, 'heliocentric')
+    return ltt_bary, ltt_helio
+ 
+logging.basicConfig(level=logging.INFO)
+def hjd_utc_to_bjd_tdb_mid(ra, dec, tinp, observatory):
+    location = EarthLocation.of_site(observatory)
+    logging.info('Input times in HJD, removing heliocentric correction')
+    time_inp = Time(tinp, format='jd', scale='utc', location=location)
+    _, ltt_helio = getLightTravelTimes(ra, dec, time_inp)
+    time_inp = Time(time_inp.utc - ltt_helio, format='jd', scale='utc', location=location)
+    logging.info('Output set to BJD_TDB_MID, adding barycentric correction')
+    ltt_bary, _ = getLightTravelTimes(ra, dec, time_inp)
+    new_time = (time_inp.tdb + ltt_bary).value
+    return new_time
+
+
+if __name__ == '__main__':
+    # input  HJD, RA, DEC, and the location of observation
+    # verified with https://astroutils.astronomy.osu.edu/time/hjd2bjd.html
+    # Note that it does not support any observatories, so is only accurate to 20 ms.
+    ra = '16:00:00'; dec = '+20:00:00'
+    observatory = 'paranal'
+    tinp = np.linspace(2450000, 2458000, 1000)
+
+    hjd_utc_to_bjd_tdb_mid(ra, dec, tinp, observatory)
+
+
+
+
+```
+
