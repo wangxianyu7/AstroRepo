@@ -580,4 +580,8 @@ if __name__ == '__main__':
 
 
 ```
+### Latex comments
+```latex
+\newcommand{\xy}[1]{{\color{red}{XY: #1}}}
 
+```
