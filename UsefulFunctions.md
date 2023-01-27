@@ -585,3 +585,24 @@ if __name__ == '__main__':
 \newcommand{\xy}[1]{{\color{red}{XY: #1}}}
 
 ```
+
+
+### get individual light curve from long-cadence data
+
+```Python
+data_path = 'lc.dat'
+time ,flux, flux_err = np.loadtxt(data_path, usecols=(0,1,2), unpack=True)
+count = 0
+times = np.array([]); fluxs = np.array([]); flux_errs = np.array([])
+for i in range(len(time)):
+    times = np.append(times, time[i]); fluxs = np.append(fluxs, flux[i]); flux_errs = np.append(flux_errs, flux_err[i])
+    
+    if i+1 != len(time):
+        if time[i+1] - time[i] > 0.1:
+            count += 1
+            plt.figure()
+            plt.scatter(times, fluxs, s=1)
+            plt.title(str(count))
+            times = np.array([]); fluxs = np.array([]); flux_errs = np.array([])
+	    np.savetxt(str(count) + '.csv', np.c_[times, fluxs, flux_errs], delimiter=',', header='BJD, Flux, Flux_err', comments='', fmt='%.7f')
+```
