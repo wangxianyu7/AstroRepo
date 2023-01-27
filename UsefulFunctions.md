@@ -603,6 +603,6 @@ for i in range(len(time)):
             plt.figure()
             plt.scatter(times, fluxs, s=1)
             plt.title(str(count))
-            times = np.array([]); fluxs = np.array([]); flux_errs = np.array([])
 	    np.savetxt(str(count) + '.csv', np.c_[times, fluxs, flux_errs], delimiter=',', header='BJD, Flux, Flux_err', comments='', fmt='%.7f')
+            times = np.array([]); fluxs = np.array([]); flux_errs = np.array([])
 ```
