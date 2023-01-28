@@ -49,6 +49,9 @@
 #### LDC calculation
 - https://github.com/ucl-exoplanets/ExoTETHyS/
 
+### K2 detrend
+
+- https://github.com/rodluger/everest
 
 ### Validation
 #### VESPA install yml
