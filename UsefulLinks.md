@@ -8,6 +8,9 @@
 #### TTV database
 - https://transit-timing.github.io/  8,667 transit timing measurements for 382 systems
 
+### K2 light curve
+- https://lweb.cfa.harvard.edu/~avanderb/k2.html
+
 ### Programming languages
 #### Fortran
 - http://micro.ustc.edu.cn/Fortran/ZJDing/ (in Chinese)
