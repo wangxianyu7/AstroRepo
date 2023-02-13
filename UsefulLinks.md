@@ -4,6 +4,7 @@
 - https://ui.adsabs.harvard.edu/abs/2017AJ....153..208B/abstract LSK, HIRES
 - https://dace.unige.ch/radialVelocities/ from Paul
 - https://arxiv.org/abs/2001.05942 A public HARPS radial velocity database corrected for systematic errors
+- https://ui.adsabs.harvard.edu/abs/2014ApJ...785..126K/abstract friend of hot jupiters, HIRES
 
 #### TTV database
 - https://transit-timing.github.io/  8,667 transit timing measurements for 382 systems
