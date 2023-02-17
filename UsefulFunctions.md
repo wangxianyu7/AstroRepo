@@ -606,3 +606,15 @@ for i in range(len(time)):
 	    np.savetxt(str(count) + '.csv', np.c_[times, fluxs, flux_errs], delimiter=',', header='BJD, Flux, Flux_err', comments='', fmt='%.7f')
             times = np.array([]); fluxs = np.array([]); flux_errs = np.array([])
 ```
+
+### creat a x86 env on Mac
+
+```
+#terminal
+softwareupdate -install-rosetta -agree-to-license 
+CONDA_SUBDIR=osx-64 conda create -n rosetta python
+conda activate rosetta
+python -c "import platform;print(platform.machine())"
+```
+
+
