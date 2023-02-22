@@ -616,5 +616,15 @@ CONDA_SUBDIR=osx-64 conda create -n rosetta python
 conda activate rosetta
 python -c "import platform;print(platform.machine())"
 ```
+### get sqrt(e)cosw and sqrt(e)sinw
+
+```Python
+import numpy as np
+e = 0.5
+w = 0
+w = np.radians(w)
+sqrt_e_cosw = np.sqrt(e)*np.cos(w)
+sqrt_e_sinw = np.sqrt(e)*np.sin(w)
+```
 
 
