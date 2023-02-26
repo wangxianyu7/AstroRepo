@@ -163,3 +163,9 @@ https://noirlab.edu/science/observing-noirlab/scheduling/mso-telescopes
 
 ### filters
 - http://svo2.cab.inta-csic.es/svo/theory/fps3/index.php?mode=browse&gname=2MASS
+
+
+### How to identify divergences in pymc3 chain using arviz
+- https://stackoverflow.com/questions/66895673/how-to-identify-divergences-in-pymc3-chain-using-arviz
+- https://www.pymc.io/projects/docs/en/v3/pymc-examples/examples/diagnostics_and_criticism/Diagnosing_biased_Inference_with_Divergences.html
+- simple way to solve divergences: 1) use large accept rate; 2) reparameterize
