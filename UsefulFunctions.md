@@ -607,7 +607,7 @@ for i in range(len(time)):
             times = np.array([]); fluxs = np.array([]); flux_errs = np.array([])
 ```
 
-### creat a x86 env on Mac
+### creat a x86 env on M1/2 Mac
 
 ```
 #terminal
@@ -616,6 +616,20 @@ CONDA_SUBDIR=osx-64 conda create -n rosetta python
 conda activate rosetta
 python -c "import platform;print(platform.machine())"
 ```
+
+
+
+### creat a Pymc env on M1/2 Mac
+
+```
+conda create -n pymc
+conda activate pymc
+conda install -c conda-forge pymc
+conda install -c conda-forge aesara
+conda install -c conda-forge ipykernel
+```
+
+
 ### get sqrt(e)cosw and sqrt(e)sinw
 
 ```Python
