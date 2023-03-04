@@ -640,5 +640,15 @@ w = np.radians(w)
 sqrt_e_cosw = np.sqrt(e)*np.cos(w)
 sqrt_e_sinw = np.sqrt(e)*np.sin(w)
 ```
+### transit mask (from wotan)
+
+```
+def transit_mask(time, period, duration, T0):
+    half_period = 0.5 * period
+    with np.errstate(invalid='ignore'):  # ignore NaN values
+        return np.abs((time - T0 + half_period) % period - half_period) < 0.5 * duration
+
+```
+
 
 
