@@ -655,7 +655,7 @@ def transit_mask(time, period, duration, T0):
 ```Python
 def mass_torres(hd, teff, logg, feh, dteff, dlogg, dfeh):
     """Calculate masses and radii from the calibration of Torres et al. 2010"""
-
+    # https://github.com/MariaTsantaki/mass_radius/blob/master/mass_radius_age.py
     # coefficients
     a  = [1.5689, 1.3787, 0.4243, 1.139, -0.1425,  0.01969, 0.1010]
     da = [0.058,  0.029,  0.029,  0.240, 0.011,    0.0019,  0.014]
