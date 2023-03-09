@@ -650,5 +650,45 @@ def transit_mask(time, period, duration, T0):
 
 ```
 
+### Torres Relation 
+
+```Python
+def mass_torres(hd, teff, logg, feh, dteff, dlogg, dfeh):
+    """Calculate masses and radii from the calibration of Torres et al. 2010"""
+
+    # coefficients
+    a  = [1.5689, 1.3787, 0.4243, 1.139, -0.1425,  0.01969, 0.1010]
+    da = [0.058,  0.029,  0.029,  0.240, 0.011,    0.0019,  0.014]
+    b  = [2.4427, 0.6679, 0.1771, 0.705, -0.21415, 0.02306, 0.04173]
+    db = [0.038,  0.016,  0.027,  0.13,  0.0075,   0.0013,  0.0082]
+
+    X = np.log10(teff) - 4.1
+    dX = dteff/teff
+    log_M = a[0] + (a[1]*X) + (a[2]*(X**2)) + (a[3]*(X**3)) + (a[4]*(logg**2)) + (a[5]*(logg**3)) + (a[6]*feh)
+    log_R = b[0] + (b[1]*X) + (b[2]*(X**2)) + (b[3]*(X**3)) + (b[4]*(logg**2)) + (b[5]*(logg**3)) + (b[6]*feh)
+    # must check the errors
+    dlog_M = np.sqrt((da[0]**2) + ((a[1]*dX)**2) + ((da[1]*X)**2) + ((da[2]*(X**2))**2) + ((a[2]*2*X*dX)**2) + ((da[3]*(X**3))**2) + ((a[3]*3*X*X*dX)**2) + ((da[4]*(logg**2))**2) + ((a[4]*2*logg*dlogg)**2) + ((da[5]*(logg**3))**2) + ((a[5]*3*logg*logg*dlogg)**2) + ((da[6]*feh)**2) + ((a[6]*dfeh)**2))
+    dlog_R = np.sqrt((db[0]**2) + ((b[1]*dX)**2) + ((db[1]*X)**2) + ((db[2]*(X**2))**2) + ((b[2]*2*X*dX)**2) + ((db[3]*(X**3))**2) + ((b[3]*3*X*X*dX)**2) + ((db[4]*(logg**2))**2) + ((b[4]*2*logg*dlogg)**2) + ((db[5]*(logg**3))**2) + ((b[5]*3*logg*logg*dlogg)**2) + ((db[6]*feh)**2) + ((b[6]*dfeh)**2))
+    Mt = np.power(10,log_M)
+    Rt = np.power(10,log_R)
+    dMt = dlog_M*Mt*np.power(10,(log_M-1.0))
+    dRt = dlog_R*Rt*np.power(10,(log_R-1.0))
+    # Apply Santos et al. (2013) correction
+    Mcal = (0.791*(Mt**2.0)) - (0.575*Mt) + 0.701
+    dMcal = np.sqrt(((0.791*Mt*dMt)**2) + ((0.575*dMt)**2))
+
+    Mcal  = np.round(Mcal,2)
+    dMcal = np.round(dMcal,2)
+    Rt    = np.round(Rt, 2)
+    dRt   = np.round(dRt,2)
+    return hd, Rt, dRt, Mcal, dMcal
+
+hd = 0 
+T = 6000; dT = 100
+logg = 4.5; dlogg = 0.1
+feh = 0.0; dfeh = 0.1
+mass_torres(hd, T, logg, feh, dT, dlogg, dfeh)
+
+```
 
 
