@@ -691,4 +691,12 @@ mass_torres(hd, T, logg, feh, dT, dlogg, dfeh)
 
 ```
 
+### install ellc (M1)
+```Python
+conda create -n alles python==3.8.5
+conda install gfortran
+conda install pybind11
+pip install numpy matplotlib seaborn scipy astropy statsmodels emcee corner tqdm dynesty celerite h5py rebound
+pip install ellc==1.8.5
+```
 
