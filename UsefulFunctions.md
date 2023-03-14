@@ -241,9 +241,15 @@ print((R/st_rad).to(''))
 ### Calculate RM Amplitude
 
 ```Python
-pl_ror = 0.1
-vsini = 10
-b = 0
+import astropy.units as u
+import astropy.constants as const
+period = 8.5*u.day
+st_rad = 0.8*u.Rsun
+vrot = (2*np.pi*st_rad/period).to(u.km/u.s).value
+print(vrot)
+pl_ror = 0.07414
+vsini = vrot
+b = 0.251
 RM_amp = 2/3*pl_ror**2*vsini*1000*(1-b**2)**0.5
 print(RM_amp,'m/s')
 ```
