@@ -705,4 +705,10 @@ conda install pybind11
 pip install numpy matplotlib seaborn scipy astropy statsmodels emcee corner tqdm dynesty celerite h5py rebound
 pip install ellc==1.8.5
 ```
+### cat slurm file
+
+```bash
+cat "$(ls -1rt *slurm* | tail -n1)"
+```
+
 
