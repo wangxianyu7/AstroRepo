@@ -711,4 +711,22 @@ pip install ellc==1.8.5
 cat "$(ls -1rt *slurm* | tail -n1)"
 ```
 
+### get emcee mcmc save file
+
+
+```Python
+import sys
+import scipy.stats as stats
+import math
+import matplotlib.gridspec as gridspec
+import gzip, pickle
+from scipy.stats import norm
+from shutil import copyfile
+import emcee
+import numpy as np
+copyfile('mcmc_save.h5', 'mcmc_save_tmp.h5')
+sampler = emcee.backends.HDFBackend( 'mcmc_save_tmp.h5', read_only=True )
+samples = sampler.get_chain(flat=True)#, discard=int(1.*1000/1))
+```
+
 
