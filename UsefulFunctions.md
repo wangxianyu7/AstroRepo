@@ -729,4 +729,31 @@ sampler = emcee.backends.HDFBackend( 'mcmc_save_tmp.h5', read_only=True )
 samples = sampler.get_chain(flat=True)#, discard=int(1.*1000/1))
 ```
 
+### get_model (ellc)
+
+```Python
+def get_model(x_lin, rr, rsuma, cosi, epoch, period, f_c, f_s, vsini, lambda_, q1, q2,q):
+    ar = (1+rr)/rsuma
+    radius_1 = rsuma/(1+rr)
+    radius_2 = rsuma/(1+1/rr)
+    lambda_1 = lambda_
+    f_c = f_c; f_s = f_s
+    q = q
+    u1 = 2*np.sqrt(q1)*q2
+    u2 = np.sqrt(q1)*(1-2*q2)
+    idegree = np.arccos(cosi)*180/np.pi
+    period = period
+    epoch = epoch
+    
+    rm,_ = ellc.rv(x_lin,radius_1=radius_1,radius_2=radius_2,sbratio=0, vsini_1=vsini,lambda_1=lambda_1,f_c=f_c,f_s=f_s,
+                   incl=idegree,a=ar,q=q,ld_1='quad',ldc_1=[u1,u2],t_zero=epoch, period=period)
+    rv,_ = ellc.rv(x_lin,radius_1=radius_1,radius_2=radius_2,sbratio=0, vsini_1=0,lambda_1=lambda_1,f_c=f_c,f_s=f_s,
+                   incl=idegree,a=ar,q=q,ld_1='quad',ldc_1=[u1,u2],t_zero=epoch, period=period,flux_weighted=False)
+    transit = ellc.lc(x_lin,radius_1=radius_1,radius_2=radius_2,sbratio=0, vsini_1=vsini,lambda_1=lambda_1,f_c=f_c,f_s=f_s,
+                    incl=idegree,a=ar,q=q,ld_1='quad',ldc_1=[u1,u2],t_zero=epoch, period=period)
+
+    return rm, rv, transit 
+
+```
+
 
