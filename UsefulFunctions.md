@@ -755,5 +755,28 @@ def get_model(x_lin, rr, rsuma, cosi, epoch, period, f_c, f_s, vsini, lambda_, q
     return rm, rv, transit 
 
 ```
+### get public data
+```Python
+import requests
+target_url = 'https://exofop.ipac.caltech.edu/tess/download_toi.php?sort=toi&output=csv'
+response = requests.get(target_url)
+data = response.text
+with open('toi.csv', 'w') as f:
+    print(data, file=f)
 
+
+target_url = 'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+*+from+ps&format=csv'
+response = requests.get(target_url)
+data = response.text
+with open('pstable.csv', 'w') as f:
+    print(data, file=f)
+    
+    
+
+target_url = 'https://www.astro.keele.ac.uk/jkt/tepcat/obliquity.csv'
+response = requests.get(target_url)
+data = response.text
+with open('obliquity.csv', 'w') as f:
+    print(data, file=f)
+```
 
