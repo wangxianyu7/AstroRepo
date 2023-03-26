@@ -48,6 +48,9 @@
 
 ### Stellar modelling
 
+#### 3D dust
+- https://github.com/jobovy/mwdust
+
 #### Correct routine to install isochrones
 - https://github.com/timothydmorton/isochrones/issues/138 
 #### LDC calculation
