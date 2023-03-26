@@ -780,3 +780,14 @@ with open('obliquity.csv', 'w') as f:
     print(data, file=f)
 ```
 
+### GPT prompt for midjourney
+
+```
+Here is a MidJourney Prompt Formula:
+(image we're prompting), (5 descriptive keywords), (camera type), (camera lens type), (time of day), (style of photograph), (type of film)
+
+Please respond with "yes" if you understand the formula
+```
+
+
+
