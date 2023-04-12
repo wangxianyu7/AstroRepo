@@ -793,4 +793,50 @@ Please respond with "yes" if you understand the formula
 ```
 
 
+### fetch S&F 2011 upper-limit AV
+```Python
+import requests
+import xml.etree.ElementTree as ET
+
+def fetch_and_parse_dust_data(ra_deg, dec_deg, name=None):
+    
+    if name is not None:
+        url = "https://irsa.ipac.caltech.edu/cgi-bin/DUST/nph-dust?locstr="+name+"&regSize=2.0"
+    else:
+        url = "https://irsa.ipac.caltech.edu/cgi-bin/DUST/nph-dust?locstr="+str(ra_deg)+"+"+str(dec_deg)+"+equ+j2000&regSize=2.0"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        content = response.content.decode("utf-8")
+        root = ET.fromstring(content)
+        return root
+    else:
+        print(f"Error: Unable to fetch data from the URL. Status code: {response.status_code}")
+if __name__ == "__main__":
+    ra_deg = 180
+    dec_deg = 30
+    root = fetch_and_parse_dust_data(ra_deg, dec_deg, name='HAT-P-7')
+    for i in range(len(root)):
+        for j in range(len(root[i])):
+            if root[i][j].tag == 'statistics':
+                for k in range(len(root[i][j])):
+                    if root[i][j][k].tag == 'maxValueSandF':
+                        maxValueSandF = root[i][j][k].text.strip().replace('(mag)', '')
+                    # meanValueSandF
+                    if root[i][j][k].tag == 'meanValueSandF':
+                        meanValueSandF = root[i][j][k].text.strip().replace('(mag)', '')
+                    # stdSandF
+                    if root[i][j][k].tag == 'stdSandF':
+                        stdSandF = root[i][j][k].text.strip().replace('(mag)', '')
+    maxValueSandF, meanValueSandF, stdSandF = float(maxValueSandF), float(meanValueSandF), float(stdSandF)
+
+    maxAv, meanAv, stdAv = maxValueSandF*3.1, meanValueSandF*3.1, stdSandF*3.1
+
+    print("maxAv, meanAv, stdAv")
+    print(maxAv, meanAv, stdAv)
+
+```
+
+
+
 
