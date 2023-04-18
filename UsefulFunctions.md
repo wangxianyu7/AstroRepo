@@ -837,6 +837,31 @@ if __name__ == "__main__":
 
 ```
 
+### make latex ouput
 
+```Python
+import math
+import numpy as np
+#test
+number = 0.0000214546
+rounded_number = round(number, 2 - int(math.floor(math.log10(abs(number)))) - 1)
+deci_num = 2 - int(math.floor(math.log10(abs(number)))) - 1
+print(f"%.{deci_num}f" % rounded_number)
+
+start_idx = 0
+for key in data.columns:
+    if 'b_rr' in key:
+        start_idx = 1
+    if start_idx == 1:
+        linedata = data[key].to_numpy()
+        linedata = linedata[int(len(linedata)/2):]
+        theta_median, theta_ll, theta_ul = get_params_from_samples(linedata)
+        # print(key,theta_median, theta_ll, theta_ul)
+        number = np.min([theta_ll, theta_ul])
+        rounded_number = round(number, 2 - int(math.floor(math.log10(abs(number)))) - 1)
+        deci_num = 2 - int(math.floor(math.log10(abs(number)))) - 1
+        formatted_string = f"{theta_median:.{deci_num}f}^{{+{theta_ul:.{deci_num}f}}}_{{-{theta_ll:.{deci_num}f}}}"
+        print(key,formatted_string)
+```
 
 
