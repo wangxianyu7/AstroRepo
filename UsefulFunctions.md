@@ -842,6 +842,19 @@ if __name__ == "__main__":
 ```Python
 import math
 import numpy as np
+
+
+def get_params_from_samples(samples):
+    '''
+    read MCMC or NS results and update params
+    '''
+    theta_median = np.nanpercentile(samples, 50, axis=0)
+    theta_ul = np.nanpercentile(samples, 84, axis=0) - theta_median
+    theta_ll = theta_median - np.nanpercentile(samples, 16, axis=0)
+
+    return theta_median, theta_ll,theta_ul
+
+
 #test
 number = 0.0000214546
 rounded_number = round(number, 2 - int(math.floor(math.log10(abs(number)))) - 1)
