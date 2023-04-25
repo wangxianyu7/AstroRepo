@@ -876,5 +876,74 @@ for key in data.columns:
         formatted_string = f"{theta_median:.{deci_num}f}^{{+{theta_ul:.{deci_num}f}}}_{{-{theta_ll:.{deci_num}f}}}"
         print(key,formatted_string)
 ```
+### Obs Month
+```Python
+from astroplan import Observer, FixedTarget
+from astropy.time import Time
+from astropy.coordinates import SkyCoord, EarthLocation
+import astropy.units as u
+import pandas as pd
+import numpy as np
+import warnings
+from astroquery.gaia import Gaia
+
+warnings.filterwarnings('ignore')
+
+
+def observability_table_example(observer_location, star_data, start_time, end_time, time_resolution=31):
+    observer = Observer(location=observer_location)
+    targets = [FixedTarget(coord=SkyCoord(ra=ra, dec=dec, unit=('hourangle', 'deg')), name=name)
+               for name, ra, dec in star_data]
+
+    start_time = Time(start_time)
+    end_time = Time(end_time)
+    times = start_time + np.arange(0, (end_time - start_time).to(u.d).value, time_resolution) * u.d
+
+    obs_table = observer.target_is_up(times, targets, grid_times_targets=True)
+
+    obs_df = pd.DataFrame(obs_table.T, columns=[target.name for target in targets], index=times)
+
+    return obs_df
+
+
+def get_star_coordinates_from_gaia_id(gaia_id):
+    job = Gaia.launch_job_async("SELECT * FROM gaiadr2.gaia_source WHERE source_id = " + str(gaia_id))
+    results = job.get_results()
+    ra = results['ra'][0]
+    dec = results['dec'][0]
+    return ra, dec
+
+
+from astroplan import Observer
+
+obs_observer = Observer.at_site("Kitt Peak")
+observer_location = obs_observer.location
+
+
+gaia_ids = [111111111111111]
+
+for gaia_id in gaia_ids:
+    ra, dec = get_star_coordinates_from_gaia_id(gaia_id)
+    star_data = [('Star', ra * u.deg, dec * u.deg)]
+
+    this_year = Time.now().decimalyear
+    this_year = str(int(np.round(this_year, 0)))
+
+    start_time = this_year + '-01-01 00:00:00'
+    end_time = this_year + '-12-31 00:00:00'
+
+    obs_df = observability_table_example(observer_location, star_data, start_time, end_time)
+    obs = obs_df.to_numpy()
+    obs = np.transpose(obs)
+
+    month_ = np.arange(1, 13, 1)
+    # print(this_year)
+
+    obs_mon = month_[obs[0] == True]
+
+    print(gaia_id, obs_mon)
+
+
+```
 
 
