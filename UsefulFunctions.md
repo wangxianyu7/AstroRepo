@@ -1,6 +1,35 @@
-## skewed normal distribution
+### Avai Month
+
+```Python
+from astroplan import Observer
+from astroplan import FixedTarget
+from astropy.time import Time
+from astropy.coordinates import SkyCoord
+kitt = Observer.at_site('Kitt Peak')
+ra = toi_table['RA (deg)']
+dec = toi_table['Dec (deg)']
+avai_month = []
+for ii in range(len(ra)):
+# for ii in range(20):
+    ra_ = ra[ii]; dec_ = dec[ii]
+    coordinates = SkyCoord(ra_, dec_, unit='deg')
+    deneb = FixedTarget(name='Deneb', coord=coordinates)
+    month_avi = []
+    for i in range(1,13):
+        time = Time('2023-{:02d}-01'.format(i))
+        is_up = kitt.target_is_up(time, deneb)
+        alt_ = kitt.altaz(time, deneb).alt.value; az_ = kitt.altaz(time, deneb).az.value
+        if alt_>-20 and az_<90:
+            # print('2023-{:02d}-01'.format(i), alt_, az_)
+            month_avi.append(i)
+    month_avi_str = ' '.join(['{:02d}'.format(i) for i in month_avi])+' *'
+    avai_month.append(month_avi_str)
+    # print(ii,month_avi_str)
+toi_table['Available Month'] = avai_month
+```
 
 
+### skewed normal distribution
 
 ```Python
 import numpy as np
