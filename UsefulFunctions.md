@@ -1041,5 +1041,51 @@ if __name__ == '__main__':
     mk_prior(work_folder)
 ```
 
+### plot arrow for fig 
 
+```
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import matplotlib.transforms as mtransforms
+
+x0 = -0.1
+
+arrow_style="simple,head_length=15,head_width=30,tail_width=10"
+rect_style="simple,tail_width=25"
+line_style="simple,tail_width=1"
+
+fig, ax = plt.subplots()
+
+# the x coords of this transformation are axes, and the y coord are data
+trans = mtransforms.blended_transform_factory(ax.transAxes, ax.transData)
+
+y_tail = 5
+y_head = 15
+arrow1 = mpatches.FancyArrowPatch((x0, y_tail), (x0, y_head), arrowstyle=arrow_style, transform=trans)
+arrow1.set_clip_on(False)
+ax.add_patch(arrow1)
+
+y_tail = 40
+y_head = 60
+arrow2 = mpatches.FancyArrowPatch((x0, y_tail), (x0, y_head), arrowstyle=arrow_style, facecolor='gold', edgecolor='black', linewidth=1, transform=trans)
+arrow2.set_clip_on(False)
+ax.add_patch(arrow2)
+
+y_tail = 20
+y_head = 40
+rect_backgr = mpatches.FancyArrowPatch((x0, y_tail), (x0, y_head), arrowstyle=rect_style, color='white', zorder=0, transform=trans)
+rect_backgr.set_clip_on(False)
+rect = mpatches.FancyArrowPatch((x0, y_tail), (x0, y_head), arrowstyle=rect_style, fill=False, color='orange', hatch='///', transform=trans)
+rect.set_clip_on(False)
+ax.add_patch(rect_backgr)
+ax.add_patch(rect)
+
+line = mpatches.FancyArrowPatch((x0, 0), (x0, 80), arrowstyle=line_style, color='orange', transform=trans, zorder=-1)
+line.set_clip_on(False)
+ax.add_patch(line)
+
+ax.set_xlim(0, 30)
+ax.set_ylim(0, 80)
+plt.show()
+```
 
