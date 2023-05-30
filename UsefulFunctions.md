@@ -1,3 +1,18 @@
+###
+```AAS like CSL
+  <bibliography second-field-align="flush" et-al-min="11" et-al-use-first="3" entry-spacing="0">
+    <layout suffix=".">
+      <text variable="citation-number" suffix=". "/>
+      <group delimiter=". ">
+        <text macro="contributors"/> 
+     <text macro="date"/>
+      </group>
+      <text macro="container-title" prefix=". "/>
+          <text variable="volume" prefix=", "/>
+        <text variable="page" prefix=", "/>
+```
+
+
 ### Avai Month
 
 ```Python
