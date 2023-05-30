@@ -11,6 +11,8 @@
       <text macro="container-title" prefix=". "/>
           <text variable="volume" prefix=", "/>
         <text variable="page" prefix=", "/>
+    </layout>
+  </bibliography>
 ```
 
 
