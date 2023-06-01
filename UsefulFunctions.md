@@ -1,3 +1,16 @@
+### get formated output for Latex table
+
+```Python
+def get_formated_value(value, uerr, lerr):
+    if abs(float(uerr)) == abs(float(lerr)):
+        line = '{:.3f}\\pm{:.3f}'.format(float(value), abs(float(uerr)))
+    else:
+        line = '{:.3f}^{{+{:.3f}}}_{{-{:.3f}}}'.format(float(value), abs(float(uerr)), abs(float(lerr)))
+    return line
+
+```
+
+
 ### AAS like CSL
 ```Python
 #AAS like CSL
