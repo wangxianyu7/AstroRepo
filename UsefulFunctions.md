@@ -1,3 +1,37 @@
+### measure stellar rotation period 
+#### Wavelet
+```Python
+pip install git+https://github.com/zclaytor/prot
+!git clone https://github.com/zclaytor/prot
+!cp -r /content/prot/prot/misc  /usr/local/lib/python3.10/dist-packages/prot/
+from typing_extensions import Unpack
+import lightkurve as lk
+# result = lk.search_lightcurve("TIC 149308317", author="tess-spoc", sector=range(14), cadence=1800)
+# result = lk.search_lightcurve("TOI 2202", author="spoc")
+# lcs = result.download_all(flux_column="sap_flux").stitch()
+import numpy as np
+
+time, flux, fluxerr = np.loadtxt('/content/toi2202.txt', unpack=True)
+time = time - 2457000
+lcs = lk.LightCurve(time=time, flux=flux, flux_err=fluxerr)
+from prot import WaveletTransform
+wt = WaveletTransform.from_lightcurve(lcs)
+
+wt.plot_all()
+
+
+wt.period_at_max_power
+import matplotlib.pyplot as plt
+
+plt.plot(wt.period, wt.gwps)
+plt.xscale('log')
+
+
+
+```
+
+
+
 ### get formated output for Latex table
 
 ```Python
