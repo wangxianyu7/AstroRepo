@@ -1,7 +1,7 @@
 ### Gaia fucntion
 
 
-```
+```Python
 
 def dr2dr3(dr2_source_id):
     query = "SELECT * FROM gaiadr3.dr2_neighbourhood WHERE dr2_source_id = "+str(dr2_source_id)
