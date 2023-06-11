@@ -1,3 +1,26 @@
+### Gaia fucntion
+
+
+```
+
+def dr2dr3(dr2_source_id):
+    query = "SELECT * FROM gaiadr3.dr2_neighbourhood WHERE dr2_source_id = "+str(dr2_source_id)
+    job = Gaia.launch_job_async(query)
+    results = job.get_results()
+    return results['dr3_source_id'].value[0]
+
+
+def get_gaia_dr3_plx(dr3_source_id):
+    query = "SELECT * FROM gaiadr3.gaia_source WHERE source_id = "+str(dr3_source_id)
+    job = Gaia.launch_job_async(query)
+    results = job.get_results()
+    return results['parallax'].value[0], results['parallax_error'].value[0]
+dr2dr3(381592313648387200),get_gaia_dr3_plx(381592313648387200)
+
+```
+
+
+
 ### standardize tepcat name (pstable)
 ```Python
 
