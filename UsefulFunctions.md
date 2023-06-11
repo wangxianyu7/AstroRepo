@@ -1,3 +1,47 @@
+### standardize tepcat name (pstable)
+```Python
+
+obliquity = pd.read_csv('obliquity_2023-06-09.csv', skiprows=[1,2])
+names = obliquity['System']
+names = list(set(list(names)))
+names = [x.replace('_',' ') for x in names]
+standardnames = []
+for name in names:
+    isSpace = False
+    numstrs = name.split('-')
+    if len(numstrs)<2:
+        numstrs = name.split(' ')
+        isSpace = True
+    haszerostr= ''
+    for i, numstr in enumerate(numstrs):
+        while numstr[0] == '0':
+            numstr = numstr[1:]
+            haszero = i
+            haszerostr = numstr
+            numstrs[i] = haszerostr
+    # print(numstrs, haszerostr)
+    if isSpace:
+        sep = ' '
+    else:
+        sep = '-'
+    newname = sep.join(numstrs)
+    
+    if name[-1].isalpha():
+        newname = newname.strip(name[-1])
+    standardnames.append(newname.strip())
+# find and replcae the names
+ob_names = ['KELT-19','Kepler-89','Kepler-448','WASP-30','WASP-134','WASP-180','WASP-109','XO-2','Kepler-420','K2-93','WASP-111','K2-267','WASP-85','pi Men','Kepler-13','K2-234','TOI-1937','WASP-94','DS Tu']
+ps_name = ['KELT-19 A','KOI-94','KOI-12','WASP-30','WASP-134','WASP-180 A','WASP-109','XO-2 N','KOI-1257','HIP 41378','WASP-111','EPIC 246851721','WASP-85 A','HD 39091','KOI-13','HD 89345','TOI-1937 A','WASP-94 A','DS Tuc A']
+
+for i in range(len(ob_names)):
+    try:
+        standardnames[standardnames.index(ob_names[i])] = ps_name[i]
+    except:
+        print(ob_names[i], 'not found')
+```
+
+
+
 ### measure stellar rotation period 
 #### Wavelet
 ```Python
