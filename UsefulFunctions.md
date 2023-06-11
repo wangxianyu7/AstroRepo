@@ -974,6 +974,12 @@ else:
     print('downloading '+dated_name)
     with open(dated_name, 'w') as f:
         print(data, file=f)
+	
+	
+toi_table = pd.read_csv('toi_'+date+'.csv', comment='#')
+pstable = pd.read_csv('pstable_'+date+'.csv', comment='#')
+obliquity_table = pd.read_csv('obliquity_'+date+'.csv', comment='#')
+
 ```
 
 ### GPT prompt for midjourney
