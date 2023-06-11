@@ -921,13 +921,13 @@ def get_model(x_lin, rr, rsuma, cosi, epoch, period, f_c, f_s, vsini, lambda_, q
 ```
 ### get public data
 ```Python
-
+import os
+import time
 import requests
 # download the obliquity data from the website
 target_url = 'https://exofop.ipac.caltech.edu/tess/download_toi.php?sort=toi&output=csv'
 response = requests.get(target_url)
 data = response.text
-
 name = 'toi.csv'
 date = time.strftime("%Y-%m-%d", time.localtime())
 dated_name = 'toi_'+date+'.csv'
