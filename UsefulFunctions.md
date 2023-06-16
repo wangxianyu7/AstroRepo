@@ -1,3 +1,12 @@
+### ps2pdf
+
+```
+find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
+find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
+
+```
+
+
 ### Gaia fucntion
 
 
