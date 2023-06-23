@@ -1,3 +1,12 @@
+
+### del all
+
+
+
+```Python
+find . -name "*.idl" -type f -delete
+
+```
 ### ps2pdf
 
 ```
