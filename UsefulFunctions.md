@@ -1,3 +1,21 @@
+### agreement
+
+```Python
+
+import numpy as np
+
+def calculate_agreement(value1, value_lerr1, value_uerr1, value2, value_lerr2, value_uerr2):
+    if value1 > value2:
+        result = (value1 - value2) / np.hypot(value_lerr1, value_uerr2)
+    else:
+        result = (value2 - value1) / np.hypot(value_uerr1, value_lerr2)
+    agreement = round(result, 2)
+    return agreement
+
+
+calculate_agreement(1,0.01,0.01,1,0.01,0.01)
+```
+
 
 ### del all
 
