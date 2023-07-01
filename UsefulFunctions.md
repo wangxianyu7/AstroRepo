@@ -1,3 +1,69 @@
+### get ecc from rho_obs and rho_circ
+
+```Python
+import pymc3 as pm
+import theano.tensor as tt
+import numpy as np
+import matplotlib.pyplot as plt
+import astropy.units as u
+import exoplanet as xo
+from exoplanet_core.pymc import ops
+import arviz as az
+import pymc3_ext as pmx
+import aesara_theano_fallback.tensor as tt
+import pymc3 as pm
+from celerite2.theano import terms, GaussianProcess
+import pandas as pd
+from fastprogress import fastprogress
+fastprogress.printing = lambda: True
+import corner
+
+
+
+rho_star_observations = np.random.normal(0.435, 0.067, 1000)
+rho_cir_observations = np.random.normal(0.059, 0.01, 1000)
+
+with pm.Model() as model:
+
+    ecs = pmx.UnitDisk("ecs", shape=(2, 1), testval=0.01 * np.ones((2, 1)))
+    ecc = pm.Deterministic("ecc", tt.sum(ecs**2, axis=0))
+    w = pm.Deterministic("omega", tt.arctan2(ecs[1], ecs[0]))
+    xo.eccentricity.kipping13(
+        "ecc_prior",  fixed=True, observed=ecc
+    )   
+    sinw = tt.sin(w)
+    g = (1 + ecc*sinw) / tt.sqrt(1 - ecc**2)
+    rho_star_model = g**(-3) * rho_cir_observations
+    obs = pm.Normal('obs', mu=rho_star_model, sd=0.1, observed=rho_star_observations)
+    trace = pm.sample(1000, tune=1000, cores=2, chains=2, target_accept=0.99)
+e = trace['ecc']
+w = trace['omega']
+sqrt_e_sinw = np.sqrt(e) * np.sin(w)
+sqrt_e_cosw = np.sqrt(e) * np.cos(w)
+
+
+data = np.hstack([sqrt_e_cosw, sqrt_e_sinw])
+figure = corner.corner(
+    data,
+    labels=[
+        r"$\sqrt{e} \cos \omega$",
+        r"$\sqrt{e} \sin \omega$",
+    ],
+    quantiles=[0.16, 0.5, 0.84],
+    show_titles=True,
+    title_kwargs={"fontsize": 12},
+)
+
+q50, q16, q84 = np.percentile(trace['ecc'], [50, 16, 84])
+uerr, lerr = q84-q50, q50-q16
+q50, q16, q84
+print('ecc = {0:.3f} +{1:.3f} -{2:.3f}'.format(q50, uerr, lerr))
+
+
+
+```
+
+
 ### agreement
 
 ```Python
