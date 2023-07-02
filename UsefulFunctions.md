@@ -1,3 +1,14 @@
+### fast bin pandas
+```Python
+import pandas as pd
+
+def bin_lightcurve_fast(times, fluxes, flux_errs, time_bin_size):
+    df = pd.DataFrame({'time': times, 'flux': fluxes, 'flux_err': flux_errs})
+    bin_labels = (df['time'] / time_bin_size).astype(int)
+    binned_df = df.groupby(bin_labels).mean()
+    return binned_df['time'].values, binned_df['flux'].values, binned_df['flux_err'].values
+```
+
 ### get ecc from rho_obs and rho_circ
 
 ```Python
