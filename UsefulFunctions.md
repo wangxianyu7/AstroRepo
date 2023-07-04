@@ -1,3 +1,125 @@
+
+### download TESS lc (fast)
+
+
+```Python
+# %%
+
+import os
+import time
+import requests
+import pandas as pd
+import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+plt.rcParams['font.family'] = 'DeJavu Serif'
+plt.rcParams['font.serif'] = ['Times New Roman']
+import os
+import pandas as pd
+import lightkurve as lk
+import numpy as np
+import os
+
+
+# download the obliquity data from the website
+target_url = 'https://exofop.ipac.caltech.edu/tess/download_toi.php?sort=toi&output=csv'
+response = requests.get(target_url)
+data = response.text
+name = 'toi.csv'
+date = time.strftime("%Y-%m-%d", time.localtime())
+dated_name = 'toi_'+date+'.csv'
+# check if the file exists
+if os.path.exists(dated_name):
+    print(dated_name+' exists')
+else:
+    print('downloading '+dated_name)
+    with open(dated_name, 'w') as f:
+        print(data, file=f)
+
+def get_period(toi,dated_name):
+    toi_table = pd.read_csv(dated_name, comment='#')
+    tois = toi_table['TOI'].values
+    periods = toi_table['Period (days)'].values
+    tic_ids = toi_table['TIC ID'].values
+    toi = float(toi)
+    period = periods[tois==toi][0]
+    tic_id = tic_ids[tois==toi][0]
+    return period,tic_id
+
+def bin_lightcurve_fast(times, fluxes, flux_errs, time_bin_size):
+    df = pd.DataFrame({'time': times, 'flux': fluxes, 'flux_err': flux_errs})
+    bin_labels = (df['time'] / time_bin_size).astype(int)
+    binned_df = df.groupby(bin_labels).mean()
+    return binned_df['time'].values, binned_df['flux'].values, binned_df['flux_err'].values
+
+
+
+
+# %%
+good_wjs = '''121.01  173.01  201.01  292.01  296.01  316.01  327.01  334.01  345.01   352.01  365.01  450.01  481.01  527.01  558.01  573.01  671.01  677.01   679.01  681.01  746.01  758.01  760.01  768.01  811.01  812.01  830.01   850.01  892.01  899.01  902.01  917.01  919.01  924.01  933.01  943.01   948.01  963.01  978.01 1058.01 1119.01 1176.01 1186.01 1232.01 1274.01  1312.01 1366.01 1406.01 1433.01 1456.01 1478.01 1642.01 1670.01 1708.01  1755.01 1764.01 1825.01 1849.01 1859.01 1874.01 1875.01 1879.01 1890.01  1897.01 1898.01 1899.01 1938.01 1958.01 1963.01 1982.01 1985.01 2005.01  2032.01 2033.01 2137.01 2145.01 2147.01 2159.01 2179.01 2202.01 2251.01  2255.01 2271.01'''
+good_wjs = good_wjs.split(' ')
+# remove the empty string
+good_wjs = [good_wj for good_wj in good_wjs if good_wj != '']
+good_wjs = [float(good_wj) for good_wj in good_wjs]
+good_wjs = np.array(good_wjs)
+good_wjs
+
+
+
+def get_lc(toi_id):
+    print('working on ',toi_id)
+    toi_id = str(toi_id)
+    
+
+    if os.path.exists(toi_id+'.txt'):
+        times, fluxes, fluxes_err = np.loadtxt(toi_id+'.txt',unpack=True,delimiter=',')
+    else:
+        period, tic_id = get_period(toi_id,dated_name)
+        lcs = lk.search_lightcurve('TIC '+str(tic_id), mission='TESS')
+        print('TIC '+str(tic_id))
+        sector_uniq = np.unique(lcs.table['mission'], return_index=True)[0].tolist()
+
+        try:
+            sector_uniq.remove('TESS Sector ')
+        except:
+            pass
+
+        author_list = ['SPOC', 'TESS-SPOC', 'QLP']
+        times = np.asarray([]); fluxes = np.asarray([]); fluxes_err = np.asarray([])
+        for sector in sector_uniq:
+            lcs_tmp = lcs[lcs.table['mission'] == sector]
+            for author in author_list:
+                lc = lcs_tmp[lcs_tmp.author == author]
+                print(sector, author, len(lc))
+                try:
+                    lc = lc.download().normalize().bin(10/60/24)
+                except:
+                    continue
+                time = lc.time.value; flux = lc.flux.value; flux_err = lc.flux_err.value
+                times = np.append(times, time); fluxes = np.append(fluxes, flux); fluxes_err = np.append(fluxes_err, flux_err)
+                if len(lc) > 0:
+                    break
+        no_nan = np.isfinite(times) & np.isfinite(fluxes) & np.isfinite(fluxes_err)
+        times = times[no_nan]; fluxes = fluxes[no_nan]; fluxes_err = fluxes_err[no_nan]
+        np.savetxt(toi_id+'.txt', np.transpose([times, fluxes, fluxes_err]), delimiter=',', header='time,flux,flux_err', fmt='%.7f')
+    time, flux,flux_err = np.loadtxt(toi_id+'.txt',delimiter=',',unpack=True)
+    time, flux, flux_err = bin_lightcurve_fast(time, flux, flux_err, 10/60/24)
+    
+    
+
+import multiprocessing as mp
+
+
+if __name__ == "__main__":
+    with mp.Pool(processes=mp.cpu_count()) as pool:
+        results = pool.map_async(get_lc, good_wjs)
+        results = results.get() # to fetch the results of computation
+
+
+```
+
+
+
 ### fast bin pandas
 ```Python
 import pandas as pd
