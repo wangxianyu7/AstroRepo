@@ -1,3 +1,24 @@
+### Calc Stellar Velocity V
+```Python
+import astropy.units as u   
+import astropy.constants as c
+import uncertainties as unc
+
+period = unc.ufloat(9.7666105,9.766610/10)
+
+st_rad = unc.ufloat(1.47,0.017)
+vrot = 2*np.pi*st_rad/period
+
+# vrot.to(u.km/u.s)
+
+n = vrot.n; s = vrot.s
+
+(n*c.R_sun/u.day).to(u.km/u.s), (s*c.R_sun/u.day).to(u.km/u.s)
+
+
+```
+
+
 ### get stellar inc
 
 ```python
