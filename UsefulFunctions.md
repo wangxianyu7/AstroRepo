@@ -35,20 +35,12 @@ with pm.Model() as model:
     pm.Normal('likelihood_vsini', mu=vu, sd=vsini_err, observed=vsini_obs)
     trace = pm.sample(2000, tune=2000, chains=2, cores=2, target_accept=0.999)
 
-# 求解结果
+
 import arviz as az
-# style
 az.style.use('arviz-darkgrid')
-# az plot
-
-
 az.plot_trace(trace, var_names=['R', 'Prot', 'cos_i', 'sin_i_squared', 'sin_i', 'inc'])
 
 pm.summary(trace, var_names=['R', 'Prot', 'cos_i', 'sin_i_squared', 'sin_i', 'inc'])
-
-# 求解结果
-# pm.plot_trace(trace, var_names=['R', 'Prot', 'cos_i', 'sin_i_squared'])
-# pm.summary(trace, var_names=['R', 'Prot', 'cos_i', 'sin_i_squared'])
 
 
 
