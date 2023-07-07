@@ -141,11 +141,19 @@ def get_period(toi,dated_name):
     tic_id = tic_ids[tois==toi][0]
     return period,tic_id
 
+import numpy as np
+import pandas as pd
+
 def bin_lightcurve_fast(times, fluxes, flux_errs, time_bin_size):
     df = pd.DataFrame({'time': times, 'flux': fluxes, 'flux_err': flux_errs})
     bin_labels = (df['time'] / time_bin_size).astype(int)
-    binned_df = df.groupby(bin_labels).mean()
+    binned_df = df.groupby(bin_labels).agg({
+        'time': 'mean',
+        'flux': 'mean',
+        'flux_err': lambda x: np.sqrt(np.sum(np.square(x)))  # Compute the square root of the sum of squares for the flux errors
+    })
     return binned_df['time'].values, binned_df['flux'].values, binned_df['flux_err'].values
+
 
 
 
