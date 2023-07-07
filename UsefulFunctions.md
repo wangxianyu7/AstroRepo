@@ -1,3 +1,25 @@
+### get psi
+```Python
+import numpy as np
+st_inc = simulate_PDF(89.4,24.5,24.5,1000)
+pl_inc = simulate_PDF(87.297,0.553,0.443,1000)
+lambda_ = simulate_PDF(4,11,10,1000)
+cos_psi = np.cos(np.deg2rad(st_inc))*np.cos(np.deg2rad(pl_inc)) + np.sin(np.deg2rad(st_inc))*np.sin(np.deg2rad(pl_inc))*np.cos(np.deg2rad(lambda_))
+psi = np.rad2deg(np.arccos(cos_psi))
+
+
+q50, q16, q84 = np.percentile(psi, [50, 16, 84])
+lerr, uerr= q50-q16, q84-q50
+
+# .2f
+print('psi = %.2f +%.2f -%.2f'%(q50,lerr,uerr))
+# latex format
+print('psi = $%.2f^{+%.2f}_{-%.2f}$'%(q50,lerr,uerr))
+
+```
+
+
+
 ### Calc Stellar Velocity V
 ```Python
 import astropy.units as u   
