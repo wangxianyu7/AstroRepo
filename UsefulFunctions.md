@@ -30,7 +30,7 @@ import theano.tensor as tt
 
 sol_radius_km = 696340  
 day_to_sec = 24 * 60 * 60 
-R_obs, Rerr_obs, Prot_obs, Prot_err, vsini_obs, vsini_err = 1.51, 0.075, 6.63, 1, 6.9, 0.5
+R_obs, Rerr_obs, Prot_obs, Prot_err, vsini_obs, vsini_err = 1.47, 0.017, 9.77, 0.98, 7.6, 1.3
 
 
 R_obs, Rerr_obs = R_obs * sol_radius_km, Rerr_obs * sol_radius_km
@@ -40,13 +40,14 @@ Prot_obs, Prot_err = Prot_obs * day_to_sec, Prot_err * day_to_sec
 with pm.Model() as model:
     R = pm.Normal('R', mu=R_obs, sd=Rerr_obs) 
     Prot = pm.Normal('Prot', mu=Prot_obs, sd=Prot_err)
-    cos_i = pm.Uniform('cos_i', lower=0, upper=1) 
+    inc_rad = pm.Uniform('inc_rad', lower=0, upper=np.pi)  # inc in radians
+    cos_i = pm.Deterministic('cos_i', tt.cos(inc_rad))
     
     u = pm.Deterministic('u', tt.sqrt(1 - cos_i**2))
     sin_i_squared = pm.Deterministic('sin_i_squared', 1 - cos_i**2)
     sin_i = pm.Deterministic('sin_i',tt.sqrt(sin_i_squared))
     
-    inc = pm.Deterministic('inc', tt.arccos(cos_i) * (180 / np.pi))
+    inc = pm.Deterministic('inc', inc_rad * (180 / np.pi))  # convert radians to degrees
 
     v = 2*np.pi*R/Prot
     vu = v * u
@@ -62,6 +63,7 @@ az.style.use('arviz-darkgrid')
 az.plot_trace(trace, var_names=['R', 'Prot', 'cos_i', 'sin_i_squared', 'sin_i', 'inc'])
 
 pm.summary(trace, var_names=['R', 'Prot', 'cos_i', 'sin_i_squared', 'sin_i', 'inc'])
+
 
 
 
