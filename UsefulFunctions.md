@@ -1,3 +1,41 @@
+### get TIC
+
+```Python
+from astroquery.simbad import Simbad
+
+def get_tic_ids(star_names):
+    # add the 'ids' field to the SIMBAD query object to retrieve identifiers
+    Simbad.add_votable_fields('ids')
+
+    # dictionary to hold results
+    results = {}
+
+    for name in star_names:
+        # query SIMBAD for the star
+        result_table = Simbad.query_object(name)
+        
+        # find TIC ID among identifiers, if it exists
+        ids = result_table['IDS'][0].split('|')
+        tic_ids = [i for i in ids if 'TIC' in i]
+        
+        if tic_ids:
+            # if there is a TIC ID, add it to the results
+            results[name] = tic_ids[0]
+        else:
+            # otherwise, note that no TIC ID was found
+            results[name] = 'No TIC ID found'
+
+    return results
+
+# your list of star names
+star_names = ["AU Mic", "Beta PIC", "CoRoT-2", "CoRoT-3", "CoRoT-11", "CoRoT-18"]
+
+tic_ids = get_tic_ids(star_names)
+print(tic_ids)
+
+```
+
+
 ### get psi
 ```Python
 import numpy as np
