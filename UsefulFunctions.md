@@ -1,3 +1,13 @@
+### Common Linux command
+
+```
+find . -name "*.idl" -type f -delete
+find . -type f -name '*.txt' -exec rm {} \;
+find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
+find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
+
+```
+
 ### get TIC
 
 ```Python
@@ -360,21 +370,8 @@ calculate_agreement(1,0.01,0.01,1,0.01,0.01)
 ```
 
 
-### del all
 
 
-
-```Python
-find . -name "*.idl" -type f -delete
-
-```
-### ps2pdf
-
-```
-find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
-find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
-
-```
 
 
 ### Gaia fucntion
