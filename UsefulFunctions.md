@@ -8,6 +8,53 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+
+### Get RM from PyAstronomy
+
+
+```Python
+# Import some unrelated modules
+from numpy import arange, pi, random
+import matplotlib.pylab as plt
+import astropy.constants as const
+import astropy.units as u
+from PyAstronomy import modelSuite as ms
+rmcl = ms.RmcL_Hirano()
+
+
+
+def get_rm(time,rr,ar,period,t0,inc,st_rad,vsini,u1,u2):
+    t0 = t0-period/2
+    st_r_m = st_rad*(const.R_sun.to(u.m)).value
+    Omega = -vsini*1000/st_r_m
+    rmcl.assignValue({"a": ar, "lambda": lambda_r, 
+                      "P": period, "T0": t0, "i": inc,
+                      "Is": 90/180*np.pi  , "Omega": Omega, "gamma": rr, "linLimb": u1, "quadLimb": u2, "vbeta": 0, "vSurf": vsini})
+    rv = rmcl.evaluate(time)
+    return rv*st_r_m/1000
+
+
+a_r = 16.7
+lambda_r = 0/180.0*pi
+period = 9.457
+t0 = 0
+inc = 87.8/180.*pi
+st_rad = 1.0  
+rr = 0.05  
+u1 = 0.3 
+u2 = 0.2  
+vsini = 9.5 
+
+time = np.linspace(-1, 2, 10000)
+
+
+rm = get_rm(time,rr,a_r,period,t0,inc,st_rad,vsini,u1,u2)
+
+plt.plot(time, rm)
+plt.xlim(-0.2, 0.2)
+
+```
+
 ### get TIC
 
 ```Python
