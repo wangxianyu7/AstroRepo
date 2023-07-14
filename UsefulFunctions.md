@@ -1,6 +1,8 @@
 ### Common Linux command
 
 ```
+rsync -av --max-size=500k a/ b/
+
 find . -name "*.idl" -type f -delete
 find . -type f -name '*.txt' -exec rm {} \;
 find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
