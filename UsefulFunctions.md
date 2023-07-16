@@ -10,6 +10,39 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+### get CoRoT :C
+
+```Python
+# http://idoc-corot.ias.u-psud.fr/sitools/client-user/COROT_N2_PUBLIC_DATA/project-index.html
+# HJD
+import astropy.io.fits as fits
+from astropy.io import fits
+import numpy as np
+
+data = fits.open('/Users/wangxianyu/Downloads/Downloads/EN2_STAR_CHR_0315211361_20100305T001525_20100329T065610.fits')
+datett = data[1].data['DATETT']
+flux = data[1].data['WHITEFLUX']
+datett = data[1].data['DATEBARTT']+2400000
+flux = data[1].data['WHITEFLUX']/np.median(data[1].data['WHITEFLUX'])
+flux_err =  0.003+0*flux
+
+
+idx = (flux > 0.95) & (flux < 1.05)
+datett = datett[idx]; flux = flux[idx]; flux_err = flux_err[idx]
+
+datett = np.round(datett, 7); flux = np.round(flux, 7); flux_err = np.round(flux_err, 7)
+
+col1 = fits.Column(name='TIME', array=datett, format='D')
+col2 = fits.Column(name='FLUX', array=flux, format='D')
+col3 = fits.Column(name='FLUX_ERR', array=flux_err, format='D')
+cols = fits.ColDefs([col1, col2, col3])
+hdu = fits.BinTableHDU.from_columns(cols)
+hdu.writeto('CoRoT-18_6.fits', overwrite=True)
+plt.scatter(datett, flux/np.median(flux), s=0.1)
+plt.axvline(2455260.925, color='r')
+plt.xlim(datett[0], datett[0]+1)
+```
+
 
 ### Get RM from PyAstronomy
 
