@@ -16,13 +16,12 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 import astropy.io.fits as fits
 from astropy.io import fits
 import numpy as np
-name = 'Kepler-63'
+name = 'Kepler-89'
 lcs = lk.search_lightcurve(name, cadence='long', mission='Kepler')
 
 for lc in lcs:
     try:
         mission = lc.mission[0].strip('Kepler Quarter ')
-        print(mission)
         lc = lc.download()
         time = lc.time.value; flux = lc.flux.value; flux_err = lc.flux_err.value
         datett = np.round(time, 7); flux = np.round(flux, 7); flux_err = np.round(flux_err, 7)
@@ -32,10 +31,10 @@ for lc in lcs:
         cols = fits.ColDefs([col1, col2, col3])
         hdu = fits.BinTableHDU.from_columns(cols)
         hdu.writeto(name+'_'+str(mission)+'.fits', overwrite=True)
-        print(name+'_'+str(mission)+'.fits')
+        print(name+'_'+str(mission)+'.fits saved (long)')
     except:
         pass
-name = 'Kepler-63'
+# name = 'Kepler-63'
 lcs = lk.search_lightcurve(name, cadence='short', mission='Kepler')
 unique_mission = np.unique(lcs.table['mission'])
 for mission in unique_mission:
@@ -55,7 +54,7 @@ for mission in unique_mission:
         cols = fits.ColDefs([col1, col2, col3])
         hdu = fits.BinTableHDU.from_columns(cols)
         hdu.writeto(name+'_'+str(mission)+'.fits', overwrite=True)
-        print(name+'_'+str(mission)+'.fits saved')
+        print(name+'_'+str(mission)+'.fits saved (short)')
     except:
         pass
 ```
