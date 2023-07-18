@@ -10,13 +10,14 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
-### tic to dr2 to dr3
+### tic to dr2 to dr3 / get Gaia stellar pars
 
 
 ```python
 from astroquery.vizier import Vizier
 import astropy.units as u
 import numpy as np
+from astroquery.gaia import Gaia
 
 def get_gaia_dr2_id(tic_num):
     # Configure Vizier to retrieve all columns from the TIC catalog
@@ -36,10 +37,6 @@ def get_gaia_dr2_id(tic_num):
     gaia_dr2_id = qtic['GAIA']
     return gaia_dr2_id
 
-# Use the function
-tic_num = 441739020  # Replace with your TIC number
-gaia_dr2_id = get_gaia_dr2_id(tic_num)
-print(gaia_dr2_id)
 
 from astroquery.gaia import Gaia
 
@@ -58,7 +55,32 @@ def dr2_to_dr3(dr2_id):
     return dr3_id
 
 
-dr3_id = dr2_to_dr3('5969922907049506176')
+def get_star_parameters(gaia_dr3_id):
+    # Run the query
+    job = Gaia.launch_job_async("SELECT * FROM gaiadr3.astrophysical_parameters WHERE source_id={}".format(gaia_dr3_id))
+    result = job.get_results()
+    # Return the results
+    return result
+
+tic_num = 441739020  # Replace with your TIC number
+gaia_dr2_id = get_gaia_dr2_id(tic_num)
+dr3_id = dr2_to_dr3(gaia_dr2_id)
+star_parameters = get_star_parameters(dr3_id)  
+mass_flame = star_parameters['mass_flame'][0];mass_flame_lower = star_parameters['mass_flame_lower'][0];mass_flame_upper = star_parameters['mass_flame_upper'][0]
+mass_flame_uerr, mass_flame_lerr = mass_flame_upper - mass_flame, mass_flame - mass_flame_lower
+radius_flame = star_parameters['radius_flame'][0];radius_flame_lower = star_parameters['radius_flame_lower'][0];radius_flame_upper = star_parameters['radius_flame_upper'][0]
+radius_flame_uerr, radius_flame_lerr = radius_flame_upper - radius_flame, radius_flame - radius_flame_lower
+age_flame = star_parameters['age_flame'][0];age_flame_lower = star_parameters['age_flame_lower'][0];age_flame_upper = star_parameters['age_flame_upper'][0]
+age_flame_uerr, age_flame_lerr = age_flame_upper - age_flame, age_flame - age_flame_lower
+teff_gspspec = star_parameters['teff_gspspec'][0];teff_gspspec_lower = star_parameters['teff_gspspec_lower'][0];teff_gspspec_upper = star_parameters['teff_gspspec_upper'][0]
+teff_gspspec_uerr, teff_gspspec_lerr = teff_gspspec_upper - teff_gspspec, teff_gspspec - teff_gspspec_lower
+logg_gspspec = star_parameters['logg_gspspec'][0];logg_gspspec_lower = star_parameters['logg_gspspec_lower'][0];logg_gspspec_upper = star_parameters['logg_gspspec_upper'][0]
+logg_gspspec_uerr, logg_gspspec_lerr = logg_gspspec_upper - logg_gspspec, logg_gspspec - logg_gspspec_lower
+mh_gspspec = star_parameters['mh_gspspec'][0];mh_gspspec_lower = star_parameters['mh_gspspec_lower'][0];mh_gspspec_upper = star_parameters['mh_gspspec_upper'][0]
+mh_gspspec_uerr, mh_gspspec_lerr = mh_gspspec_upper - mh_gspspec, mh_gspspec - mh_gspspec_lower
+print(mh_gspspec, mh_gspspec_uerr, mh_gspspec_lerr)
+
+
 
 
 ```
