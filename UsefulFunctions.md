@@ -9,6 +9,67 @@ find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
 find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
+
+### get Filtered WJs candidates (Need to mark confirmed manually)
+
+```Python
+import pandas as pd
+ 
+toi = pd.read_csv(dated_name, comment='#')
+
+# toi = toi.query(' TESS_Mag < 13.5')
+
+toi = toi[toi['TESS Mag'] < 13.5]
+toi = toi[toi['Planet Radius (R_Earth)'] > 11.208981*0.8]
+
+
+
+st_mass = toi['Stellar Mass (M_Sun)'].values
+period = toi['Period (days)'].values
+
+
+
+
+period = period*u.day
+st_mass = st_mass*u.Msun
+
+a = (period**2 * c.G * st_mass / (4*np.pi**2))**(1/3)
+a = a.to(u.AU)
+a_r = a/(toi['Stellar Radius (R_Sun)'].values*u.Rsun)
+a_r = a_r.to('')
+toi = toi[a_r>12]
+
+np.unique(toi['TESS Disposition'].values,return_counts=True)
+
+
+# toi = toi[(toi['TFOPWG Disposition'] == 'CP') or (toi['TFOPWG Disposition'] == 'PC')]
+toi = toi[(toi['TFOPWG Disposition'] == 'CP' ) | (toi['TFOPWG Disposition'] == 'PC') | (toi['TFOPWG Disposition'] == 'APC')]
+toi = toi[(toi['TESS Disposition'] == 'CP' ) | (toi['TESS Disposition'] == 'PC') ]
+
+toi = toi[toi['Period (days)']<100]
+
+
+
+# if Comments has EB and V-shape; remove
+idx = []
+for i in range(len(toi)):
+    # if 'eb' in  str(toi['Comments'].values[i]).lower() or 'v-shape' in str(toi['Comments'].values[i]).lower() or 'found in faint-star' in str(toi['Comments'].values[i]).lower():
+    if 'eb' in  str(toi['Comments'].values[i]).lower() or 'sb' in  str(toi['Comments'].values[i]).lower() or 'v-shape' in str(toi['Comments'].values[i]).lower():
+        pass
+    else:
+        # print(i)
+        idx.append(i)
+        pass
+    
+    
+toi = toi.iloc[idx]
+
+toi.to_csv('toi.csv',index=False)
+
+
+```
+
+
 ### get K2
 
 ```Python
