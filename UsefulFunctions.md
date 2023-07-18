@@ -10,6 +10,27 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+### get files with certain suffix
+
+```Python
+import os
+
+def find_files(path, suffix):
+    files_found = []
+    
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            if file.endswith(suffix):
+                file_path = os.path.join(root, file)
+                files_found.append(file_path)
+                
+    return files_found
+
+path = 
+
+```
+
+
 ### get Filtered WJs candidates (Need to mark confirmed manually)
 
 ```Python
