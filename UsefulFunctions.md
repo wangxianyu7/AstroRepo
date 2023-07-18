@@ -10,6 +10,61 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+### tic to dr2 to dr3
+
+
+```python
+from astroquery.vizier import Vizier
+import astropy.units as u
+import numpy as np
+
+def get_gaia_dr2_id(tic_num):
+    # Configure Vizier to retrieve all columns from the TIC catalog
+    v = Vizier(columns=["**"], catalog=["IV/39/tic82"])
+
+    # Query the catalog for the object with the given TIC number
+    result = v.query_object("TIC "+str(tic_num), radius=0.0001*u.deg)
+
+    # Get the table of results
+    tic_table = result[0]
+
+    # Find the row with the closest TIC number
+    idx_tic = np.argmin(np.abs(tic_table['TIC'] - tic_num))
+    qtic = tic_table[idx_tic]
+
+    # Extract and return the Gaia DR2 ID
+    gaia_dr2_id = qtic['GAIA']
+    return gaia_dr2_id
+
+# Use the function
+tic_num = 441739020  # Replace with your TIC number
+gaia_dr2_id = get_gaia_dr2_id(tic_num)
+print(gaia_dr2_id)
+
+from astroquery.gaia import Gaia
+
+def dr2_to_dr3(dr2_id):
+    # Define the ADQL query
+    query = f"SELECT * FROM gaiadr3.dr2_neighbourhood WHERE dr2_source_id={dr2_id}"
+
+    # Execute the query
+    job = Gaia.launch_job_async(query)
+    result = job.get_results()
+
+    # Extract and return the Gaia DR3 ID
+    # Note: This assumes that there is only one matching entry in the Gaia DR3 catalog.
+    # If there might be multiple matches, you would need to add some logic to handle that.
+    dr3_id = result['dr3_source_id'][0]
+    return dr3_id
+
+
+dr3_id = dr2_to_dr3('5969922907049506176')
+
+
+```
+
+
+
 ### get files with certain suffix
 
 ```Python
