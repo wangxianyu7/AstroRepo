@@ -10,6 +10,21 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+
+### make fits
+```Python
+def mkfits(time, flux, flux_err, path):
+    time = np.round(time, 7); flux = np.round(flux, 7); flux_err = np.round(flux_err, 7)
+    col1 = fits.Column(name='TIME', array=time, format='D')
+    col2 = fits.Column(name='FLUX', array=flux, format='D')
+    col3 = fits.Column(name='FLUX_ERR', array=flux_err, format='D')
+    cols = fits.ColDefs([col1, col2, col3])
+    hdu = fits.BinTableHDU.from_columns(cols)
+    hdu.writeto(path, overwrite=True)
+    
+```
+
+
 ### tic to dr2 to dr3 / get Gaia stellar pars
 
 
