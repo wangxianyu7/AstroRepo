@@ -106,19 +106,23 @@ print(mh_gspspec, mh_gspspec_uerr, mh_gspspec_lerr)
 
 ```Python
 import os
+import re
 
-def find_files(path, suffix):
+def find_files(path, pattern):
     files_found = []
     
     for root, dirs, files in os.walk(path):
         for file in files:
-            if file.endswith(suffix):
+            if re.search(pattern, file):
                 file_path = os.path.join(root, file)
                 files_found.append(file_path)
                 
     return files_found
 
-path = 
+path = "."  # Use your path
+pattern = "TOI-2025.*\.csv$"  # Use your regex
+print(find_files(path, pattern))
+
 
 ```
 
