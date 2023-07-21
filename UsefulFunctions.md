@@ -3,6 +3,8 @@
 ```
 rsync -av --max-size=500k a/ b/
 
+
+grep -v 'nan' input.txt > output.txt # remove nan
 find . -name "*.idl" -type f -delete
 find . -type f -name '*.txt' -exec rm {} \;
 find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
