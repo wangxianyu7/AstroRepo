@@ -12,6 +12,52 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+### find boundary and calc the difference
+```Python
+
+import numpy as np
+import matplotlib.pyplot as plt
+np.random.seed(0)
+teff = np.random.normal(6200, 100, 100)
+lambda_ = np.random.uniform(0, 180, 100) * (teff > 6300)
+lambda_ += np.random.normal(0, 8, 100)* (teff <= 6300)
+
+with pm.Model() as model:
+    # t = pm.Normal('t', mu=6500., sigma=250.)
+    t = pm.Uniform('t', lower=teff.min(), upper=teff.max(), testval=6250.)
+    
+    mu_high = pm.Normal('mu_high', mu=0., sigma=10.)
+    sigma_high = pm.HalfNormal('sigma_high', sigma=10.)
+    mu_low = pm.Normal('mu_low', mu=0., sigma=10.)
+    sigma_low = pm.HalfNormal('sigma_low', sigma=10.)
+
+    weight = pm.math.sigmoid(teff - t)
+
+    mu_ = weight * mu_high + (1 - weight) * mu_low
+    sigma_ = weight * sigma_high + (1 - weight) * sigma_low
+
+    likelihood = pm.Normal('likelihood', mu=mu_, sigma=sigma_, observed=lambda_)
+
+    testval = pm.find_MAP(model=model)
+    trace = pm.sample(tune=4000, draws=4000, chains=2, cores=2, random_seed=0, return_inferencedata=True, target_accept=0.999, start=testval)
+
+az.style.use('arviz-darkgrid')
+az.plot_trace(trace, var_names=['t', 'mu_high', 'sigma_high', 'mu_low', 'sigma_low'])
+mu_high = trace.posterior['mu_high'].values.flatten()
+mu_low = trace.posterior['mu_low'].values.flatten()
+
+median1 = np.median(mu_high)
+median2 = np.median(mu_low)
+
+err = np.std(mu_high)
+err2 = np.std(mu_low)
+
+agreements = abs(median1 - median2) / np.sqrt(err**2 + err2**2)
+agreements
+```
+
+
+
 
 ### make fits
 ```Python
