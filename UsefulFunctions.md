@@ -503,6 +503,57 @@ n = vrot.n; s = vrot.s
 
 
 ```
+### get stellar inc (pymc version)
+
+```Python
+# https://www.pnas.org/doi/pdf/10.1073/pnas.2017418118 A backward-spinning star with two coplanar planets
+import pymc as pm
+import numpy as np
+import pytensor.tensor as tt
+
+
+sol_radius_km = 696340  
+day_to_sec = 24 * 60 * 60 
+R_obs, Rerr_obs, Prot_obs, Prot_err, vsini_obs, vsini_err = 1.338, 0.038, 9.34, 0.97, 10.2, 0.64
+
+
+R_obs, Rerr_obs = R_obs * sol_radius_km, Rerr_obs * sol_radius_km
+Prot_obs, Prot_err = Prot_obs * day_to_sec, Prot_err * day_to_sec
+
+
+with pm.Model() as model:
+    R = pm.Normal('R', mu=R_obs, sigma=Rerr_obs) 
+    Prot = pm.Normal('Prot', mu=Prot_obs, sigma=Prot_err)
+    inc_rad = pm.Uniform('inc_rad', lower=0, upper=np.pi)  # inc in radians
+    cos_i = pm.Deterministic('cos_i', tt.cos(inc_rad))
+    
+    u = pm.Deterministic('u', tt.sqrt(1 - cos_i**2))
+    sin_i_squared = pm.Deterministic('sin_i_squared', 1 - cos_i**2)
+    sin_i = pm.Deterministic('sin_i',tt.sqrt(sin_i_squared))
+    
+    inc = pm.Deterministic('inc', inc_rad * (180 / np.pi))  # convert radians to degrees
+
+    v = 2*np.pi*R/Prot
+    vu = v * u
+
+    pm.Normal('likelihood_R', mu=R, sigma=Rerr_obs, observed=R_obs)
+    pm.Normal('likelihood_Prot', mu=Prot, sigma=Prot_err, observed=Prot_obs)
+    pm.Normal('likelihood_vsini', mu=vu, sigma=vsini_err, observed=vsini_obs)
+    trace = pm.sample(2000, tune=2000, chains=2, cores=2, target_accept=0.999)
+
+
+import arviz as az
+az.style.use('arviz-darkgrid')
+az.plot_trace(trace, var_names=['R', 'Prot', 'cos_i', 'sin_i_squared', 'sin_i', 'inc'])
+
+pm.summary(trace, var_names=['R', 'Prot', 'cos_i', 'sin_i_squared', 'sin_i', 'inc'])
+
+
+
+
+
+```
+
 
 
 ### get stellar inc
