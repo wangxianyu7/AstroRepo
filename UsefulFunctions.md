@@ -12,6 +12,32 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+
+### RV Completeness Contours
+
+```Python
+# https://california-planet-search.github.io/rvsearch/tutorials/Completeness_Contours.html
+import os
+
+import numpy as np
+import pylab as pl
+
+import rvsearch
+from rvsearch.inject import Completeness
+from rvsearch.plots import CompletenessPlots
+
+recfile = os.path.join(rvsearch.DATADIR, 'recoveries.csv')
+
+comp = Completeness.from_csv(recfile, 'inj_au', 'inj_msini', mstar=1.1)
+xi, yi, zi = comp.completeness_grid(xlim=(0.05, 100), ylim=(1.0, 3e4), resolution=25)
+
+cp = CompletenessPlots(comp)
+fig = cp.completeness_plot(xlabel='$a$ [AU]', ylabel=r'M$\sin{i}$ [M$_{\oplus}$]')
+
+```
+
+
+
 ### find boundary and calc the difference
 ```Python
 
