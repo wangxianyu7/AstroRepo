@@ -13,6 +13,29 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 ```
 
 
+### get Av from Bayestar
+
+```Python
+
+# Example usage
+star_name = "K2-232"
+ra, dec, parallax, parallax_error = query_star_data(star_name)
+
+
+
+from astropy.coordinates import SkyCoord
+import astropy.units as u
+
+ra_deg = ra * u.deg
+dec_deg = dec * u.deg
+parallax_mas = parallax * u.mas
+distance = parallax_mas.to(u.pc, equivalencies=u.parallax())
+coords = SkyCoord(ra=ra_deg, dec=dec_deg, distance=distance)
+bayestar = BayestarQuery(max_samples=1)
+Av_bayestar = 2.742 * bayestar(coords)
+Av_bayestar
+```
+
 
 ### name to ra, dec, parallax
 
