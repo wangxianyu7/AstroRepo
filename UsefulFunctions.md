@@ -13,6 +13,55 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 ```
 
 
+
+### name to ra, dec, parallax
+
+```Python
+from astroquery.simbad import Simbad
+from astroquery.gaia import Gaia
+
+def query_star_data(star_name):
+    # Initialize Simbad and add Gaia DR3 to the fields
+    Simbad.add_votable_fields('ids')
+    
+    # Query Simbad by star name to get Gaia DR3 ID
+    result = Simbad.query_object(star_name)
+    ids = result['IDS'][0].split('|')
+    gaia_dr3_id = next((id for id in ids if 'Gaia DR3' in id), None)
+    
+    if not gaia_dr3_id:
+        print(f"No Gaia DR3 ID found for star {star_name}.")
+        return
+    
+    # Query the Gaia DR3 archive using the retrieved ID
+    query = f"""
+    SELECT ra, dec, parallax, parallax_error 
+    FROM gaiaedr3.gaia_source 
+    WHERE source_id = {gaia_dr3_id.split()[-1]}
+    """
+
+    job = Gaia.launch_job(query)
+    result = job.get_results()
+
+    # Extract and return the values
+    ra = result['ra'][0]
+    dec = result['dec'][0]
+    parallax = result['parallax'][0]
+    parallax_error = result['parallax_error'][0]
+
+    return ra, dec, parallax, parallax_error
+
+# Example usage
+star_name = "K2-232"
+ra, dec, parallax, parallax_error = query_star_data(star_name)
+print(f"RA: {ra} deg")
+print(f"Dec: {dec} deg")
+print(f"Parallax: {parallax} mas")
+print(f"Parallax Error: {parallax_error} mas")
+
+```
+
+
 ### RV Completeness Contours
 
 ```Python
