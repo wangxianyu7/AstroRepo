@@ -12,6 +12,25 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+### get dilution factor for TESS and TESS-SPOC
+
+```Python
+
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import lightkurve as lk
+name = 'WASP-148'
+import lightkurve as lk
+lcs= lk.search_lightcurvefile(name, mission='TESS')
+
+
+
+lc = lcs[3].download()
+lc.meta['CROWDSAP'],lcs
+```
+
 
 ### get Av from Bayestar
 
