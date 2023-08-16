@@ -11,6 +11,47 @@ find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
 find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
+### sub sub spec grid
+
+```Python
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+
+fig = plt.figure(figsize=(10, 8))
+grid_spec = gridspec.GridSpec(2, 2, figure=fig)
+
+subgrid_spec = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=grid_spec[0, 0], hspace=0, height_ratios=[2, 1])
+ax1 = plt.subplot(subgrid_spec[0, 0])
+ax2 = plt.subplot(subgrid_spec[1, 0], sharex=ax1)
+ax1.set_xticklabels([])
+
+
+subgrid_spec = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=grid_spec[0, 1], hspace=0, height_ratios=[2, 1])
+ax1 = plt.subplot(subgrid_spec[0, 0])
+ax2 = plt.subplot(subgrid_spec[1, 0], sharex=ax1)
+ax1.set_xticklabels([])
+
+
+
+
+subgrid_spec = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=grid_spec[1, 0], hspace=0, height_ratios=[2, 1])
+ax1 = plt.subplot(subgrid_spec[0, 0])
+ax2 = plt.subplot(subgrid_spec[1, 0], sharex=ax1)
+ax1.set_xticklabels([])
+
+
+subgrid_spec = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=grid_spec[1, 1], hspace=0, height_ratios=[2, 1])
+ax1 = plt.subplot(subgrid_spec[0, 0])
+ax2 = plt.subplot(subgrid_spec[1, 0], sharex=ax1)
+ax1.set_xticklabels([])
+
+
+plt.show()
+
+
+```
+
+
 
 ### get dilution factor for TESS and TESS-SPOC
 
