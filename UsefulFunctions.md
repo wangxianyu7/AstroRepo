@@ -1,3 +1,8 @@
+### comment block generator
+```
+https://blocks.jkniest.dev/
+```
+
 ### Common Linux command
 
 ```
