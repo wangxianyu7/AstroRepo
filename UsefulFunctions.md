@@ -16,6 +16,38 @@ find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
 find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
+
+### CDPP snr calculation
+
+```Python
+import pandas as pd
+
+
+# constants from https://iopscience.iop.org/article/10.3847/1538-3881/ac68e3/pdf
+c0 = 50.2/1e6
+c1 = 97.4/1e6
+c2 = 92.9/1e6
+
+
+# import target list
+target_list = pd.read_csv('https://raw.githubusercontent.com/transit-timing/tt/master/3_database/1_target_list.csv')
+System = target_list['System']
+
+duration = target_list['duration']
+R_b_over_R_A_squared = target_list['R_b_over_R_A_squared']
+TESSMag = target_list['TESSMag']
+SNR = target_list['SNR']
+
+print('System','My SNR','My SNR * 2','TT SNR',sep='\t')
+for i in range(len(System)):
+    cdpp = c0 + c1*10**(0.2*(TESSMag[i]-10)) + c2*10**(0.4*(TESSMag[i]-10))
+    snr = R_b_over_R_A_squared[i]/(cdpp/np.sqrt(duration[i]*24))
+    print(System[i],snr, snr*2,cdpp*1e6,SNR[i],duration[i]*24,sep='\t')
+```
+
+
+
+
 ### sub sub spec grid
 
 ```Python
