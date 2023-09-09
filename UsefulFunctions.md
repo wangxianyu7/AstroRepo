@@ -17,6 +17,14 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+### get stellar rho from period and a/r
+
+
+```Python
+rho = 3 * pi * (a/R)**3 / (G * P**2)
+```
+
+
 ### CDPP snr calculation
 
 ```Python
