@@ -17,6 +17,71 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+
+### get stellar parameters from 175 million
+```Python
+import numpy as np
+dr3s = tepcat_table['gaiadr3_id'].values
+tic = dr3s.astype(str)
+import pandas as pd
+
+filename = '/Users/wangxianyu/Downloads/Program/175millionStellarPar/table_1_catwise.csv.gz'
+chunk_size = 50000  # Adjust depending on your available memory
+chunks = pd.read_csv(filename, compression='gzip', chunksize=chunk_size)
+
+# Assuming you have a list of target IDs
+target_ids = dr3s  # Example list
+target_ids = [int(t) for t in target_ids]
+target_ids
+results = {}  # Store results for each target_id
+
+for chunk in chunks:
+    # Check for each target_id
+    for tid in target_ids:
+        if tid in results:  # If already found, skip
+            continue
+        filtered_chunk = chunk[chunk['source_id'] == tid]
+        if not filtered_chunk.empty:
+            mh_xgboost = filtered_chunk['mh_xgboost'].values[0]
+            teff_xgboost = filtered_chunk['teff_xgboost'].values[0]
+            logg_xgboost = filtered_chunk['logg_xgboost'].values[0]
+            results[tid] = (mh_xgboost, teff_xgboost, logg_xgboost)
+            print(f'For target_id {tid}: XGBoost: MH={mh_xgboost:.3f}, Teff={teff_xgboost:.1f}, logg={logg_xgboost:.2f}')
+            # print
+    
+    # If all target_ids are found, break
+    if set(target_ids).issubset(set(results.keys())):
+        break
+
+# All results are stored in 'results' dictionary
+for tid, (mh, teff, logg) in results.items():
+    # print(f'For target_id {tid}: XGBoost: MH={mh:.3f}, Teff={teff:.1f}, logg={logg:.2f}')
+    print(tid, mh, teff, logg, sep=',')
+fehs = []
+teffs = []
+loggs = []
+
+
+for i in range(len(tepcat_table)):
+    name = tepcat_table['name'][i]
+    gaiadr2_id = tepcat_table['gaiadr2_id'][i]
+    gaiadr3_id = tepcat_table['gaiadr3_id'][i]
+    # print('Working on '+name)
+    try:
+        mh, teff, logg = results[gaiadr3_id]
+        fehs.append(mh)
+        teffs.append(teff)
+        loggs.append(logg)
+    except:
+        fehs.append(np.nan)
+        teffs.append(np.nan)
+        loggs.append(np.nan)
+        print(name, 'not found')
+        pass
+
+```
+
+
 ### get stellar rho from period and a/r
 
 
