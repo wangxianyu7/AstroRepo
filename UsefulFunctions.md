@@ -20,7 +20,7 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 ```Python
 for i,ele in enumerate(obliquity_all.columns):
     ending = ' '
-    if i%15 == 0:
+    if i%15 == 0 and i>0:
         ending = '\n'
     print(ele, end=ending)
 ```
