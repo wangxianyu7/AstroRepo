@@ -16,6 +16,17 @@ find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
 find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
+### better print for pandas 
+```Python
+for i,ele in enumerate(obliquity_all.columns):
+    ending = ' '
+    if i%15 == 0:
+        ending = '\n'
+    print(ele, end=ending)
+```
+
+
+
 
 ### merge pstable to get all parameters
 
