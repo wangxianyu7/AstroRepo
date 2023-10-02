@@ -17,6 +17,38 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+### merge pstable to get all parameters
+
+```Python
+import pandas as pd
+import numpy as np
+
+df = pstable
+unique_pl_names = np.unique(df['pl_name'])
+def select_best_data(group):
+    default_index = group[group['default_flag'] == 1].index[0]
+    default_row = group.loc[default_index].copy()
+    
+    for col in group.columns:
+        if pd.isnull(default_row[col]):
+            non_default_rows = group.loc[group.index != default_index]
+            non_nan_values = non_default_rows[~pd.isnull(non_default_rows[col])]
+            if not non_nan_values.empty:
+                best_alternate_value = non_nan_values.sort_values(by='pl_pubdate', ascending=False)[col].iloc[0]
+                default_row[col] = best_alternate_value
+    return default_row
+
+
+results = pd.DataFrame()
+for i in range(len(unique_pl_names)):
+    print(len(unique_pl_names), i, unique_pl_names[i],  end='\r')    
+    tmp_pstable = df.query('pl_name == "'+unique_pl_names[i]+'"')
+    result = tmp_pstable.groupby('pl_name').apply(select_best_data).reset_index(drop=True)
+    results = pd.concat([results, result], ignore_index=True)
+results.to_csv('pstable_merge.csv', index=False)
+```
+
+
 
 ### get stellar parameters from 175 million
 ```Python
