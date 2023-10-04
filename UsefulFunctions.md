@@ -16,6 +16,143 @@ find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
 find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
+
+### Manim, HJs migration
+```Python
+# https://docs.manim.community/en/stable/installation/jupyter.html#google-colaboratory
+# !sudo apt update
+# !sudo apt install libcairo2-dev ffmpeg \
+#     texlive texlive-latex-extra texlive-fonts-extra \
+#     texlive-latex-recommended texlive-science \
+#     tipa libpango1.0-dev
+# !pip install manim
+# !pip install IPython --upgrade
+
+
+%%manim -qm -v WARNING HeatDiagramPlot
+
+from manim import *
+import numpy as np
+from scipy.special import comb
+import matplotlib.pyplot as plt
+
+def smoothstep(x, x_min=0, x_max=1, y_min=0, y_max=1, N=1):
+    x = np.clip((x - x_min) / (x_max - x_min), 0, 1)
+    
+    result = 0
+    for n in range(0, N + 1):
+         result += comb(N + n, n) * comb(2 * N + 1, N - n) * (-x) ** n
+
+    result *= x ** (N + 1)
+    
+    # Transforming the output to desired range [y_min, y_max]
+    result = y_min + result * (y_max - y_min)
+    
+    return result
+
+
+import matplotlib.pyplot as plt
+
+
+class HeatDiagramPlot(Scene):
+    def construct(self):
+        ax = Axes(
+            x_range=[0.00001, 4.1, 1],
+            y_range=[0, 12.1, 1],
+            x_length=9,
+            y_length=6,
+            y_axis_config={"numbers_to_include": np.arange(0, 12, 1)},
+            x_axis_config={"scaling": LogBase(custom_labels=True),"numbers_to_include": np.arange(1, 4, 1)},
+            tips=False,
+        )
+        labels = ax.get_axis_labels(
+            x_label=Tex("Period (days)"), y_label=Tex("Occurrence rate ($\%$)")
+        )
+
+        x_vals = np.linspace(0, 4, 1000)
+        y_min = 5
+        y_max = 10
+        cut = 300
+        log_cut = np.log10(300)
+        half_width = 0.5
+        y_vals = smoothstep(x_vals, x_min=(log_cut - half_width), x_max=(log_cut + half_width), y_min=y_min, y_max=y_max, N=5)
+        x_vals = 10**x_vals
+
+        lines = VGroup(
+            *[Line(ax.c2p(x_vals[i], y_vals[i]), ax.c2p(x_vals[i+1], y_vals[i+1])) for i in range(len(x_vals)-1)]
+        )
+        # Creating Random Dots
+        dots = VGroup()
+
+        x_randoms = []
+        y_randoms = []
+
+        for _ in range(100):  # Creating 50 dots as an example
+            x_random = np.random.uniform(0, 4)
+            y_random = np.random.uniform(0, smoothstep(x_random, x_min=(log_cut - half_width), x_max=(log_cut + half_width), y_min=y_min, y_max=y_max, N=5))
+            x_random = 10**x_random
+            dot = Dot(ax.c2p(x_random, y_random), radius=0.04, color=BLUE)
+            dots.add(dot)
+            x_randoms.append(x_random)
+            y_randoms.append(y_random)
+
+
+        # self.play(Create(ax))
+        # self.play(Write(labels))
+        # self.play(Create(lines))
+        # self.play(Create(dots))
+
+
+        red_probability = 0.1  # baseline probability to turn red
+        red_probability_boost = 0.5  # boosted probability if x > 300
+
+  # [Your existing code above this point ...]
+
+        dots_to_remove = VGroup()
+        dots_to_add = VGroup()
+
+        # Changing color and size of some dots
+        for i, dot in enumerate(dots):
+            x_value = x_randoms[i]
+            prob = red_probability_boost if x_value > 300 else red_probability
+            if np.random.uniform(0, 1) < prob:  
+                dot.set_color(RED).scale(2)
+                if x_value > 300:
+                    dots_to_remove.add(dot)
+
+        self.play(Create(ax), Write(labels), Create(lines), Create(dots),run_time=10)
+
+        dots_to_remove_animations = []
+        dots_to_add_animations = []
+
+        # Prepare animations for removing dots
+        for dot in dots_to_remove:
+            dots_to_remove_animations.append(dot.animate.scale(0).set_opacity(0))
+            dots.remove(dot)  # if you want to actually delete them from the dots VGroup
+
+        num_dots_to_add = len(dots_to_remove)
+
+        # Prepare animations for adding new red dots under the curve at x < 300
+        for _ in range(num_dots_to_add):
+            x_new = np.random.uniform(0, np.log10(300))  # new x in log scale
+            x_new = 10**x_new  # convert back to linear scale
+            y_new = np.random.uniform(0, smoothstep(np.log10(x_new), x_min=(log_cut - half_width), x_max=(log_cut + half_width), y_min=y_min, y_max=y_max, N=5))
+            dot = Dot(ax.c2p(x_new, y_new), radius=0.08, color=RED)  # bigger red dots
+            dots.add(dot)
+            dots_to_add.add(dot)
+            dots_to_add_animations.append(FadeIn(dot))
+
+        # Play animations simultaneously
+        self.play(*dots_to_remove_animations, *dots_to_add_animations, run_time=5)
+
+        self.wait()
+
+
+
+```
+
+
+
 ### better print for pandas 
 ```Python
 for i,ele in enumerate(obliquity_all.columns):
