@@ -26,6 +26,44 @@ for i,ele in enumerate(obliquity_all.columns):
 ```
 
 
+### smoothstep function
+
+```Python
+import numpy as np
+from scipy.special import comb
+import matplotlib.pyplot as plt
+
+def smoothstep(x, x_min=0, x_max=1, y_min=0, y_max=1, N=1):
+    x = np.clip((x - x_min) / (x_max - x_min), 0, 1)
+    
+    result = 0
+    for n in range(0, N + 1):
+         result += comb(N + n, n) * comb(2 * N + 1, N - n) * (-x) ** n
+
+    result *= x ** (N + 1)
+    
+    # Transforming the output to desired range [y_min, y_max]
+    result = y_min + result * (y_max - y_min)
+    
+    return result
+
+# Example usage
+x = np.linspace(-2, 2, 1000)
+y_min, y_max = 10, 15
+
+plt.figure(figsize=(10, 6))
+for N in range(4, 5):
+    y = smoothstep(x, x_min=-1, x_max=1, y_min=y_min, y_max=y_max, N=N)
+    plt.plot(x, y, label=f"N={N}")
+
+plt.xlabel("x")
+plt.ylabel("y")
+plt.legend()
+plt.grid(True)
+plt.title("Smoothstep function with varying N")
+plt.show()
+```
+
 
 
 ### merge pstable to get all parameters
