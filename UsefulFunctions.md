@@ -17,6 +17,14 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+### Manim Resources
+
+```
+Manim Web: https://manim-web.hugos29.dev/
+https://eertmans.be/manim-slides/
+```
+
+
 ### Manim, HJs migration
 ```Python
 # https://docs.manim.community/en/stable/installation/jupyter.html#google-colaboratory
