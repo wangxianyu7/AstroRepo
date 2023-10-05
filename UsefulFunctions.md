@@ -23,6 +23,7 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 Manim Web: https://manim-web.hugos29.dev/
 https://eertmans.be/manim-slides/
 https://pypi.org/project/manim-pptx/
+https://plugins.manim.community/
 ```
 
 
