@@ -17,6 +17,35 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+### get RV from ESPRESSO
+```Python
+# fits
+from astropy.io import fits
+import numpy as np
+import os
+
+path = '/Users/wangxianyu/Library/CloudStorage/OneDrive-SharedLibraries-onedrive/每日科研/2023/20230928_RM_Refit/add_planets/HD209485/archive2'
+fit_files = [x for x in os.listdir(path) if x.endswith('.fits')]
+rvs = []
+rverrs = []
+times = []
+for i in fit_files:
+    hdu = fits.open(path+'/'+i)
+    time_bjd_tdb = hdu[0].header['HIERARCH ESO QC BJD']
+    RV = hdu[0].header['HIERARCH ESO QC CCF RV']
+    RVerr = hdu[0].header['HIERARCH ESO QC CCF RV ERROR']
+    hdu.close()
+    rvs.append(RV)
+    rverrs.append(RVerr)
+    times.append(time_bjd_tdb)
+    
+    
+    
+times = np.array(times)
+rvs = np.array(rvs)
+rverrs = np.array(rverrs)
+```
+
 ### Manim Resources
 
 ```
