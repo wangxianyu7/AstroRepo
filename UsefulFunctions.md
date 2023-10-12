@@ -8,7 +8,7 @@ https://blocks.jkniest.dev/
 ```
 rsync -av --max-size=500k a/ b/
 
-
+find . -type d | while read -r dir; do echo "$dir: $(find "$dir" -maxdepth 1 -type f | wc -l)"; done | sort -t: -k2 -nr | head -n 20
 grep -v 'nan' input.txt > output.txt # remove nan
 find . -name "*.idl" -type f -delete
 find . -type f -name '*.txt' -exec rm {} \;
