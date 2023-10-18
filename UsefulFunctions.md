@@ -19,7 +19,7 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ### q 2 u
 
-```
+```Python
 
 def get_u1u2_from_q1q2(q1, q2, Nsamples=10000):
     '''
