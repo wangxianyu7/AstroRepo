@@ -418,11 +418,16 @@ R_b_over_R_A_squared = target_list['R_b_over_R_A_squared']
 TESSMag = target_list['TESSMag']
 SNR = target_list['SNR']
 
-print('System','My SNR','My SNR * 2','TT SNR',sep='\t')
+headers = ['System','My SNR','My SNR * 2','TT SNR','duration','TESSMag']
+data = []
 for i in range(len(System)):
     cdpp = c0 + c1*10**(0.2*(TESSMag[i]-10)) + c2*10**(0.4*(TESSMag[i]-10))
     snr = R_b_over_R_A_squared[i]/(cdpp/np.sqrt(duration[i]*24))
-    print(System[i],snr, snr*2,cdpp*1e6,SNR[i],duration[i]*24,sep='\t')
+    data = np.append(data, [System[i],snr, snr*2,SNR[i],duration[i]*24,TESSMag[i]])
+# to pandas
+data = data.reshape(-1, len(headers))
+df = pd.DataFrame(data, columns=headers)
+df
 ```
 
 
