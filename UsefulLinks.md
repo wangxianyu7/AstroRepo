@@ -1,5 +1,14 @@
 ### Database
 
+
+### R-M fitting tools
+- EXOSAM, https://github.com/baddison2005/ExOSAM/tree/master/R-M_modules
+- tracit, https://github.com/emilknudstrup/tracit
+- ARoME, https://cdsarc.u-strasbg.fr/viz-bin/qcat?J/A+A/550/A53
+- Ellc, https://github.com/pmaxted/ellc
+- RMfit, private repo
+
+
 #### RV database
 - https://ui.adsabs.harvard.edu/abs/2017AJ....153..208B/abstract LSK, HIRES
 - https://dace.unige.ch/radialVelocities/ from Paul
