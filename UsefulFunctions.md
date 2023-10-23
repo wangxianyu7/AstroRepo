@@ -17,6 +17,27 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+### find all file path including
+```
+import pandas as pd
+import numpy as np
+
+import os
+
+def find_files(filename, search_path):
+    result = []
+
+    for root, dirs, files in os.walk(search_path):
+        if filename in files:
+            result.append(os.path.join(root, filename))
+
+    return result
+filename = "params_star.csv"
+search_path = os.getcwd()
+```
+
+
+
 ### q 2 u
 
 ```Python
