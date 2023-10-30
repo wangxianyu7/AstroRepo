@@ -2369,9 +2369,7 @@ import os
 import time
 import requests
 # download the obliquity data from the website
-target_url = 'https://exofop.ipac.caltech.edu/tess/download_toi.php?sort=toi&output=csv'
-response = requests.get(target_url)
-data = response.text
+
 name = 'toi.csv'
 date = time.strftime("%Y-%m-%d", time.localtime())
 dated_name = 'toi_'+date+'.csv'
@@ -2379,6 +2377,9 @@ dated_name = 'toi_'+date+'.csv'
 if os.path.exists(dated_name):
     print(dated_name+' exists')
 else:
+    target_url = 'https://exofop.ipac.caltech.edu/tess/download_toi.php?sort=toi&output=csv'
+    response = requests.get(target_url)
+    data = response.text
     print('downloading '+dated_name)
     with open(dated_name, 'w') as f:
         print(data, file=f)
@@ -2386,9 +2387,7 @@ else:
     
 import requests
 # download the obliquity data from the website
-target_url = 'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+*+from+ps&format=csv'
-response = requests.get(target_url)
-data = response.text
+
 
 name = 'pstable.csv'
 date = time.strftime("%Y-%m-%d", time.localtime())
@@ -2397,16 +2396,30 @@ dated_name = 'pstable_'+date+'.csv'
 if os.path.exists(dated_name):
     print(dated_name+' exists')
 else:
+    target_url = 'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+*+from+ps&format=csv'
+    response = requests.get(target_url)
+    data = response.text
     print('downloading '+dated_name)
     with open(dated_name, 'w') as f:
         print(data, file=f)
 
 
-import requests
+name = 'pscomppars.csv'
+date = time.strftime("%Y-%m-%d", time.localtime())
+dated_name = 'pscomppars_'+date+'.csv'
+# check if the file exists
+if os.path.exists(dated_name):
+    print(dated_name+' exists')
+else:
+    target_url = 'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+*+from+pscomppars&format=csv'
+    response = requests.get(target_url)
+    data = response.text
+    print('downloading '+dated_name)
+    with open(dated_name, 'w') as f:
+        print(data, file=f)
+
 # download the obliquity data from the website
-target_url = 'https://www.astro.keele.ac.uk/jkt/tepcat/obliquity.csv'
-response = requests.get(target_url)
-data = response.text
+
 
 name = 'obliquity.csv'
 date = time.strftime("%Y-%m-%d", time.localtime())
@@ -2415,6 +2428,9 @@ dated_name = 'obliquity_'+date+'.csv'
 if os.path.exists(dated_name):
     print(dated_name+' exists')
 else:
+    target_url = 'https://www.astro.keele.ac.uk/jkt/tepcat/obliquity.csv'
+    response = requests.get(target_url)
+    data = response.text
     print('downloading '+dated_name)
     with open(dated_name, 'w') as f:
         print(data, file=f)
@@ -2423,7 +2439,7 @@ else:
 toi_table = pd.read_csv('toi_'+date+'.csv', comment='#')
 pstable = pd.read_csv('pstable_'+date+'.csv', comment='#')
 obliquity_table = pd.read_csv('obliquity_'+date+'.csv', comment='#')
-
+pscomppars_table = pd.read_csv('pscomppars_'+date+'.csv', comment='#')
 ```
 
 ### GPT prompt for midjourney
