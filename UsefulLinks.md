@@ -4,7 +4,7 @@
 - ARoME, https://cdsarc.u-strasbg.fr/viz-bin/qcat?J/A+A/550/A53
 - Ellc, https://github.com/pmaxted/ellc
 - RMfit, private repo
-- 
+- RM Revolutions https://github.com/rodluger/rmrevolutions/tree/master
 ### Database
 #### RV database
 - https://ui.adsabs.harvard.edu/abs/2017AJ....153..208B/abstract LSK, HIRES
