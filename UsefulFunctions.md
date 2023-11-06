@@ -17,6 +17,39 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+### get RV from ESO data; ESP
+
+```Python
+# import numpy as np
+# import matplotlib.pyplot as plt
+# from scipy import interpolate
+# x = np.arange(0, 10)
+# y = np.exp(-x/3.0)
+# f = interpolate.interp1d(x, y)
+
+from astropy.io import fits
+
+# open the FITS file
+import glob
+import numpy as np
+file_list = glob.glob('/Users/wangxianyu/Downloads/Downloads/archive (5)/*.fits')
+times = np.asarray([]); rvs = np.asarray([]); rverrs = np.asarray([])
+for file in file_list:
+    hdul = fits.open(file)
+    try:
+        time = hdul[0].header["HIERARCH ESO QC BJD"]
+        rv = hdul[0].header['HIERARCH ESO QC CCF RV']
+        rverr = hdul[0].header['HIERARCH ESO QC CCF RV ERROR']
+        times = np.append(times, time); rvs = np.append(rvs, rv); rverrs = np.append(rverrs, rverr)
+    except:
+        pass
+import matplotlib.pyplot as plt
+plt.errorbar(times, rvs, yerr=rverrs, fmt='o')
+
+
+```
+
+
 ### find all file path including
 ```
 import pandas as pd
