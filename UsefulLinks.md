@@ -7,6 +7,7 @@
 - RM Revolutions https://github.com/rodluger/rmrevolutions/tree/master
 ### Database
 #### RV database
+- http://atlas.obs-hp.fr/ ELODIE/SOPHIE database
 - https://ui.adsabs.harvard.edu/abs/2017AJ....153..208B/abstract LSK, HIRES
 - https://dace.unige.ch/radialVelocities/ from Paul
 - https://arxiv.org/abs/2001.05942 A public HARPS radial velocity database corrected for systematic errors
