@@ -20,7 +20,7 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ### Vmic and Vmac (iSpec)
 
-```
+```Python
 import numpy as np
 def _estimate_vmac_doyle2014(teff, logg, feh):
     """
