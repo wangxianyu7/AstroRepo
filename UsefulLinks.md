@@ -1,3 +1,6 @@
+### Transmission Spectrum fit
+- https://github.com/esedagha/molecfit_lecture/tree/main
+
 ### R-M fitting tools
 - EXOSAM, https://github.com/baddison2005/ExOSAM/tree/master/R-M_modules
 - tracit, https://github.com/emilknudstrup/tracit
