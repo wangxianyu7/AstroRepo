@@ -8,6 +8,7 @@
 - Ellc, https://github.com/pmaxted/ellc
 - RMfit, private repo
 - RM Revolutions https://github.com/rodluger/rmrevolutions/tree/master
+- Covino 2013,https://github.com/LucaMalavolta/PyORBIT/blob/main/pyorbit/models/rossitermclaughlin_precise.py
 ### Database
 #### RV database
 - http://atlas.obs-hp.fr/ ELODIE/SOPHIE database
