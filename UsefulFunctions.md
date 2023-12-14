@@ -2545,6 +2545,7 @@ def get_model(x_lin, rr, rsuma, cosi, epoch, period, f_c, f_s, vsini, lambda_, q
 import os
 import time
 import requests
+import pandas as pd
 # download the obliquity data from the website
 
 name = 'toi.csv'
