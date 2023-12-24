@@ -2038,6 +2038,14 @@ print(RM_amp,'m/s')
 ### format axis
 
 ```Python
+import matplotlib.pyplot as plt
+plt.rcParams["font.family"] = "Times New Roman"
+import matplotlib
+matplotlib.rcParams['mathtext.fontset'] = 'custom'
+matplotlib.rcParams['mathtext.rm'] = 'Times New Roman'
+matplotlib.rcParams['mathtext.it'] = 'Times New Roman:italic'
+
+matplotlib.rc('text.latex', preamble=r'\usepackage{sfmath}')
 from matplotlib.ticker import MultipleLocator, \
     FormatStrFormatter, AutoMinorLocator
 def ticksetax(ax, labelsize=15, ticksize=12, tickwidth=1.5, ticklength=5):
