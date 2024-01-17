@@ -1,3 +1,11 @@
+### SED fit
+- VOSA: http://svo2.cab.inta-csic.es/theory/vosa/
+- isoclassify: https://github.com/danxhuber/isoclassify/tree/master/isoclassify
+- isochrones: https://github.com/timothydmorton/isochrones 
+- MINESweeper: https://github.com/pacargile/MINESweeper
+- ARIADNE: https://github.com/jvines/astroARIADNE/tree/master/astroARIADNE
+- EXOFASTv2: https://github.com/jdeast/EXOFASTv2
+- 
 ### Transmission Spectrum fit
 - https://github.com/esedagha/molecfit_lecture/tree/main
 
