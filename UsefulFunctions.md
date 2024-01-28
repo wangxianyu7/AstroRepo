@@ -18,6 +18,26 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 ```
 
 
+### PyTransit Installation on M1/M2 Macbook/Mac Mini
+```
+git clone https://github.com/hpparvi/PyTransit.git
+cd pytransit
+conda create -n pytransit python==3.10
+conda activate pytransit
+
+conda install numpy scipy matplotlib ipython jupyter pandas sympy nose -y
+pip install emcee corner arviz
+conda install astropy tqdm -y
+conda install -c conda-forge celerite -y
+conda install anaconda::pytables -y
+conda install scipy pandas -y
+conda install conda-forge::pyopencl
+conda install conda-forge::semantic_version
+conda install ocl_icd_wrapper_apple -y
+python setup.py install
+```
+
+
 ### Vmic and Vmac (iSpec)
 
 ```Python
