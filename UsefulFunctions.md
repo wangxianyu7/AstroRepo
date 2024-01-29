@@ -167,13 +167,13 @@ teff = 5500
 logg = 4.5
 feh = 0.0
 
-vmac = estimate_vmac(teff, logg, feh)
+#vmac = estimate_vmac(teff, logg, feh)
 vmic = estimate_vmic(teff, logg, feh)
 
-print(vmac,vmic)
+#print(vmac,vmic)
 
 vmac = estimate_vmac(teff, logg, feh, relation='Doyle2014')
-vmic = estimate_vmic(teff, logg, feh, relation='Bruntt2010')
+#vmic = estimate_vmic(teff, logg, feh, relation='Bruntt2010')
 
 print(vmac,vmic)
 ```
