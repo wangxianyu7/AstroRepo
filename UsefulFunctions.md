@@ -34,6 +34,24 @@ def get_ra_dec(name):
 
 ```
 
+### RA DEC 2 EDR3 ID
+
+```
+def radec2edr3(ra, dec):
+    from astroquery.gaia import Gaia
+
+    ra = ra
+    dec = dec
+
+    query = f"SELECT * FROM gaiaedr3.gaia_source WHERE CONTAINS(POINT('ICRS', gaiaedr3.gaia_source.ra, gaiaedr3.gaia_source.dec), CIRCLE('ICRS', {ra}, {dec}, 0.001389))=1;"
+
+    job = Gaia.launch_job(query)
+    result = job.get_results()
+
+
+    return result['source_id'][0]
+```
+
 ### PyTransit Installation on M1/M2 Macbook/Mac Mini
 ```
 git clone https://github.com/hpparvi/PyTransit.git
