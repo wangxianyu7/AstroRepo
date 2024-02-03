@@ -16,7 +16,23 @@ find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
 find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
+###
 
+```
+def get_ra_dec(name):
+    import requests
+
+    get_str = 'https://cds.unistra.fr/cgi-bin/nph-sesame/-oxp/SNVA?'
+    results = requests.get(get_str+name)
+
+    for line in results.text.split('\n'):
+        if '<jradeg>' in line:
+            ra = float(line.split('>')[1].split('<')[0])
+        if '<jdedeg>' in line:
+            dec = float(line.split('>')[1].split('<')[0])
+    return ra, dec
+
+```
 
 ### PyTransit Installation on M1/M2 Macbook/Mac Mini
 ```
