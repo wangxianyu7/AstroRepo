@@ -53,7 +53,7 @@ def radec2edr3(ra, dec):
 ```
 
 ### PyTransit Installation on M1/M2 Macbook/Mac Mini
-Note: Also works for https://github.com/hippke/tls
+Note: Also works for https://github.com/hippke/tls;https://johannesbuchner.github.io/UltraNest/example-line.html#
 ```
 git clone https://github.com/hpparvi/PyTransit.git
 cd pytransit
