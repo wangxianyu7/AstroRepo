@@ -17,6 +17,76 @@ find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
 find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
+
+### make TOI table with Gaia DR2/3 RUWE
+
+```
+import time
+import pandas
+import os
+import requests
+import matplotlib.pyplot as plt
+import pandas as pd
+name = 'toi.csv'
+date = time.strftime("%Y-%m-%d", time.localtime())
+dated_name = 'toi_'+date+'.csv'
+# check if the file exists
+if os.path.exists(dated_name):
+    print(dated_name+' exists')
+else:
+    target_url = 'https://exofop.ipac.caltech.edu/tess/download_toi.php?sort=toi&output=csv'
+    response = requests.get(target_url)
+    data = response.text
+    print('downloading '+dated_name)
+    with open(dated_name, 'w') as f:
+        print(data, file=f)
+
+	
+toi_table = pd.read_csv('toi_'+date+'.csv', comment='#')
+TESS_Disposition = toi_table['TESS Disposition']
+TFOPWG_Disposition = toi_table['TFOPWG Disposition']
+unique_TESS_Disposition = TESS_Disposition.unique() #KP', 'CP', 'PC',
+unique_TFOPWG_Disposition = TFOPWG_Disposition.unique() #KP', 'CP', 'PC',
+# print(unique_TESS_Disposition, unique_TFOPWG_Disposition)
+print('We only keep the ones with TESS Disposition == "KP" or "CP" or "PC" and TFOPWG Disposition == "KP" or "CP" or "PC"')
+# toi_table = toi_table.query('`TESS Disposition` == "KP" or `TESS Disposition` == "CP" or `TESS Disposition` == "PC"')
+# toi_table = toi_table.query('`TFOPWG Disposition` == "KP" or `TFOPWG Disposition` == "CP" or `TFOPWG Disposition` == "PC"')
+print('The number of targets is', len(toi_table))   
+
+
+#  -- output format : csv
+#  SELECT "IV/39/tic82".TIC,  "IV/39/tic82".RAJ2000,  "IV/39/tic82".DEJ2000,  "IV/39/tic82".HIP,  "IV/39/tic82".TYC,  "IV/39/tic82".UCAC4,  "IV/39/tic82"."2MASS", 
+#  "IV/39/tic82".objID,  "IV/39/tic82".WISEA,  "IV/39/tic82".GAIA,  "IV/39/tic82".KIC,  "IV/39/tic82"."S/G",  "IV/39/tic82".Ref,  "IV/39/tic82".pmRA,  "IV/39/tic82".e_pmRA, 
+#  "IV/39/tic82".pmDE,  "IV/39/tic82".e_pmDE,  "IV/39/tic82".r_pm,  "IV/39/tic82".Teff,  "IV/39/tic82".s_Teff,  "IV/39/tic82".logg,  "IV/39/tic82".s_logg,  "IV/39/tic82"."[M/H]", 
+#  "IV/39/tic82"."e_[M/H]",  "IV/39/tic82".Rad,  "IV/39/tic82".s_Rad,  "IV/39/tic82".Mass,  "IV/39/tic82".s_Mass,  "IV/39/tic82".LClass,  "IV/39/tic82".Dist,  "IV/39/tic82".s_Dist, 
+#  "IV/39/tic82".Ncont,  "IV/39/tic82".Rcont,  "IV/39/tic82".r_Dist,    "IV/39/tic82".r_Teff,  "IV/39/tic82".e_RAJ2000,  "IV/39/tic82".e_DEJ2000, 
+#  "IV/39/tic82".RAOdeg,  "IV/39/tic82".DEOdeg,  "IV/39/tic82".e_RAOdeg,  "IV/39/tic82".e_DEOdeg
+#  FROM "IV/39/tic82" WHERE TIC = 231663901
+
+adql_string = '''-- output format : csv
+SELECT "IV/39/tic82".TIC,   "IV/39/tic82".GAIA
+FROM "IV/39/tic82" WHERE xxxx'''
+ 
+ 
+tics = toi_table['TIC ID']
+adql_file = open('adql.txt', 'w')
+
+
+tic_str = ''
+for i in range(len(tics)):
+    if i == len(tics)-1:
+        # print(f'(TIC = {tics[i]})' , end=' ')
+        tic_str = tic_str + f'(TIC = {tics[i]})'
+    else:
+        # print(f'(TIC = {tics[i]}) OR' , end=' ')
+        tic_str = tic_str + f'(TIC = {tics[i]}) OR'
+        
+        
+print(adql_string.replace('xxxx', tic_str), file=adql_file)
+https://tapvizier.u-strasbg.fr/adql/
+```
+
+
 ### Get RA DEC
 
 ```
