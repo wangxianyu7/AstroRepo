@@ -18,6 +18,60 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+
+### plots and tables 
+```python
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+
+
+# data for the tables
+data1 = np.ones((3,7))
+data2 = np.ones((3,7))
+data4 = np.ones((3,7))
+data_all = [data1,data2,data4]
+
+
+fig = plt.figure(constrained_layout = True, figsize = (11,7))
+plt.rcParams["figure.autolayout"] = True
+
+# grid for the tables
+grid = gridspec.GridSpec(ncols=3, nrows=4, figure = fig, height_ratios=[1,1,1,2])
+ax0 = fig.add_subplot(grid[0,:])
+ax1 = fig.add_subplot(grid[1,:]) 
+ax2 = fig.add_subplot(grid[2,:]) 
+
+# grid for the plots
+subgrid_spec = gridspec.GridSpecFromSubplotSpec(1, 3, subplot_spec=grid[3,:], wspace=0.1)
+ax = [ax0,ax1,ax2]
+ax00 =[plt.subplot(subgrid_spec[0, 0]),plt.subplot(subgrid_spec[0, 1]),plt.subplot(subgrid_spec[0, 2])]
+
+
+# column labels and settings 
+titles = ['title1','title2','title3']
+columns = ("column1","column2","column3","column4","column5","column6","column7")
+row = (' g ',' r ',' i ')
+color = [['w','w','w','bisque','w','skyblue','w'],['w','w','w','bisque','w','w','w'],['w','w','w','bisque','w','w','w']]
+
+
+# make the table
+fig.suptitle("\n\nDe-red spec Template",fontsize = 14)
+for i in range(len(ax)):
+    ax[i].table(cellText=data_all[i],fontsize=13,colLabels=columns,rowLabels=row,cellLoc ='center',loc='center',cellColours=color,colWidths=colwidth1)
+    ax[i].axis('tight')
+    ax[i].axis('off')
+    ax[i].set_title(titles[i],fontsize= 12)
+
+# make the plots
+for i in range(len(ax00)):
+    # placeholder
+    pass
+
+
+
+```
+
+
 ### make TOI table with Gaia DR2/3 RUWE
 
 ```
