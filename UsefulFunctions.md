@@ -18,6 +18,27 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+### download TFOP transits
+```Python
+import requests
+import json
+
+tic_id = '394050135'
+
+
+if not os.path.exists(tic_id):
+    os.makedirs(tic_id)
+
+json_data = requests.get('https://exofop.ipac.caltech.edu/tess/target.php?id='+tic_id+'&json').json()
+
+
+for ind_file in json_data['files']:
+    if ind_file['ftype'] == 'Light_Curve':
+        fname = ind_file['fname']
+        fid = ind_file['fid']
+        os.system('wget https://exofop.ipac.caltech.edu/tess/get_file.php?id='+str(fid)+' -O '+tic_id+'/'+fname)
+```
+
 
 ### plots and tables 
 ```python
