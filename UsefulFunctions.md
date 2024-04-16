@@ -18,6 +18,45 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+### NEID Proposal, Targets Info submission
+```python
+import os
+import time
+import requests
+import pandas as pd
+import os
+import pandas as pd
+import numpy as np
+name = 'toi.csv'
+date = time.strftime("%Y-%m-%d", time.localtime())
+dated_name = 'toi_'+date+'.csv'
+if os.path.exists(dated_name):
+    print(dated_name+' exists')
+else:
+    target_url = 'https://exofop.ipac.caltech.edu/tess/download_toi.php?sort=toi&output=csv'
+    response = requests.get(target_url)
+    data = response.text
+    print('downloading '+dated_name)
+    with open(dated_name, 'w') as f:
+        print(data, file=f)
+
+toi_ids = '''111
+222
+333
+444'''
+toi_ids = [int(i) for i in toi_ids.split('\n')]
+toi_ids = list(set(toi_ids)
+toi_table = pd.read_csv('toi_'+date+'.csv', comment='#')
+TOI = toi_table['TOI'].to_numpy()
+TIC_ID = toi_table['TIC ID'].to_numpy()
+ra = toi_table['RA'].to_numpy()
+dec = toi_table['Dec'].to_numpy()
+print('id,objectName,ra,dec,epoch,magnitude,filter,exposureTimeSeconds,numberOfExposures,skyCondition,seeing,comment')
+for i in range(len(toi_ids)):
+    idx = np.where(TOI == float(toi_ids[i])+0.01)[0]
+    print(i+1, 'TOI'+str(toi_ids[i]),  ra[idx][0], dec[idx][0], '', '', '', '', '','','','', sep=',')
+```
+
 ### download TFOP transits
 ```Python
 import requests
