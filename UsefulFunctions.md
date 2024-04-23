@@ -7,6 +7,13 @@ https://blocks.jkniest.dev/
 
 ```
 rsync -av --max-size=500k a/ b/
+
+find . -type f -name 'quartzrun.sbatch' -exec grep -l 'mail-type' {} \; | while read file; do
+    sed -i '/mail-type/c\#SBATCH --mail-type=FAIL' "$file"
+done
+
+
+
 find . -type f -name 'xxx' -exec sed -i '3i#SBATCH --mem=200GB' {} \;
 
 find . -type f -name '*.eps' -exec convert {} {}.png \;
