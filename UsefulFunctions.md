@@ -7,6 +7,8 @@ https://blocks.jkniest.dev/
 
 ```
 rsync -av --max-size=500k a/ b/
+find . -type f -name 'xxx' -exec sed -i '3i#SBATCH --mem=200GB' {} \;
+
 find . -type f -name '*.eps' -exec convert {} {}.png \;
 
 find . -type d | while read -r dir; do echo "$dir: $(find "$dir" -maxdepth 1 -type f | wc -l)"; done | sort -t: -k2 -nr | head -n 20
