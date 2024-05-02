@@ -37,7 +37,7 @@ from __future__ import division
 
 # Required packages
 #import requests
-import urllib2
+from urllib.request import urlopen
 from numpy import array, ndarray
 
 
@@ -219,7 +219,7 @@ def _query_webserver(server_url, params, expected_length):
 #        r = requests.get(server_url, params=params)
         g = "&".join([ "%s=%s"%x for x in params.items()])
         #print(server_url+'?'+g)
-        r = urllib2.urlopen(server_url+'?'+g)
+        r = urlopen(server_url+'?'+g)
     except:
         raise BarycorrError(
             'Could not connect to web server ({})'.format(server_url)
