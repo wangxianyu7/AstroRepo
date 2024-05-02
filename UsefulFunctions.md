@@ -242,6 +242,45 @@ def _query_webserver(server_url, params, expected_length):
             'Could not parse output from web server:\n{}'.format(r.url)
         )
 
+import pandas as pd
+
+
+def bjdutc2bjdtbd(bjdutc, ra, dec):
+    pd.options.display.float_format = '{:.7f}'.format
+    url = 'https://hpiers.obspm.fr/iers/bul/bulc/Leap_Second.dat'
+    # MJD ,day,month,year        TAI-UTC (s)
+    data = pd.read_csv(url, skiprows=20, delimiter='\s+', header=None)
+    data.columns = ['MJD', 'day', 'month', 'year', 'TAI-UTC']
+    data['JD'] = data['MJD'] + 2400000.5
+    data['BJDTDB'] = np.float64(utc2bjd(data['JD'].values, ra, dec))
+
+    data['BJDUTC'] = data['BJDTDB'].values - data['TAI-UTC'].values/86400 - 32.184/86400
+
+    input_times = bjdutc
+    input_timestamp = 'BJDUTC'
+
+    output_times = []
+    for input_time in input_times:
+        if input_timestamp == 'BJDUTC':
+            differences = input_time - np.abs(data['BJDUTC'].values)
+            non_negative_differences = differences[differences >= 0]
+            min_non_negative_index = np.argmin(non_negative_differences)
+            original_index = np.where(differences == non_negative_differences[min_non_negative_index])[0][0]
+
+            N = data.iloc[original_index]['TAI-UTC']
+            output_times.append(data.iloc[original_index]['BJDUTC'] + N/86400 + 32.184/86400)
+            
+            
+    return np.array(output_times)
+
+
+
+bjdutc = np.asarray([2458711.74770])
+ra = 0
+dec = 0
+bjdutc2bjdtbd(bjdutc, ra, dec)
+
+
 
 class BarycorrError(BaseException):
     pass
