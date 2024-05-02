@@ -12,7 +12,7 @@
 ### R-M fitting tools
 - EXOSAM, https://github.com/baddison2005/ExOSAM/tree/master/R-M_modules
 - tracit, https://github.com/emilknudstrup/tracit
-- ARoME, https://cdsarc.u-strasbg.fr/viz-bin/qcat?J/A+A/550/A53; https://github.com/andres-jordan/PyARoME
+- ARoME, https://cdsarc.u-strasbg.fr/viz-bin/qcat?J/A+A/550/A53; https://github.com/andres-jordan/PyARoME; https://github.com/esedagha/ARoMEpy
 - Ellc, https://github.com/pmaxted/ellc
 - RMfit, private repo
 - RM Revolutions https://github.com/rodluger/rmrevolutions/tree/master
