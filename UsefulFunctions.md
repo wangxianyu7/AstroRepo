@@ -28,6 +28,37 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 ```
 
 
+
+### download HARPS RV 2003 to 2023
+```Python
+import astropy.io.fits as fits
+import numpy as np
+import os, sys
+# https://arxiv.org/abs/2312.06586
+
+os.system('wget https://dataportal.eso.org/dataPortal/file/ADP.2023-12-04T15:16:53.464 && mv ADP.2023-12-04T15:16:53.464 HARPS_RV.fits')
+hdu = fits.open('HARPS_RV.fits')
+
+time = np.asarray([])
+rv = np.asarray([])
+rv_err = np.asarray([])
+for i in range(len(csv)):
+    if 'KELT-10' in csv['tel_object'][i]:
+        # print(csv['tel_object'][i])
+        drs_bjd = csv['drs_bjd'][i]
+        drs_ccf_rvc = csv['drs_ccf_rvc'][i]
+        drs_ccf_rv = csv['drs_ccf_rv'][i]
+        drs_ccf_noise = csv['drs_ccf_noise'][i]
+        time = np.append(time, drs_bjd)
+        rv = np.append(rv, drs_ccf_rvc)
+        rv_err = np.append(rv_err, drs_ccf_noise)
+import matplotlib.pyplot as plt
+%matplotlib widget
+plt.figure()
+plt.errorbar(time, rv, yerr=rv_err, fmt='o')
+
+```
+
 ### barrcorr.py
 
 ```Python
