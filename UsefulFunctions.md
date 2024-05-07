@@ -27,7 +27,34 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+### Get HARPS RV from ESO Archive
 
+
+```Python
+# Download HARPSSTAR .tar data
+
+path = '/Volumes/TESS_GO/ESO_Data/HD189733/archive/'
+tars = [x for x in os.listdir(path) if x.endswith('.tar') and not x.startswith('.')]
+import glob
+
+rvs = np.asarray([]); rv_errs = np.asarray([]); bjds = np.asarray([])
+for tar in tars:
+    os.system('tar -zxvf '+path+tar)
+    fits_files = glob.glob(os.path.join('.', '**', '*ccf*.fits'), recursive=True)
+    print(tar)
+    hdu = fits.open(fits_files[0])
+    hdu[0].header
+
+    rv = hdu[0].header['HIERARCH ESO DRS CCF RVC']
+    rv_err = hdu[0].header['HIERARCH ESO DRS CCF NOISE']
+    bjd = hdu[0].header['HIERARCH ESO DRS BJD']
+    # print(rv, rv_err, bjd
+    rvs = np.append(rvs, rv); rv_errs = np.append(rv_errs, rv_err); bjds = np.append(bjds, bjd)
+    os.system('rm -rf data')
+    
+
+
+```
 
 ### download HARPS RV 2003 to 2023
 ```Python
