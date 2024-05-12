@@ -27,6 +27,58 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+
+### Photoeccentric effect 
+
+
+```Python
+import numpy as np
+import corner
+
+
+ecc_list = np.asarray([])
+weight_list = np.asarray([])
+omega_list = np.asarray([])
+
+
+rho_cir_median = 9
+rho_cir_err = 0.01
+
+for i in range(1000):
+    N = 1000
+    rho_circ = np.random.normal(rho_cir_median, rho_cir_err, N)
+    ecc = np.random.uniform(0, 1, N)
+    omega = np.random.uniform(-np.pi, np.pi, N)
+    g = (1 + ecc * np.sin(omega)) / np.sqrt(1 - ecc**2)
+    rho = rho_circ / g[:, None] ** 3
+
+    log_weights = -0.5 * ((rho - 1) / 0.001) ** 2
+    weights = np.exp(log_weights[:, 0] - np.max(log_weights[:, 0]))
+    ecc_list = np.append(ecc_list, ecc)
+    weight_list = np.append(weight_list, weights)
+    omega_list = np.append(omega_list, omega)
+
+q = corner.quantile(ecc_list, [0.16, 0.5, 0.84], weights=weight_list)
+q50, q16, q84 = q
+
+print(f"ecc = {q50:.2f} +{q84 - q50:.2f} {q50 - q16:.2f}")
+
+# idx = np.where(weight_list > 0)
+# ecc_list = ecc_list[idx]
+# omega_list = omega_list[idx]
+data = np.vstack([ecc_list, omega_list]).T
+
+figure = corner.corner(
+    data,
+    labels=[r"$e$", r"$\omega$"],
+    quantiles=[0.16, 0.5, 0.84],
+    weights=weight_list,
+)
+
+```
+
+
+
 ### Get HARPS RV from ESO Archive
 
 
