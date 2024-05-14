@@ -26,6 +26,64 @@ find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
 find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
+### Unfinished Matlab Hirano2011; still slow
+
+```Python
+
+beta = 1;
+gamma = 1;
+u1 = 0.3;
+u2 = 0.2;
+vsini = 3;
+vp = 1; % km/s
+zeta = 1;
+sigma = 1;  
+t = 1;      
+f = 1;
+costheta = 0;
+sintheta = 0;
+pi_squared = pi^2;
+
+
+f_upper = @(phi, t, sigma) exp(-2*pi_squared*beta.^2*sigma.^2 - 4*pi.*gamma.*sigma) .* ...
+                     (1 - u1 * (1 - sqrt(1 - t.^2)) - u2 * (1 - sqrt(1 - t.^2)).^2) ./ ...
+                     (1 - u1 / 3 - u2 / 6) .* ...
+                     (exp(-pi_squared * zeta.^2 .* sigma.^2 .* (1 - t.^2)) + exp(-pi.^2 * zeta.^2 .* sigma.^2 .* t.^2)) .* ...
+                     cos(2 * pi .* sigma .* vsini .* t .* cos(phi)) .* ...
+                     sin(2 * pi .* sigma .* vp) .* ...
+                     0.5 .*  (exp(-(pi*zeta*costheta).^2 * sigma.^2) + exp(-(pi*zeta*sintheta).^2 * sigma.^2));
+f_lower = @(phi, t, sigma) exp(-2*pi_squared*beta.^2*sigma.^2 - 4*pi.*gamma.*sigma) .* ...
+                     (1 - u1 * (1 - sqrt(1 - t.^2)) - u2 * (1 - sqrt(1 - t.^2)).^2) ./ ...
+                     (1 - u1 / 3 - u2 / 6) .* ...
+                     (exp(-pi.^2 * zeta.^2 .* sigma.^2 .* (1 - t.^2)) + exp(-pi.^2 * zeta.^2 .* sigma.^2 .* t.^2)) .* ...
+                     cos(2 * pi .* sigma .* vsini .* t .* cos(phi)) .* ...
+                     ((1 - u1 * (1 - sqrt(1 - t.^2)) - u2 * (1 - sqrt(1 - t.^2)).^2) ./ ...
+                     (1 - u1 / 3 - u2 / 6) .* ...
+                     (exp(-pi_squared * zeta.^2 .* sigma.^2 .* (1 - t.^2)) + exp(-pi_squared * zeta.^2 .* sigma.^2 .* t.^2)) .* ...
+                     cos(2 * pi .* sigma .* vsini .* t .* cos(phi)) - f*0.5 .*  (exp(-(pi*zeta*costheta).^2 * sigma.^2) ...
+                     + exp(-(pi*zeta*sintheta).^2 * sigma.^2)) .* cos(2 * pi .* sigma .* vp)  );
+                     
+
+tic
+I_upper = integral3(f_upper, 0, 2*pi, 0, 1, 0, 5, 'AbsTol',1e-3, 'RelTol', 1e-3,'Method','tiled'); 
+I_lower = integral3(f_lower, 0, 2*pi, 0, 1, 0, 5, 'AbsTol',1e-3, 'RelTol', 1e-3,'Method','tiled');
+ratio = I_upper/ I_lower
+toc
+
+disp('The integral result is:');
+disp(I);
+
+
+% correct
+% f = @(phi) cos(2 * pi * sigma * vsini * t * cos(phi));
+% I = integral(f,0,2*pi)
+
+% f = @(r,theta,phi,xi) r.^3 .* sin(theta).^2 .* sin(phi);
+% Q = @(r) integral3(@(theta,phi,xi) f(r,theta,phi,xi),0,pi,0,pi,0,2*pi);
+% I = integral(Q,0,2,'ArrayValued',true)
+
+```
+
 
 
 ### Photoeccentric effect 
