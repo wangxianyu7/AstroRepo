@@ -29,7 +29,52 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 ### Unfinished Matlab Hirano2011; still slow
 
 ```Python
+############2nd
+beta = 1;
+gamma = 1;
+u1 = 0.3;
+u2 = 0.2;
+vsini = 3;
+vp = 1; % km/s
+zeta = 1;
+sigma = 1;  
+t = 1;      
+f = 1;
+costheta = 0;
+sintheta = 0;
+pi_squared = pi^2;
 
+
+phi_arr = 0:.01:2*pi;
+t_arr = 0:.01:1;
+sigma_arr = 0:.01:10;
+[phi, t, sigma] = meshgrid(phi_arr, t_arr, sigma_arr);
+
+F = exp(-2*pi_squared*beta.^2*sigma.^2 - 4*pi.*gamma.*sigma) .* ...
+                     (1 - u1 * (1 - sqrt(1 - t.^2)) - u2 * (1 - sqrt(1 - t.^2)).^2) ./ ...
+                     (1 - u1 / 3 - u2 / 6) .* ...
+                     (exp(-pi_squared * zeta.^2 .* sigma.^2 .* (1 - t.^2)) + exp(-pi.^2 * zeta.^2 .* sigma.^2 .* t.^2)) .* ...
+                     cos(2 * pi .* sigma .* vsini .* t .* cos(phi)) .* ...
+                     sin(2 * pi .* sigma .* vp) .* ...
+                     0.5 .*  (exp(-(pi*zeta*costheta).^2 * sigma.^2) + exp(-(pi*zeta*sintheta).^2 * sigma.^2));
+
+
+disp(Iz);
+
+tic
+% 1:y; 3; z; 2 x
+Ix = trapz(phi_arr, F, 2);
+Iy = trapz(t_arr, Ix, 1);
+Iz = trapz(sigma_arr, Iy, 3);
+toc
+
+
+
+
+
+
+
+############# 1st
 beta = 1;
 gamma = 1;
 u1 = 0.3;
