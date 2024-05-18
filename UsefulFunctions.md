@@ -3516,67 +3516,32 @@ for gaia_id in gaia_ids:
 ### make new priors from mcmc table
 
 ```Python
-import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
 import os
-from shutil import copyfile
-from datetime import datetime
+import numpy as np
 
-def mk_prior(work_folder):
+work_folder = '.'
 
-    mcmc_save_table = pd.read_csv( os.path.join(work_folder, 'results/mcmc_table.csv') )
-    mcmc_save_table['#name'].to_list()
-    mcmc_save_table
-    new_priors = []
-    with open( os.path.join(work_folder, 'params.csv'), 'r') as f:
-        for line in f.readlines():
-            line = line.strip()
-            name = line.split(',')[0]
-            if '#' in name or name == '':
-                # print(line)
-                new_priors.append(line)
-                continue
-            new_table = mcmc_save_table[mcmc_save_table['#name'] == name]
-            fit = 1
-            if 'fixed' in new_table['lower_error'].values[0]:
-                fit = 0
-                new_priors.append(line)
-            else:
-                err = np.max([float(new_table['upper_error'].values[0]), float(new_table['lower_error'].values[0])])
-                if '_rr' in name or '_rsuma' in name or 'q1' in name or 'q2' in name or 'cosi' in name:
-                    # print(name)
-                    new_priors.append(name + ',' + str(new_table['median'].values[0]) + ',' + str(fit) + ',' + 'uniform 0 1,' + ','.join(line.split(',')[4:]))
-                elif 'f_c' in name or 'f_s' in name:
-                    new_priors.append(name + ',' + str(new_table['median'].values[0]) + ',' + str(fit) + ',' + 'uniform -1 1,' + ','.join(line.split(',')[4:]))
-                elif 'ln_err' in name or 'ln_jitter' in name:
-                    new_priors.append(name + ',' + str(new_table['median'].values[0]) + ',' + str(fit) + ',' + 'uniform -15 0,' + ','.join(line.split(',')[4:]))
-                elif 'lambda' in name:
-                    new_priors.append(name + ',' + str(new_table['median'].values[0]) + ',' + str(fit) + ',' + 'uniform -360 360,' + ','.join(line.split(',')[4:]))
-                elif '_K' in name:
-                    new_priors.append(name + ',' + str(new_table['median'].values[0]) + ',' + str(fit) + ',' + 'uniform 0 10,' + ','.join(line.split(',')[4:]))                    
-                elif '_period' in name or '_epoch' in name:
-                    new_priors.append(name + ',' + str(new_table['median'].values[0]) + ',' + str(fit) + ',' + 'uniform '+str(new_table['median'].values[0]-1)+\
-                                      ' '+str(new_table['median'].values[0]+1)+',' + ','.join(line.split(',')[4:]))  
-                elif 'vsini' in name:
-                    new_priors.append(name + ',' + str(new_table['median'].values[0]) + ',' + str(fit) + ',' + 'uniform 0 '+str(new_table['median'].values[0]+5)+',' + ','.join(line.split(',')[4:]))
-                else:
-                    new_priors.append(name + ',' + str(new_table['median'].values[0]) + ',' + str(fit) + ',' + 'normal '+str(new_table['median'].values[0])\
-                    +' '+ str(err) + ',' + ','.join(line.split(',')[4:]))
-    now = datetime.now()
-    current_time = now.strftime("%Y-%m-%d-%H-%M-%S"); current_time = current_time.replace('-','_')
-    old_prior = os.path.join(work_folder, 'params.csv')
-    cp_old_prior = os.path.join(work_folder, 'params_'+current_time+'.csv')
-    copyfile(old_prior, cp_old_prior)
+priors_table = pd.read_csv(os.path.join(work_folder, 'params.csv'))
+priors_table = priors_table[~priors_table['#name'].str.startswith('#')]
+mcmc_save_table = pd.read_csv(os.path.join(work_folder, 'results/mcmc_table.csv'))
+mcmc_save_table = mcmc_save_table[~mcmc_save_table['#name'].str.startswith('#')]
+mcmc_name_list = mcmc_save_table['#name'].to_list()
+priors_columns_list = priors_table.columns.to_list()
+valid_names = priors_table.loc[~priors_table['value'].isna(), '#name'].to_list()
 
-    with open(old_prior, 'w') as f:
-        for line in new_priors:
-            f.write(line+'\n')  
-      
-if __name__ == '__main__':
-    pass
-    work_folder = '..'
-    mk_prior(work_folder)
+for i, valid_name in enumerate(valid_names):
+    mcmc_value = mcmc_save_table.loc[mcmc_save_table['#name'] == valid_name, 'median'].values[0]
+    priors_table.loc[priors_table['#name'] == valid_name, 'value'] = mcmc_value
+    
+# make a copy of the old priors file
+import time
+time_str = time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime())
+old_priors_file = os.path.join(work_folder, 'params.csv')
+new_priors_file = os.path.join(work_folder, 'params_'+time_str+'.csv')
+os.system('cp '+old_priors_file+' '+new_priors_file)
+# make a new priors file
+priors_table.to_csv(old_priors_file, index=False)
 ```
 
 ### plot arrow for fig 
