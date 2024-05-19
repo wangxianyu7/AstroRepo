@@ -26,6 +26,31 @@ find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
 find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
+
+### get_exoclock_emp
+
+```python
+import urllib
+import json
+
+def get_exoclock_emp(name):
+    exoclock_planets = json.loads(urllib.request.urlopen('https://www.exoclock.space/database/planets_json').read())
+    try:
+        ephem_mid_time = exoclock_planets[name.replace(' ', '')]['ephem_mid_time']
+        ephem_mid_time_e1 = exoclock_planets[name.replace(' ', '')]['ephem_mid_time_e1']
+        ephem_mid_time_e2 = exoclock_planets[name.replace(' ', '')]['ephem_mid_time_e2']
+        ephem_period = exoclock_planets[name.replace(' ', '')]['ephem_period']
+        ephem_period_e1 = exoclock_planets[name.replace(' ', '')]['ephem_period_e1']
+        ephem_period_e2 = exoclock_planets[name.replace(' ', '')]['ephem_period_e2']
+        ephem_parameters_ref = exoclock_planets[name.replace(' ', '')]['ephem_parameters_ref']
+        return ephem_mid_time, ephem_mid_time_e1, ephem_mid_time_e2, ephem_period, ephem_period_e1, ephem_period_e2, ephem_parameters_ref
+    except:
+        print(name, 'is not in', exoclock_planets.keys())
+
+```
+
+
+
 ### Unfinished Matlab Hirano2011; still slow
 
 ```Python
