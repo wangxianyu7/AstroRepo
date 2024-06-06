@@ -26,6 +26,113 @@ find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
 find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
+### stitch NEID spectra
+```
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+# minimize
+import os
+from scipy.optimize import minimize
+from astropy.io import fits
+
+
+def residual(norm_factor, flux_order, blaze_order):
+    resi = flux_order / (blaze_order / norm_factor)
+    median_resi = np.median(resi)
+    sigma_resi = np.std(resi)
+    sigma_1_idx = np.where((resi > median_resi - 2 * sigma_resi) & (resi < median_resi + 2 * sigma_resi))
+    sigma_1_idx = np.where((resi > median_resi - 0.1 * sigma_resi))
+    return ((resi[sigma_1_idx] - 1) ** 2).sum()
+
+
+fits_files = [x for x in os.listdir() if x.endswith('.fits')]
+
+for j, filename in enumerate(fits_files):
+    print(j, len(fits_files), filename)
+    hdul = fits.open(filename)
+
+    flux = hdul['SCIFLUX'].data
+    wave = hdul['SCIWAVE'].data
+    SCIBLAZE = hdul['SCIBLAZE'].data
+    SKYBLAZE = hdul['SKYBLAZE'].data
+
+    plt.figure(figsize=(10, 5))
+    norm_factor = 10
+    waves = np.asarray([])
+    fluxes = np.asarray([])
+
+
+
+    norm_factor_50 = 0
+    norm_factor_78 = 0
+    for order in range(47,84):
+    # for order in range(47,49):
+        wave_order = wave[order]; flux_order = flux[order]
+        idx = np.where(flux_order < 1e99)
+        wave_order = wave_order[idx]; flux_order = flux_order[idx]
+        blaze_order = SCIBLAZE[order][idx]
+        half_space = 2300
+        start_idx = int(4608-half_space-500-(order-46)*10)
+        end_idx = int(4608+half_space-1000+(order-46)*30)
+        res = minimize(residual, norm_factor, args=(flux_order[start_idx:end_idx], blaze_order[start_idx:end_idx]), method='nelder-mead', options={'xatol': 1e-8, 'disp': False})
+        norm_factor =  res.x[0]
+        if order==50:
+            norm_factor_50 = norm_factor
+        if order==78:
+            norm_factor_78 = norm_factor
+    # print(norm_factor_50, norm_factor_78)
+    tmp_wave_77 = None
+    tmp_wave_78 = None
+    offset = 0
+    for order in range(45,84):
+    # for order in range(47,49):
+        wave_order = wave[order]; flux_order = flux[order]
+        idx = np.where(flux_order < 1e99)
+        wave_order = wave_order[idx]; flux_order = flux_order[idx]
+        blaze_order = SCIBLAZE[order][idx]
+        half_space = 2300
+        start_idx = int(4608-half_space-500-(order-46)*10)
+        end_idx = int(4608+half_space-1000+(order-46)*30)
+        res = minimize(residual, norm_factor, args=(flux_order[start_idx:end_idx], blaze_order[start_idx:end_idx]), method='nelder-mead', options={'xatol': 1e-8, 'disp': False})
+        norm_factor =  res.x[0]
+        norm_flux = flux_order/blaze_order*norm_factor
+
+
+        wave_start_end = wave_order[start_idx:end_idx]
+        norm_flux_start_end = norm_flux[start_idx:end_idx]
+        wave_start_end_fit = wave_start_end - np.mean(wave_start_end)
+        wave_start_end = wave_order[start_idx:end_idx]
+        norm_flux_start_end = flux_order[start_idx:end_idx]/( blaze_order[start_idx:end_idx]/norm_factor_50)
+        
+        if order==77:
+            idx_6400_6420 = np.where((wave_start_end > 6416) & (wave_start_end < 6420))
+            tmp_wave_77 = wave_start_end[idx_6400_6420]
+            tmp_flux_77 = norm_flux_start_end[idx_6400_6420]
+            tmp_wave_77_resample = np.arange(6416, 6420, 0.001)
+            tmp_flux_77_resample = np.interp(tmp_wave_77_resample, tmp_wave_77, tmp_flux_77)
+        if order==78:
+            idx_6400_6420 = np.where((wave_start_end > 6416) & (wave_start_end < 6420))
+            tmp_wave_78 = wave_start_end[idx_6400_6420]
+            tmp_flux_78 = norm_flux_start_end[idx_6400_6420]
+            tmp_wave_78_resample = np.arange(6416, 6420, 0.001)
+            tmp_flux_78_resample = np.interp(tmp_wave_78_resample, tmp_wave_78, tmp_flux_78)
+            offset = np.nanmedian(tmp_flux_77_resample/tmp_flux_78_resample)
+            print(offset)
+        if order > 77:
+            norm_flux_start_end = norm_flux_start_end*offset
+
+        idx = np.where(norm_flux_start_end < 3)
+        plt.text(np.mean(wave_start_end[idx]), 1.5, str(order), fontsize=8)
+        plt.plot(wave_start_end[idx], norm_flux_start_end[idx],zorder=100,linewidth=0.5)
+        waves = np.append(waves, wave_start_end[idx])
+        fluxes = np.append(fluxes, norm_flux_start_end[idx])
+    plt.axhline(1, color='black', linewidth=0.5)
+    plt.xlim(6416, 6424)
+    # plt.ylim(0.7, 1.1)
+    plt.savefig(filename.strip('.fits')+'.png', dpi=300)
+    np.savetxt(filename.strip('.fits')+'.txt', np.transpose([waves/10, fluxes, fluxes*0]), fmt='%.6f', delimiter='\t', header='waveobs flux err', comments='')
+```
 
 ### get_exoclock_emp
 
