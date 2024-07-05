@@ -26,6 +26,37 @@ find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
 find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
+### change starry image color to black
+
+```
+### ~L520
+            if ax is None:
+                fig, ax = plt.subplots(1, figsize=figsize)
+                fig.patch.set_facecolor('k')
+                # fig.patch.set_alpha(0.7)
+            else:
+                fig = ax.figure
+            ax.axis("off")
+            ax.set_facecolor("k")
+            
+            ax.set_xlim(-1.05, 1.05)
+            ax.set_ylim(-1.05, 1.05)
+            
+            dx = 2.0 / image.shape[1]
+            extent = (-1 - dx, 1, -1 - dx, 1)
+
+            # Anti-aliasing at the edges
+            xp, yp, xm, ym = self._get_ortho_borders()
+            borders += [
+                ax.fill_between(xp, 1.1 * yp, yp, color="k", zorder=-1)
+            ]
+            borders += [
+                ax.fill_between(xm, 1.1 * ym, ym, color="k", zorder=-1)
+            ]
+
+```
+
+
 ### stitch NEID spectra
 ```
 import numpy as np
