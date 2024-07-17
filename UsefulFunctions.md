@@ -26,6 +26,47 @@ find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
 find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
+
+### ar 2 period
+
+```
+# ar to period
+
+
+def period2ar(st_mass, st_rad, period):
+    import astropy.units as u
+    import astropy.constants as const
+
+    # host star mass
+    st_mass = st_mass * u.Msun
+    st_rad = st_rad * u.Rsun
+
+    pl_orbperiod = period * u.day
+    pl_orbsmax = (const.G * st_mass * pl_orbperiod**2 / (4 * np.pi**2))**(1/3)
+    pl_ratdor = pl_orbsmax / st_rad
+    value = pl_ratdor.to(u.dimensionless_unscaled)
+    return value
+
+
+def ar2period(st_mass, st_rad, ar):
+    import astropy.units as u
+    import astropy.constants as const
+
+    # host star mass
+    st_mass = st_mass * u.Msun
+    st_rad = st_rad * u.Rsun
+    
+    pl_ratdor = ar
+    pl_orbsmax = st_rad * pl_ratdor
+    pl_orbperiod = np.sqrt(4 * np.pi**2 * pl_orbsmax**3 / (const.G * st_mass))
+    
+    value = pl_orbperiod.to(u.day)
+    
+    return value
+```
+
+
+
 ### change starry image color to black
 
 ```
