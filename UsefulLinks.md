@@ -1,3 +1,8 @@
+### Poster Galleries
+- TESS Sci Con II: https://zenodo.org/communities/tsc2/records?q=&l=list&p=1&s=10&sort=newest
+- https://exoplanets5.org/posterspreview/
+- https://www.astrobetter.com/wiki/Presentation%2bSkills
+
 ### SED fit
 - VOSA: http://svo2.cab.inta-csic.es/theory/vosa/
 - isoclassify: https://github.com/danxhuber/isoclassify/tree/master/isoclassify
