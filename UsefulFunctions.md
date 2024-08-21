@@ -27,6 +27,72 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+Clean SG2
+
+```Python
+import os
+import time
+import requests
+import pandas as pd
+# download the obliquity data from the website
+
+
+name = 'pscomppars.csv'
+date = time.strftime("%Y-%m-%d", time.localtime())
+dated_name = 'pscomppars_'+date+'.csv'
+# check if the file exists
+if os.path.exists(dated_name):
+    print(dated_name+' exists')
+else:
+    target_url = 'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+*+from+pscomppars&format=csv'
+    response = requests.get(target_url)
+    data = response.text
+    print('downloading '+dated_name)
+    with open(dated_name, 'w') as f:
+        print(data, file=f)
+pscomppars_table = pd.read_csv('pscomppars_'+date+'.csv', comment='#')
+
+
+
+import numpy as np
+ps_tics = pscomppars_table['tic_id']
+ps_tics_list = []
+for tic in ps_tics:
+    if 'TIC' in str(tic):
+        ps_tics_list.append(tic.split('TIC ')[1])
+ps_tics_list = np.array(ps_tics_list).astype(int)
+
+
+
+
+
+SG2_SG4_Aug21 = pd.read_csv('SG2_SG4_Aug21.csv')
+allowed_keys = ['KP', 'P', 'CPC', 'APC', 'VP', 'CPC-', 'VPC',  'VPC+',  'PC',  'NPC', 'VPC-',
+                'PPC', 'VPC+?', 'VPC?', 'VPC-+', 'CPC?',  'VPC-?',  'NPC?', 'CP']
+SG2_SG4_Aug21 = SG2_SG4_Aug21[SG2_SG4_Aug21['SG1 Disposition'].isin(allowed_keys)]
+SG2_SG4_Aug21 = SG2_SG4_Aug21[~SG2_SG4_Aug21['TIC'].isin(ps_tics_list)]
+
+remove_idx = []
+for i in range(len(SG2_SG4_Aug21)):
+    this_sg2_note = SG2_SG4_Aug21['Facilities/Teams Planning SG2 Observations \n(spectra in hand)'].iloc[i]
+    if 'sb' in str(this_sg2_note).lower() or 'bd' in str(this_sg2_note).lower():
+        remove_idx.append(i)
+        
+SG2_SG4_Aug21 = SG2_SG4_Aug21.drop(SG2_SG4_Aug21.index[remove_idx])
+SG2_SG4_Aug21['Rp']
+
+import matplotlib.pyplot as plt
+
+_ = plt.hist(SG2_SG4_Aug21['Rp'], bins=2000)
+plt.xlim(0, 50)
+plt.xlabel('Rp (R_Earth)')
+plt.ylabel('Number of planets')
+plt.axvline(2.5, color='r', linestyle='--')
+plt.axvline(12.5, color='r', linestyle='--')
+plt.show()
+```
+
+
 ### ar 2 period
 
 ```
