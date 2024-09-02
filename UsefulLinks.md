@@ -1,3 +1,8 @@
+### Stellar Rotation
+- https://github.com/RuthAngus/starspot
+- https://github.com/ramstojh/kanchay?tab=readme-ov-file
+- https://github.com/rae-holcomb/SpinSpotter
+
 ### Poster Galleries
 - TESS Sci Con II: https://zenodo.org/communities/tsc2/records?q=&l=list&p=1&s=10&sort=newest
 - https://exoplanets5.org/posterspreview/
