@@ -27,6 +27,59 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+Read HARPS and HARPS_N
+
+```Python
+
+import os
+import astropy.io.fits as fits
+
+path = '/Volumes/TESS_GO/TOI-892'
+
+
+fits_files = [x for x in os.listdir(path) if x.endswith('.fits.gz') and 'G2_A' in x and '._' not in x]
+
+times = np.asarray([]); rvs = np.asarray([]); rvs_err = np.asarray([])
+for fits_file in fits_files:
+    header = fits.open(os.path.join(path, fits_file))[0].header
+    rv = header['HIERARCH TNG DRS CCF RV']
+    rv_err = header['HIERARCH TNG DRS CCF NOISE']
+    mjd = header['MJD-OBS']
+    times = np.append(times, mjd); rvs = np.append(rvs, rv); rvs_err = np.append(rvs_err, rv_err)
+import matplotlib.pyplot as plt
+plt.figure(figsize=(10, 5))
+plt.errorbar(times, rvs, yerr=rvs_err, fmt='o')
+
+# ccf_G2_A.fits
+# 
+root_paht = '/Volumes/TESS_GO/WASP_87/archive/'
+
+# find all files ending with ccf_G2_A.fits
+
+times = np.asarray([]); rvs = np.asarray([]); rvs_err = np.asarray([])
+for root, dirs, files in os.walk(root_paht):
+    for file in files:
+        if file.endswith('ccf_G2_A.fits') and '._' not in file:
+            print(file)
+            header = fits.open(os.path.join(root, file))[0].header
+            try:
+                rv = header['HIERARCH ESO DRS CCF RV']
+                rv_err = header['HIERARCH ESO DRS CCF NOISE']
+                mjd = header['MJD-OBS']
+                times = np.append(times, mjd); rvs = np.append(rvs, rv); rvs_err = np.append(rvs_err, rv_err)
+            except:
+                pass
+            
+plt.figure(figsize=(10, 5))
+plt.errorbar(times%1.6827, rvs, yerr=rvs_err, fmt='o')
+
+
+
+
+```
+
+
+
 Clean SG2
 
 ```Python
