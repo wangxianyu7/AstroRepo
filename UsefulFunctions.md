@@ -27,6 +27,41 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+
+### tic 2 tefff
+```Python
+import os
+import time
+import requests
+import pandas as pd
+# download the obliquity data from the website
+
+
+name = 'pscomppars.csv'
+date = time.strftime("%Y-%m-%d", time.localtime())
+dated_name = 'pscomppars_'+date+'.csv'
+# check if the file exists
+if os.path.exists(dated_name):
+    print(dated_name+' exists')
+else:
+    target_url = 'https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+*+from+pscomppars&format=csv'
+    response = requests.get(target_url)
+    data = response.text
+    print('downloading '+dated_name)
+    with open(dated_name, 'w') as f:
+        print(data, file=f)
+pscomppars_table = pd.read_csv('pscomppars_'+date+'.csv', comment='#')
+import os
+os.system('rm pscomppars_'+date+'.csv')
+def tic2teff(tic_id):
+    this_row = pscomppars_table[pscomppars_table['tic_id'] == tic_id]
+    st_teff = this_row['st_teff'].values[0]
+    st_tefferr1 = this_row['st_tefferr1'].values[0]
+    st_tefferr2 = this_row['st_tefferr2'].values[0]
+    return st_teff, st_tefferr1, st_tefferr2
+```
+
+
 Read HARPS and HARPS_N
 
 ```Python
