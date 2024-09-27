@@ -26,7 +26,21 @@ find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
 find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
+### Python Opening
 
+```
+import numpy as np
+import pandas as pd
+import os
+import sys
+from astroquery.simbad import Simbad
+from astroquery.gaia import Gaia
+import astropy
+from wotan import flatten, transit_mask
+import lightkurve as lk
+import matplotlib.pyplot as plt
+import warnings
+```
 
 ### tic 2 tefff
 ```Python
