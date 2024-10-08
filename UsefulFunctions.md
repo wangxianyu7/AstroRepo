@@ -42,6 +42,33 @@ import matplotlib.pyplot as plt
 import warnings
 ```
 
+
+### fit.pro2vmarg
+```
+vm_str = '''
+exofastv2,nplanets=1,rvpath='/N/slate/xwa5/xianyuwangfolder/wjs/XO3_EXOFAST/DT/n*RV.rv', tranpath='/N/slate/xwa5/xianyuwangfolder/wjs/XO3_EXOFAST/DT/n*flux',ttvpath='/N/slate/xwa5/xianyuwangfolder/wjs/XO3_EXOFAST/DT/n20240817.b.ttv',$
+          priorfile='/N/slate/xwa5/xianyuwangfolder/wjs/XO3_EXOFAST/DT/8400842.priors',prefix='/N/slate/xwa5/xianyuwangfolder/wjs/XO3_EXOFAST/DT/fitresults/8400842.',$
+          mistsedfile='/N/slate/xwa5/xianyuwangfolder/wjs/XO3_EXOFAST/DT/8400842.sed', $
+		  dtpath='/N/slate/xwa5/xianyuwangfolder/wjs/XO3_EXOFAST/DT/*.fits',$
+          maxsteps=100000,nthin=10, fittran=[1],fitrv=[1],$
+          debug=debug, nthreads=63, restorebest=1,verbose=verbose,maxgr=1.1, mintz=200,$
+          stopnow=0,maxtime=43200,OPTMETHOD='de',optcriteria=1,skiptt=1
+exit
+
+
+
+
+'''
+vm_str = vm_str.replace('exofastv2', '').replace('exit', '').replace('$', '').replace('\n', '').replace('\'', '').replace(' ', '').replace('","', '|||').replace('\t', '')
+
+for line in vm_str.split(','):
+    if len(line) > 0:
+        print(line)
+
+
+```
+
+
 ### tic 2 tefff
 ```Python
 import os
