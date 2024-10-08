@@ -63,7 +63,12 @@ vm_str = vm_str.replace('exofastv2', '').replace('exit', '').replace('$', '').re
 
 for line in vm_str.split(','):
     if len(line) > 0:
+        if 'debug' in line:
+            continue
+        if 'verbose' in line:
+            continue
         print(line)
+
 
 
 ```
