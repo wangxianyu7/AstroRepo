@@ -42,6 +42,59 @@ import matplotlib.pyplot as plt
 import warnings
 ```
 
+### tic2teffmet
+```
+import json
+import requests
+import numpy as np
+
+def tic2teffmet(tic):
+    url = 'https://exofop.ipac.caltech.edu/tess/target.php?id='+str(tic)+'&json'
+    response = requests.get(url)
+    data = json.loads(response.text)
+    stellar_parameters = data['stellar_parameters']
+    teffs = []
+    mets = []
+    for i in range(len(stellar_parameters)):
+        try:
+            tel = stellar_parameters[i]['tel']
+        except:
+            continue
+        if tel =='':
+            continue
+        teff = stellar_parameters[i]['teff']
+        teff_e = stellar_parameters[i]['teff_e']
+        if teff_e == None:
+            teff_e = 100.123    
+        logg = stellar_parameters[i]['logg']
+        if logg == None:
+            logg = 4.5123
+        logg_e = stellar_parameters[i]['logg_e']
+        vsini = stellar_parameters[i]['vsini']
+        vsini_e = stellar_parameters[i]['vsini_e']
+        if vsini_e == None:
+            vsini_e = 0.123
+        met = stellar_parameters[i]['met']
+        met_e = stellar_parameters[i]['met_e']
+        if met_e == None:
+            met_e = 0.1
+        teffs = teffs + list(np.random.normal(float(teff), float(teff_e), 1000))
+        mets = mets + list(np.random.normal(float(met), float(met_e), 1000))
+        
+    if len(teffs) == 0:
+        return None, None, None, None
+    else:
+        teffs = np.asarray(teffs).flatten()
+        mets = np.asarray(mets).flatten()
+        return np.median(teffs), np.std(teffs), np.median(mets), np.std(mets)
+    
+    
+tic = 337217173
+teff, teff_e, met, met_e = tic2teffmet(tic)
+print(teff, teff_e, met, met_e)
+```
+
+
 
 ### fit.pro2vmarg
 ```
