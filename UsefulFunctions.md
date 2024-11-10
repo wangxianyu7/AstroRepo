@@ -1533,6 +1533,8 @@ rho = 3 * pi * (a/R)**3 / (G * P**2)
 ### CDPP snr calculation
 
 ```Python
+# Note that: this is incorrect. But Xian-Yu confirmed that the paper's calculation is correct.
+# And the results agree with TOI catalog. Need time to fix. 2024 Nov 10 03:27 PM
 import pandas as pd
 
 
