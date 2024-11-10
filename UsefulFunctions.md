@@ -26,6 +26,76 @@ find . -name "*.eps" -type f -exec bash -c 'epstopdf "$0" "${0%.eps}.pdf"' {} \;
 find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
+
+
+### Clean Warm Jupiters Sample
+
+```Python
+import os
+import time
+import requests
+import pandas as pd
+import numpy as np
+import astropy.units as u
+import astropy.constants as c
+import matplotlib.pyplot as plt
+
+name = 'toi.csv'
+date = time.strftime("%Y-%m-%d", time.localtime())
+dated_name = 'toi_'+date+'.csv'
+if os.path.exists(dated_name):
+    print(dated_name+' exists')
+else:
+    target_url = 'https://exofop.ipac.caltech.edu/tess/download_toi.php?sort=toi&output=csv'
+    response = requests.get(target_url)
+    data = response.text
+    print('downloading '+dated_name)
+    with open(dated_name, 'w') as f:
+        print(data, file=f)
+toi_table = pd.read_csv(dated_name)
+os.system('rm '+dated_name)
+
+toi =toi_table
+
+
+
+toi = toi[toi['TESS Mag'] < 13.5]
+toi = toi[toi['Planet Radius (R_Earth)'] > 11.208981*0.8]
+toi = toi[(toi['Period (days)'] > 8) & (toi['Period (days)'] < 200)]
+
+
+st_mass = toi['Stellar Mass (M_Sun)'].values
+period = toi['Period (days)'].values
+
+period = period*u.day
+st_mass = st_mass*u.Msun
+##############################################
+## Keep only the planets that have high probability
+##############################################
+np.unique(toi['TESS Disposition'].values,return_counts=True)
+toi = toi[(toi['TFOPWG Disposition'] == 'CP' ) | (toi['TFOPWG Disposition'] == 'PC') | (toi['TFOPWG Disposition'] == 'APC')]
+toi = toi[(toi['TESS Disposition'] == 'CP' ) | (toi['TESS Disposition'] == 'PC') ]
+toi = toi[toi['Planet SNR'] > 20]
+
+
+toi = toi[toi['Period (days)']<200]
+idx = []
+for i in range(len(toi)):
+    if 'eb' in  str(toi['Comments'].values[i]).lower() or 'sb' in  str(toi['Comments'].values[i]).lower() or 'v-shape' in str(toi['Comments'].values[i]).lower():
+        pass
+    else:
+        idx.append(i)
+        pass
+toi_wj = toi.iloc[idx]
+tic_id = toi_wj['TIC ID'].values
+planet_snr = toi_wj['Planet SNR'].values
+tois = toi_wj['TOI'].values
+toi_wj.to_csv('toi_wj.csv',index=False)
+tic_uniq = np.unique(tic_id)
+
+```
+
+
 ### Python Opening
 
 ```
