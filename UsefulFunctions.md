@@ -27,6 +27,240 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+GOT TTV
+```Python
+# %%
+import sys
+import scipy.stats as stats
+import math
+import matplotlib.gridspec as gridspec
+import gzip, pickle
+from scipy.stats import norm
+from shutil import copyfile
+import emcee
+import numpy as np
+
+# %%
+from matplotlib.ticker import MultipleLocator, \
+    FormatStrFormatter, AutoMinorLocator
+def ticksetax(ax, labelsize=15, ticksize=12, tickwidth=1.5, ticklength=5):
+    ax.tick_params(direction='in', which='both',  width=2,colors='k', bottom='True',top='True', left='True', right='True', labelsize=15)
+    ax.spines['bottom'].set_linewidth(2)
+    ax.spines['left'].set_linewidth(2)
+    ax.spines['right'].set_linewidth(2)
+    ax.spines['top'].set_linewidth(2)
+    ax.xaxis.set_minor_locator(AutoMinorLocator())
+    ax.yaxis.set_minor_locator(AutoMinorLocator())
+
+# %%
+# %%file midtimes.txt
+# 2460155.87091544,0.0005629751176654147,BJD_TDB,TESS,1
+# 2460158.182084075,0.0006478729692925299,BJD_TDB,TESS,1
+# 2460160.4927127236,0.0006271762322530238,BJD_TDB,TESS,1
+# 2460162.8043466494,0.0017837301621797712,BJD_TDB,TESS,1
+# 2460169.736747653,0.0005201690547712917,BJD_TDB,TESS,1
+# 2460172.047833772,0.0005780620460642341,BJD_TDB,TESS,1
+# 2460174.3591026776,0.0006689517338831407,BJD_TDB,TESS,1
+# 2460176.6683759075,0.0006557685951709537,BJD_TDB,TESS,1
+# 2459062.7819910124,0.0005235938637403539,BJD_TDB,TESS,1
+# 2459065.0928612784,0.0005591888543168892,BJD_TDB,TESS,1
+# 2459067.4036947577,0.0006386582555319323,BJD_TDB,TESS,1
+# 2459069.7152420655,0.0006409538898839312,BJD_TDB,TESS,1
+# 2459076.6470739846,0.0005920823323588776,BJD_TDB,TESS,1
+# 2459078.956878636,0.003528929139763574,BJD_TDB,TESS,1
+# 2459081.270241118,0.0006440552732835145,BJD_TDB,TESS,1
+# 2459083.58036514,0.0006365612535308274,BJD_TDB,TESS,1
+# 2458325.5848541623,0.005280898502174849,BJD_TDB,TESS,1
+# 2458327.893462148,0.0006085523243624557,BJD_TDB,TESS,1
+# 2458330.2039186475,0.0006206349242419661,BJD_TDB,TESS,1
+# 2458332.515316971,0.0005434501296873212,BJD_TDB,TESS,1
+# 2458334.8254373507,0.0005546215690210428,BJD_TDB,TESS,1
+# 2458337.1375653213,0.0005862716645603745,BJD_TDB,TESS,1
+# 2458341.7594227656,0.0005381643759153594,BJD_TDB,TESS,1
+# 2458344.07032893,0.0006169268639943809,BJD_TDB,TESS,1
+# 2458346.38130746,0.0005412695374159326,BJD_TDB,TESS,1
+# 2458351.002872908,0.0008729693315132663,BJD_TDB,TESS,1
+
+
+
+data = np.loadtxt('midtimes.txt', delimiter=',', dtype=str)
+sort_idx = np.argsort(data[:,0].astype(float))
+data = data[sort_idx]
+np.savetxt('midtimes.txt', data, delimiter=',', fmt='%s')
+filename = 'midtimes.txt'
+
+period = 2.3109650
+midtimes = data[:,0].astype(float)
+midtimes_err = data[:,1].astype(float)
+sort = np.argsort(midtimes)
+midtimes = midtimes[sort]
+midtimes_err = midtimes_err[sort]
+t0_init = midtimes[int(len(midtimes)/2)]
+t0_err_init = midtimes_err[int(len(midtimes)/2)]
+epoch = np.round((midtimes - t0_init)/period)
+epoch = np.array(epoch); time = np.array(midtimes); err = np.array(midtimes_err)
+
+# %%
+x = epoch
+y = time
+yerr = err
+A = np.vander(x, 2)
+C = np.diag(yerr * yerr)
+ATA = np.dot(A.T, A / (yerr**2)[:, None])
+cov = np.linalg.inv(ATA)
+w = np.linalg.solve(ATA, np.dot(A.T, y / yerr**2))
+print("Least-squares estimates:")
+print("m = {0:.7f} ± {1:.7f}".format(w[0], np.sqrt(cov[0, 0])))
+print("b = {0:.7f} ± {1:.7f}".format(w[1], np.sqrt(cov[1, 1])))
+
+
+# %%
+def covar(x,y):
+    mx = x.mean(); my = y.mean()
+    stdx = x.std();stdy = y.std()
+    covxy = np.cov(x, y)
+    return covxy[0, 1]
+
+def read_data(filename):
+    data = np.loadtxt(filename, delimiter=',', dtype=str)
+    midtimes = data[:, 0].astype(float)
+    midtimeserr = data[:, 1].astype(float)
+    return midtimes, midtimeserr
+
+def least_square(x, y, yerr):
+    A = np.vander(x, 2)
+    C = np.diag(yerr * yerr)
+    ATA = np.dot(A.T, A / (yerr ** 2)[:, None])
+    cov = np.linalg.inv(ATA)
+    w = np.linalg.solve(ATA, np.dot(A.T, y / yerr ** 2))
+    m = w[0]; merr = np.sqrt(cov[0, 0])
+    b = w[1]; berr = np.sqrt(cov[1, 1])
+    residual = y - (x*m+b)
+    covar_value = cov[0, 1]
+    y_model = m*x+b
+
+    sum_ = 0
+    for j in range(len(y)):
+        sum_ = sum_ + (y[j] - y_model[j])**2 / yerr[j]**2
+
+    reduced_chisq = sum_ / (len(y)-2)
+    return m, merr, b, berr, covar_value,reduced_chisq
+
+
+def find_optimal_epoch(ref_period, filename):
+    y, yerr = read_data(filename)
+    x = np.round((y - y[0])/ref_period, 0)
+    covar_list = []
+    optimal_epoch = 0
+    minimum_covar= 1e4
+    optimal_chisq = 0
+    for i in range(-2000,2000):
+        x = np.round((y - y[0])/ref_period, 0)
+        x = x + i
+        m, merr, b, berr, covar_value,reduced_chisq = least_square(x, y ,yerr)
+        if abs(covar_value) < abs(minimum_covar):
+            minimum_covar = covar_value
+            optimal_epoch = x
+            optimal_chisq = reduced_chisq
+        covar_list.append(covar_value)
+    return optimal_epoch, y, yerr, optimal_chisq
+
+
+ref_period = period
+x, y, yerr,optimal_chisq = find_optimal_epoch(ref_period, 'midtimes.txt')
+yerr = yerr*optimal_chisq**0.5
+m, merr, b, berr, covar_value,reduced_chisq = least_square(x, y, yerr)
+oc = y - (x*m + b)
+idx = np.argsort(x)
+
+length = x[-1] - x[0]
+xseq = np.linspace(np.min(x)-1/4*length, np.max(x)+1/4*length, 1000)
+best_t0 = b
+best_epoch = x
+period,best_epoch
+
+
+import numpy as np
+import emcee
+
+def linear_model(x, m, b):
+    return m * x + b
+def log_likelihood(params, x, y, yerr):
+    m, b = params
+    model = linear_model(x, m, b)
+    inv_sigma2 = 1.0 / yerr**2
+    return -0.5 * np.sum((y - model)**2 * inv_sigma2 + np.log(inv_sigma2))
+def log_prior(params):
+    m, b = params
+    if period-1 < m < period+1 and best_t0-1 < b < best_t0+1:
+        return 0.0
+    return -np.inf
+def log_probability(params, x, y, yerr):
+    lp = log_prior(params)
+    if not np.isfinite(lp):
+        return -np.inf
+    return lp + log_likelihood(params, x, y, yerr)
+true_m, true_b = period, best_t0
+
+x = best_epoch
+y = time
+yerr = err
+
+nwalkers, ndim = 32, 2
+pos = np.array([true_m, true_b]) + 1e-4 * np.random.randn(nwalkers, ndim)
+sampler = emcee.EnsembleSampler(nwalkers, ndim, log_probability, args=(best_epoch, y, yerr))
+sampler.run_mcmc(pos, 50000, progress=True)
+samples = sampler.get_chain(discard=200, thin=15, flat=True)
+m_perc = np.percentile(samples[:, 0], [16, 50, 84])
+b_perc = np.percentile(samples[:, 1], [16, 50, 84])
+m_err = np.diff(m_perc)
+b_err = np.diff(b_perc)
+print(f"Best-fit parameters: m = {m_perc[1]:.17f} +{m_err[1]:.17f} -{m_err[0]:.17f}, b = {b_perc[1]:.17f} +{b_err[1]:.17f} -{b_err[0]:.17f}")
+
+
+import matplotlib.pyplot as plt
+ms = samples[:,0]; bs = samples[:,1]
+
+newepoch = np.linspace(best_epoch[0], best_epoch[-1], 1000)
+med_pred_time = np.median(ms[:,None])*newepoch[None,:] + np.median(bs[:,None])
+med_pred_time_obs = np.median(ms[:,None])*best_epoch[None,:] + np.median(bs[:,None])
+
+med_pred_time[0]
+pred_mid = ms[:,None]*newepoch[None,:] + bs[:,None]
+plt.figure(figsize=(12,6))
+ax = plt.gca()
+
+datas = []
+for i in range(len(pred_mid)):
+    # ax.plot(newepoch, (pred_mid[i] - med_pred_time[0])*24*60, "C1", alpha=0.1, zorder=0)
+    datas.append((pred_mid[i] - med_pred_time[0])*24*60)
+datas = np.asarray(datas)
+confs = [68.3, 95.4, 99.7]
+for conf in confs:
+
+    pred_data_array = np.percentile(
+            datas,
+            [50-conf/2, 50, 50+conf/2],
+            axis=(0),
+        )
+    art = ax.fill_between(
+        newepoch, pred_data_array[0], pred_data_array[2], color="C0", alpha=0.3,zorder=10
+    )
+    art.set_edgecolor("none")
+ax.errorbar(best_epoch, (time-med_pred_time_obs)[0]*24*60, yerr=err*24*60, fmt='o', color='#f27100', label='observed', zorder=20,\
+            capsize=7.5, elinewidth=2, ms=7, ecolor='k', mec='k', mew=1)
+ticksetax(ax)
+ax.set_xlabel('Epoch', fontsize=20)
+ax.set_ylabel('O-C (min)', fontsize=20)
+# ax.set_xlim(np.min(newepoch), np.max(newepoch))
+plt.savefig('oc.pdf',bbox_inches='tight')
+oc = (time-med_pred_time_obs)[0]*24*60
+
+for i in range(len(best_epoch)):
+    print(int(best_epoch[i]), '%.7f'%time[i],oc[i],err[i]*24*60)
+
+```
+
 
 ### Clean Warm Jupiters Sample
 
