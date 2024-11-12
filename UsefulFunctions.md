@@ -27,7 +27,7 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
-GOT TTV
+Plot TTV
 ```Python
 # %%
 import sys
