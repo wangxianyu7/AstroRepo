@@ -27,6 +27,18 @@ find . -name "*.ps" -type f -exec bash -c 'ps2pdf "$0" "${0%.ps}.pdf"' {} \;
 
 ```
 
+### Font Style
+
+```Python
+# Set Times New Roman as the base font and override math text fonts
+plt.rcParams['font.family'] = 'serif'
+plt.rcParams['font.serif'] = ['Times New Roman']
+plt.rcParams['mathtext.fontset'] = 'custom'
+plt.rcParams['mathtext.rm'] = 'Times New Roman'  # Roman (normal) font
+plt.rcParams['mathtext.it'] = 'Times New Roman:italic'  # Italic font
+plt.rcParams['mathtext.bf'] = 'Times New Roman:bold'  # Bold font
+```
+
 ### Plot TTV
 ```Python
 # %%
