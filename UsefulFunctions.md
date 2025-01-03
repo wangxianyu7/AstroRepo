@@ -1432,7 +1432,7 @@ times = np.asarray([]); rvs = np.asarray([]); rverrs = np.asarray([])
 for file in file_list:
     hdul = fits.open(file)
     try:
-        time = hdul[0].header["HIERARCH ESO QC BJD"]
+        time = hdul[0].header["HIERARCH ESO QC BJD"] # IN TDB; see https://openaccess.inaf.it/bitstream/20.500.12386/31285/4/TNG-MAN-HARPN-0005_HARPS-N_DRS_Manual_i1r2.pdf
         rv = hdul[0].header['HIERARCH ESO QC CCF RV']
         rverr = hdul[0].header['HIERARCH ESO QC CCF RV ERROR']
         times = np.append(times, time); rvs = np.append(rvs, rv); rverrs = np.append(rverrs, rverr)
