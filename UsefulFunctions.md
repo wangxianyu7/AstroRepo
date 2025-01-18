@@ -8,6 +8,9 @@ https://blocks.jkniest.dev/
 ```
 rsync -av --max-size=500k a/ b/
 
+find . -type f \( -name "*.txt" -o -name "*.sbatch" \) -exec sed -i 's/13fits/14fitsvsini/g' {} +
+
+
 find . -type f -name 'quartzrun.sbatch' -exec grep -l 'mail-type' {} \; | while read file; do
     sed -i '/mail-type/c\#SBATCH --mail-type=FAIL' "$file"
 done
