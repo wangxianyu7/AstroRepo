@@ -3,6 +3,15 @@
 https://blocks.jkniest.dev/
 ```
 
+
+### Time Stamp
+```
+HIERARCH TNG DRS BJD: BJD UTC
+HIERARCH TNG QC BJD: BJD TDB
+
+```
+
+
 ### Common Linux command
 
 ```
