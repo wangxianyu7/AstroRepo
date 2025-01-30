@@ -3315,8 +3315,8 @@ matplotlib.rc('text.latex', preamble=r'\usepackage{sfmath}')
 from matplotlib.ticker import MultipleLocator, \
     FormatStrFormatter, AutoMinorLocator
 def ticksetax(ax, labelsize=15, ticksize=12, tickwidth=1.5, ticklength=5):
-    ax.tick_params(direction='in', which='both', width=linewidth,colors='k', bottom='True',top='True', left='True', right='True', labelsize=15)
     linewidth = 1.5
+    ax.tick_params(direction='in', which='both', width=linewidth,colors='k', bottom='True',top='True', left='True', right='True', labelsize=15)
     ax.spines['bottom'].set_linewidth(linewidth)
     ax.spines['left'].set_linewidth(linewidth)
     ax.spines['right'].set_linewidth(linewidth)
