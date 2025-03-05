@@ -4,6 +4,101 @@ https://blocks.jkniest.dev/
 ```
 
 
+### KS boundary finder
+```Python
+import numpy as np
+from scipy import stats, optimize
+import matplotlib.pyplot as plt
+import warnings
+warnings.filterwarnings("ignore")
+# Set random seed
+np.random.seed(0)
+
+# Generate sample data
+x = np.random.uniform(0, 1000, 100)
+x_err = np.ones_like(x) * 10 + np.random.normal(0, 5, 100)
+x_err = np.abs(x_err)
+
+y = np.random.uniform(0, 1000, 100)
+y_err = np.ones_like(y) * 10 + np.random.normal(0, 5, 100)
+y_err = np.abs(y_err)
+# Apply transformation to y values
+y[x > 500] *= 0.1
+
+# Plot the data with error bars
+plt.figure(figsize=(10, 5))
+plt.errorbar(x, y, xerr=x_err, yerr=y_err, fmt='o', label="Data")
+plt.axvline(500, color='r', linestyle='--', label="True Boundary")
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Data with Error Bars')
+plt.legend()
+plt.show()
+
+# Number of Monte Carlo simulations
+N = 1000
+
+# Define boundaries
+boundaries = np.arange(100, 900, 1)
+
+# Initialize array to store AD statistics
+ad_values = np.zeros((N, len(boundaries)))
+
+# Perform Monte Carlo simulations
+for i in range(N):
+    if i % 100 == 0:
+        print(f"Progress: {i/N*100:.2f}%")
+    
+    # Generate random realizations of the data based on errors
+    x_sim = x + np.random.normal(0, x_err)
+    y_sim = y + np.random.normal(0, y_err)
+    
+    for j, ind_bound in enumerate(boundaries):
+        left_side = y_sim[x_sim < ind_bound]
+        right_side = y_sim[x_sim > ind_bound]
+        
+        if len(left_side) > 5 and len(right_side) > 5:
+            ad_values[i, j] = stats.anderson_ksamp([left_side, right_side]).statistic
+        else:
+            ad_values[i, j] = np.nan  # Avoid issues with too few samples
+
+# Calculate the mean and standard deviation of AD statistics
+ad_mean = np.nanmean(ad_values, axis=0)
+ad_std = np.nanstd(ad_values, axis=0)
+
+# Find the peak boundary location
+peak_index = np.argmax(ad_mean)
+best_boundary = boundaries[peak_index]
+
+# Fit a Gaussian to the peak
+def gaussian(x, a, x0, sigma):
+    return a * np.exp(-(x - x0)**2 / (2 * sigma**2))
+
+# Fit to data near the peak
+fit_range = (boundaries > best_boundary - 50) & (boundaries < best_boundary + 50)
+popt, _ = optimize.curve_fit(gaussian, boundaries[fit_range], ad_mean[fit_range], 
+                             p0=[ad_mean.max(), best_boundary, 30])
+
+# Extract the best-fit boundary and its uncertainty
+boundary_fit, boundary_unc = popt[1], popt[2]
+
+# Plot AD statistic with Gaussian fit
+plt.figure(figsize=(8, 5))
+plt.plot(boundaries, ad_mean, label="Mean AD Statistic")
+plt.axvline(boundary_fit, color='r', linestyle='--', label=f"Best Boundary = {boundary_fit:.2f} ± {boundary_unc:.2f}")
+plt.plot(boundaries[fit_range], gaussian(boundaries[fit_range], *popt), 
+         color='black', linestyle="dashed", label="Gaussian Fit")
+plt.xlabel("Boundary Location")
+plt.ylabel("AD Statistic")
+plt.title("Boundary Detection via AD Statistic")
+plt.legend()
+plt.show()
+
+print(f"Best boundary estimate: {boundary_fit:.2f} ± {boundary_unc:.2f}")
+
+```
+
+
 ### Get Gaia Mag and plx
 ```IDL
 pro getgmag
