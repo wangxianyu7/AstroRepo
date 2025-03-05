@@ -4,7 +4,7 @@ https://blocks.jkniest.dev/
 ```
 
 
-### KS boundary finder
+### AD boundary finder
 ```Python
 import numpy as np
 from scipy import stats, optimize
