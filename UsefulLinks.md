@@ -1,4 +1,5 @@
 ### Stellar Rotation
+- https://github.com/zclaytor/prot
 - https://github.com/RuthAngus/starspot
 - https://github.com/ramstojh/kanchay?tab=readme-ov-file
 - https://github.com/rae-holcomb/SpinSpotter
