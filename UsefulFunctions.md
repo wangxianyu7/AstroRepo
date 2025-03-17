@@ -508,6 +508,8 @@ tic_uniq = np.unique(tic_id)
 ### Python Opening
 
 ```
+# pip install wotan
+# pip install Lightkurve
 import numpy as np
 import pandas as pd
 import os
