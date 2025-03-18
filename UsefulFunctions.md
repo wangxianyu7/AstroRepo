@@ -3,6 +3,103 @@
 https://blocks.jkniest.dev/
 ```
 
+### GP Prot
+```Python
+# DFM+2017 kernel
+# https://ui.adsabs.harvard.edu/abs/2017AJ....154..220F/abstract
+
+import emcee
+import celerite
+from celerite import terms, GP as GaussianProcess
+import matplotlib.pyplot as plt
+from scipy.optimize import minimize
+import autograd.numpy as np
+
+class CustomTerm(terms.Term):
+    parameter_names = ("log_a", "log_b", "log_c", "log_P")
+
+    def get_real_coefficients(self, params):
+        log_a, log_b, log_c, log_P = params
+        b = np.exp(log_b)
+        return (
+            np.exp(log_a) * (1.0 + b) / (2.0 + b), np.exp(log_c),
+        )
+
+    def get_complex_coefficients(self, params):
+        log_a, log_b, log_c, log_P = params
+        b = np.exp(log_b)
+        return (
+            np.exp(log_a) / (2.0 + b), 0.0,
+            np.exp(log_c), 2*np.pi*np.exp(-log_P),
+        )
+        
+bounds = dict(log_a=(None, None), log_b=(None, 5.0), log_c=(-1.0, 1.0),
+              log_P=(-0.5, 5))
+
+def neg_log_like(params, time, y, yerr):
+    log_a, log_b, log_c, log_P, offset = params
+
+    # Ensure log_P is within a valid range
+    if not (-2 <= log_P <= 5):
+        return np.inf  # Return infinite likelihood to reject invalid samples
+
+    try:
+        kernel = CustomTerm(log_a=log_a, log_b=log_b, log_c=log_c, log_P=log_P, bounds=bounds)
+        gp = celerite.GP(kernel, mean=offset, fit_mean=True)
+        gp.compute(time, yerr)
+        log_likelihood = gp.log_likelihood(y)
+
+        if not np.isfinite(log_likelihood):
+            return np.inf  # Reject invalid values
+
+        return -log_likelihood
+    except Exception as e:
+        # print("Exception in neg_log_like:", e)
+        return np.inf  # Catch numerical issues
+
+
+# Generate synthetic data
+time = time_bin
+yerr = flux_err_bin
+true_period = 7  # True rotation period
+y = flux_bin
+
+# Optimize initial values
+initial_params = [0.1, 0.5, -0.01, np.log(true_period), 0.0]
+soln = minimize(neg_log_like, initial_params, args=(time, y, yerr), method="L-BFGS-B")
+optimized_params = soln.x
+print("Optimized log likelihood:", -soln.fun)
+
+# MCMC Sampling
+def log_probability(params, time, y, yerr):
+    return -neg_log_like(params, time, y, yerr)
+
+ndim = len(initial_params)
+nwalkers = 32
+sampler = emcee.EnsembleSampler(nwalkers, ndim, log_probability, args=(time, y, yerr))
+
+p0 = initial_params + 1e-4 * np.random.randn(nwalkers, ndim)
+max_iter = 20000
+acf_converged = False
+
+for sample in sampler.sample(p0, iterations=max_iter, progress=True):
+    tau = emcee.autocorr.integrated_time(sampler.get_chain(), tol=0)
+    if np.all(tau * 50 < sampler.iteration) and sampler.iteration > 500:
+        print("Convergence reached: 50x ACF length.")
+        acf_converged = True
+        break
+
+if not acf_converged:
+    print("Warning: Maximum iterations reached before convergence.")
+
+# Convergence check: Compute ACF length and use the last 40 ACF chains
+acf_length = emcee.autocorr.integrated_time(sampler.get_chain(), tol=0)[-1]
+samples = sampler.get_chain(discard=int(acf_length * 40), thin=10, flat=True)
+log_P_samples = samples[:, 3]
+estimated_period = np.exp(np.median(log_P_samples))
+print("Estimated Rotation Period:", estimated_period)
+```
+
 
 ### AD boundary finder
 ```Python
