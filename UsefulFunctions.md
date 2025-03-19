@@ -2,6 +2,38 @@
 ```
 https://blocks.jkniest.dev/
 ```
+### normalize lambda
+```Python
+def normalize_lambda(lam, lam_lerr, lam_uerr):
+    """
+    Normalize lambda values to the range [0, 180] while adjusting error bars accordingly.
+
+    Parameters:
+    lam (list or array): List/array containing lambda values.
+    lam_lerr (list or array): List/array containing lower errors.
+    lam_uerr (list or array): List/array containing upper errors.
+
+    Returns:
+    list: A list of lists, where each inner list contains [normalized lambda, adjusted lower error, adjusted upper error].
+    """
+    lam_data = []
+
+    for i in range(len(lam)):
+        lambda_val = lam[i]
+
+        # Adjust lambda to be within [0, 360)
+        if lambda_val < 0:
+            lambda_val += 360
+
+        # Convert to [0, 180] range
+        if 0 <= lambda_val < 180:
+            lam_data.append([lambda_val, lam_lerr[i], lam_uerr[i]])
+        else:
+            lam_data.append([360 - lambda_val, lam_uerr[i], lam_lerr[i]])
+
+    return lam_data
+```
+
 
 ### GP Prot
 ```Python
