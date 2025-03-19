@@ -16,7 +16,9 @@ def normalize_lambda(lam, lam_lerr, lam_uerr):
     Returns:
     list: A list of lists, where each inner list contains [normalized lambda, adjusted lower error, adjusted upper error].
     """
-    lam_data = []
+    lam_output = []
+    lam_lerr_output = []
+    lam_uerr_output = []
 
     for i in range(len(lam)):
         lambda_val = lam[i]
@@ -27,11 +29,14 @@ def normalize_lambda(lam, lam_lerr, lam_uerr):
 
         # Convert to [0, 180] range
         if 0 <= lambda_val < 180:
-            lam_data.append([lambda_val, lam_lerr[i], lam_uerr[i]])
+            lam_output.append(lambda_val); lam_lerr_output.append(lam_lerr[i]); lam_uerr_output.append(lam_uerr[i])
         else:
-            lam_data.append([360 - lambda_val, lam_uerr[i], lam_lerr[i]])
+            lam_output.append(360 - lambda_val); lam_lerr_output.append(lam_uerr[i]); lam_uerr_output.append(lam_lerr[i])
 
-    return lam_data
+    return lam_output, lam_lerr_output, lam_uerr_output
+
+
+
 ```
 
 
