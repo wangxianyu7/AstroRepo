@@ -2,6 +2,42 @@
 ```
 https://blocks.jkniest.dev/
 ```
+
+### remove duplicated bibtex entries
+
+```Python
+import bibtexparser
+
+# Load the .bib file
+bib_file_path = "/Users/wangxianyu/Downloads/main.bib"
+cleaned_bib_file = "/Users/wangxianyu/Downloads/main_cleaned.bib"
+
+
+
+import bibtexparser
+
+# Load and parse the .bib file
+with open(bib_file_path, "r", encoding="utf-8") as bibtex_file:
+    bib_database = bibtexparser.load(bibtex_file)
+
+# Deduplicate entries by citation key
+unique_entries = {}
+for entry in bib_database.entries:
+    key = entry.get("ID")
+    if key not in unique_entries:
+        unique_entries[key] = entry
+
+# Save cleaned entries
+cleaned_bib = bibtexparser.bibdatabase.BibDatabase()
+cleaned_bib.entries = list(unique_entries.values())
+
+with open(cleaned_bib_file, "w", encoding="utf-8") as out_file:
+    bibtexparser.dump(cleaned_bib, out_file)
+
+```
+
+
+
 ### normalize lambda
 ```Python
 def normalize_lambda(lam, lam_lerr, lam_uerr):
