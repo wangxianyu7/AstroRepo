@@ -1,3 +1,8 @@
+### Stellar Inclination (Masuda & Winn 2020)
+- https://github.com/mjfields/cosi
+- https://github.com/emilknudstrup/coPsi
+
+
 ### Stellar Rotation
 - https://github.com/zclaytor/prot
 - https://github.com/RuthAngus/starspot
