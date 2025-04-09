@@ -1,3 +1,9 @@
+### ETCs
+- https://www.astro.physik.uni-goettingen.de/research/rvprecision/
+- https://www.eso.org/observing/etc/bin/gen/form?INS.NAME=ESPRESSO+INS.MODE=spectro
+- https://neid-etc.tuc.noirlab.edu/calc_shell/calculate_rv
+- https://etc.eso.org/
+
 ### Stellar Inclination (Masuda & Winn 2020)
 - https://github.com/mjfields/cosi
 - https://github.com/emilknudstrup/coPsi
