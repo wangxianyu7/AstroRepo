@@ -1,3 +1,5 @@
+###  Transiting BDs list
+- https://arxiv.org/pdf/2502.19940
 ### ETCs
 - https://www.astro.physik.uni-goettingen.de/research/rvprecision/
 - https://www.eso.org/observing/etc/bin/gen/form?INS.NAME=ESPRESSO+INS.MODE=spectro
