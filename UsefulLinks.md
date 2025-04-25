@@ -1,3 +1,6 @@
+### MR ploter
+- https://github.com/castro-gzlz/mr-plotter
+
 ###  Transiting BDs list
 - https://arxiv.org/pdf/2502.19940
 ### ETCs
