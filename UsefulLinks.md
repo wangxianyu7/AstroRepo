@@ -8,6 +8,8 @@
 - https://www.eso.org/observing/etc/bin/gen/form?INS.NAME=ESPRESSO+INS.MODE=spectro
 - https://neid-etc.tuc.noirlab.edu/calc_shell/calculate_rv
 - https://etc.eso.org/
+- https://research.iac.es/OOCC/observing-tools/exposure-time-calculators/
+- HARPS-N official: https://www.astro.unige.ch/~buchschn/
 
 ### Stellar Inclination (Masuda & Winn 2020)
 - https://github.com/mjfields/cosi
