@@ -3,6 +3,14 @@
 https://blocks.jkniest.dev/
 ```
 
+### Install Radvel
+
+```
+# Linux Python 3.8.5
+pip install git+https://github.com/California-Planet-Search/radvel.git
+```
+
+
 ### Ubuntu docker
 
 ```
