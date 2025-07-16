@@ -3,6 +3,50 @@
 https://blocks.jkniest.dev/
 ```
 
+### Get psi using coPsi
+```
+import coPsi
+
+
+
+
+def get_psi(Rs_mu, Rs_err, Prot_mu, Prot_err, vsini_mu, vsini_err, lam, lam_lerr, lam_uerr, pl_orbinc, pl_orbinc_lerr, pl_orbinc_uerr):
+    incs = coPsi.iStar(
+        Rs=(Rs_mu, Rs_err, 0, 10, 'gauss'),
+        Prot=(Prot_mu, Prot_err, 0, 100, 'gauss'),
+        vsini=(vsini_mu, vsini_err, 0, 1000, 'gauss')
+    )
+    res_df = incs.stellarInclination(plot_convergence=False, plot_corner=False, plot_vsini=False)
+    incs.createDistributions()
+    incs.dist['incs'] = simulate_PDF(res_df['incs'][0], res_df['incs'][1], res_df['incs'][2], size=N)
+    incs.dist['lam'] = simulate_PDF(lam, lam_lerr, lam_uerr, size=N)
+    incs.dist['inco'] = simulate_PDF(pl_orbinc, pl_orbinc_lerr, pl_orbinc_uerr, size=N)
+    
+    incs.coPsi()
+    psi_dist = incs.dist['psi']
+    psi_v, psi_u, psi_l = incs.getConfidence(psi_dist)
+    
+    return psi_v, psi_u, psi_l
+
+
+Rs_mu = 1.0
+Rs_err = 0.1
+Prot_mu = 10.0
+Prot_err = 0.1
+vsini_mu = 4
+vsini_err = 1
+lam = 0.0
+lam_lerr = 10.0
+lam_uerr = 10.0
+pl_orbinc = 90.0
+pl_orbinc_lerr = 5.0
+pl_orbinc_uerr = 5.0
+N = 1000
+
+psi_v, psi_u, psi_l = get_psi(Rs_mu, Rs_err, Prot_mu, Prot_err, vsini_mu, vsini_err, lam, lam_lerr, lam_uerr, pl_orbinc, pl_orbinc_lerr, pl_orbinc_uerr)
+print('True Obliquity: {:.2f} +{:.2f} -{:.2f}'.format(psi_v, psi_u, psi_l))
+```
+
 ### Install Radvel
 
 ```
