@@ -1,6 +1,9 @@
 ### MR ploter
 - https://github.com/castro-gzlz/mr-plotter
 
+### IDL download page
+- https://portal.nv5geospatialsoftware.com/
+
 ###  Transiting BDs list
 - https://arxiv.org/pdf/2502.19940
 ### ETCs
