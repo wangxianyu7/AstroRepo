@@ -58,7 +58,7 @@ pip install git+https://github.com/California-Planet-Search/radvel.git
 ### Ubuntu docker
 
 ```
-docker run -d --name=ubuntu-webtop --platform linux/amd64 -e PUID=$(id -u) -e PGID=$(id -g) -e TZ=America/New_York -p 3000:3000 -v $HOME/webtop-config:/config --shm-size="1gb" --restart unless-stopped lscr.io/linuxserver/webtop:ubuntu-xfce
+docker run -d --name=ubuntu-webtop --platform linux/amd64 -e PUID=$(id -u) -e PGID=$(id -g) -e TZ=America/New_York -p 3000:3000 -v $HOME/webtop-config:/config --shm-size="1gb" --restart unless-stopped lscr.io/linuxserver/webtop:ubuntu-xfce-4b039743-ls209
 
 ```
 
