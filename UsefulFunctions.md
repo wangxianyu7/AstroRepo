@@ -3,6 +3,70 @@
 https://blocks.jkniest.dev/
 ```
 
+
+### Bayestar and SFD2011 Av
+```
+import astropy.units as u
+from astropy.coordinates import SkyCoord
+from dustmaps.bayestar import BayestarQuery, fetch
+from dustmaps.sfd import SFDQuery
+import numpy as np
+import requests
+import xml.etree.ElementTree as ET
+
+
+
+def SFD_Av(name):
+    """
+    Fetches the A_V value for a given star name using the SFD dust map.
+    """
+    # Construct the URL for the SFD query
+    url = f'https://irsa.ipac.caltech.edu/cgi-bin/DUST/nph-dust?locstr={name}'
+
+    response = requests.get(url)
+    root = ET.fromstring(response.content)
+
+    # Find the SandF E(B-V) value
+    ebv = float(root.find('.//maxValueSandF').text.split()[0])
+    Av = ebv * 3.1
+
+    return Av
+
+
+
+name = 'TOI-1135'  # Example star name
+ra = 134.95762231299219
+dec = -48.48849553932501
+dist = 50          # pc
+
+# 构建 SkyCoord 对象
+coords = SkyCoord(ra, dec, distance=dist,
+                  unit=(u.deg, u.deg, u.pc), frame='icrs')
+
+# 初始化 Bayestar 地图
+dmap = BayestarQuery(version='bayestar2019')
+
+# 获取 E(B-V) 的 15/50/84 百分位
+ebvs = dmap(coords, mode='percentile', pct=[15, 50, 84])
+
+if np.any(np.isnan(ebvs)):
+    Av = SFD_Av(name)
+    Av_e = 0
+else:
+    # 将 E(B-V) 转换为 A_V（使用 Schlafly+2011 的系数）
+    mags = ebvs * 2.742 * 0.884  # = E(B-V) × R_V = A_V
+
+    # 中值和最大误差
+    Av = mags[1]
+    Av_e = max([mags[1] - mags[0], mags[2] - mags[1]])
+
+# 输出结果
+print(f"A_V = {Av:.3f} ± {Av_e:.3f}")
+```
+
+
+
+
 ### Get psi using coPsi
 ```
 import coPsi
