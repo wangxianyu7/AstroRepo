@@ -80,3 +80,28 @@ archivePrefix = {arXiv},
 
 ```
 </details>
+### Facilities
+<details>
+<summary>Details</summary>
+
+### NASA Exoplanet Archive (NEA)
+@ARTICLE{Christiansen2025,
+       author = {{Christiansen}, Jessie L. and {McElroy}, Douglas L. and {Harbut}, Marcy and {Ciardi}, David R. and {Crane}, Megan and {Good}, John and {Hardegree-Ullman}, Kevin K. and {Kesseli}, Aurora Y. and {Lund}, Michael B. and {Lynn}, Meca and {Muthiar}, Ananda and {Nilsson}, Ricky and {Oluyide}, Toba and {Papin}, Michael and {Rivera}, Amalia and {Swain}, Melanie and {Susemiehl}, Nicholas D. and {Tam}, Raymond and {van Eyken}, Julian and {Beichman}, Charles},
+        title = "{The NASA Exoplanet Archive and Exoplanet Follow-up Observing Program: Data, Tools, and Usage}",
+      journal = {arXiv e-prints},
+     keywords = {Earth and Planetary Astrophysics, Instrumentation and Methods for Astrophysics, Solar and Stellar Astrophysics},
+         year = 2025,
+        month = jun,
+          eid = {arXiv:2506.03299},
+        pages = {arXiv:2506.03299},
+          doi = {10.48550/arXiv.2506.03299},
+archivePrefix = {arXiv},
+       eprint = {2506.03299},
+ primaryClass = {astro-ph.EP},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2025arXiv250603299C},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+</details>
+
+
+
