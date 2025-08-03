@@ -1,4 +1,7 @@
 ### Intruments
+<details>
+
+<summary>Details</summary>
 
 #### CARMENES
 ```
@@ -76,3 +79,4 @@ archivePrefix = {arXiv},
 }
 
 ```
+</details>
