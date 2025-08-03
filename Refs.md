@@ -35,3 +35,44 @@
       adsnote = {Provided by the SAO/NASA Astrophysics Data System}
 }
 ```
+#### ESPRESSO
+```
+@ARTICLE{Pepe2021,
+       author = {{Pepe}, F. and {Cristiani}, S. and {Rebolo}, R. and {Santos}, N.~C. and {Dekker}, H. and {Cabral}, A. and {Di Marcantonio}, P. and {Figueira}, P. and {Lo Curto}, G. and {Lovis}, C. and {Mayor}, M. and {M{\'e}gevand}, D. and {Molaro}, P. and {Riva}, M. and {Zapatero Osorio}, M.~R. and {Amate}, M. and {Manescau}, A. and {Pasquini}, L. and {Zerbi}, F.~M. and {Adibekyan}, V. and {Abreu}, M. and {Affolter}, M. and {Alibert}, Y. and {Aliverti}, M. and {Allart}, R. and {Allende Prieto}, C. and {{\'A}lvarez}, D. and {Alves}, D. and {Avila}, G. and {Baldini}, V. and {Bandy}, T. and {Barros}, S.~C.~C. and {Benz}, W. and {Bianco}, A. and {Borsa}, F. and {Bourrier}, V. and {Bouchy}, F. and {Broeg}, C. and {Calderone}, G. and {Cirami}, R. and {Coelho}, J. and {Conconi}, P. and {Coretti}, I. and {Cumani}, C. and {Cupani}, G. and {D'Odorico}, V. and {Damasso}, M. and {Deiries}, S. and {Delabre}, B. and {Demangeon}, O.~D.~S. and {Dumusque}, X. and {Ehrenreich}, D. and {Faria}, J.~P. and {Fragoso}, A. and {Genolet}, L. and {Genoni}, M. and {G{\'e}nova Santos}, R. and {Gonz{\'a}lez Hern{\'a}ndez}, J.~I. and {Hughes}, I. and {Iwert}, O. and {Kerber}, F. and {Knudstrup}, J. and {Landoni}, M. and {Lavie}, B. and {Lillo-Box}, J. and {Lizon}, J. -L. and {Maire}, C. and {Martins}, C.~J.~A.~P. and {Mehner}, A. and {Micela}, G. and {Modigliani}, A. and {Monteiro}, M.~A. and {Monteiro}, M.~J.~P.~F.~G. and {Moschetti}, M. and {Murphy}, M.~T. and {Nunes}, N. and {Oggioni}, L. and {Oliveira}, A. and {Oshagh}, M. and {Pall{\'e}}, E. and {Pariani}, G. and {Poretti}, E. and {Rasilla}, J.~L. and {Rebord{\~a}o}, J. and {Redaelli}, E.~M. and {Santana Tschudi}, S. and {Santin}, P. and {Santos}, P. and {S{\'e}gransan}, D. and {Schmidt}, T.~M. and {Segovia}, A. and {Sosnowska}, D. and {Sozzetti}, A. and {Sousa}, S.~G. and {Span{\`o}}, P. and {Su{\'a}rez Mascare{\~n}o}, A. and {Tabernero}, H. and {Tenegi}, F. and {Udry}, S. and {Zanutta}, A.},
+        title = "{ESPRESSO at VLT. On-sky performance and first results}",
+      journal = {\aap},
+     keywords = {techniques: radial velocities, instrumentation: spectrographs, planets and satellites: atmospheres, planets and satellites: detection, cosmology: miscellaneous, asteroseismology, Astrophysics - Instrumentation and Methods for Astrophysics, Astrophysics - Earth and Planetary Astrophysics},
+         year = 2021,
+        month = jan,
+       volume = {645},
+          eid = {A96},
+        pages = {A96},
+          doi = {10.1051/0004-6361/202038306},
+archivePrefix = {arXiv},
+       eprint = {2010.00316},
+ primaryClass = {astro-ph.IM},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2021A&A...645A..96P},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+```
+#### KPF 
+```
+
+@INPROCEEDINGS{Gibson2024,
+       author = {{Gibson}, Steven R. and {Howard}, Andrew W. and {Rider}, Kodi and {Halverson}, Samuel and {Roy}, Arpita and {Baker}, Ashley D. and {Edelstein}, Jerry and {Smith}, Christopher and {Fulton}, Benjamin J. and {Walawender}, Josh and {Brodheim}, Max and {Brown}, Matthew and {Chan}, Dwight and {Dai}, Fei and {Deich}, William and {Gottschalk}, Colby and {Grillo}, Jason and {Hale}, David and {Hill}, Grant and {Holden}, Bradford and {Householder}, Aaron and {Isaacson}, Howard and {Ishikawa}, Yuzo and {Jelinsky}, Sharon and {Kassis}, Marc and {Kaye}, Stephen and {Laher}, Russ and {Lanclos}, Kyle and {Lee}, Chien-Hsiu and {Lilley}, Scott and {McCarney}, Benjamin and {Miller}, Timothy N. and {Payne}, Joel and {Petigura}, Erik and {Poppett}, Claire and {Raffanti}, Michael P. and {Rubenzahl}, Ryan and {Sandford}, Dale and {Schwab}, Christian and {Shaum}, Abby P. and {Sirk}, Martin M. and {Smith}, Roger and {Thorne}, Jim and {Valliant}, John and {Vandenberg}, Adam and {Wang}, Shin-Ywan and {Wishnow}, Edward H. and {Wold}, Truman and {Yeh}, Sherry and {Baca}, Steve and {Beichman}, Charles and {Berriman}, Bruce and {Brown}, Thomas and {Casey}, Kelleen and {Chin}, Jason and {Chong}, James and {Cowley}, David and {Devenot}, Mark and {Elwir}, Hamza and {Finstad}, Daniel and {Fraysse}, Matthew and {James}, Ean and {Jhoti}, Elisha and {Killian}, Joe and {Levine}, Obie and {Li}, Adela Chenyang and {Marin}, Eduardo and {Milner}, Steven and {Nance}, Craig and {O'Hanlon}, Timothy J. and {Orr}, Daniel and {Ortiz-Soto}, Roberto and {Payne}, Tom and {Pember}, Jacob and {Raskin}, Gert and {Savage}, Maureen and {Seifahrt}, Andreas and {Smith}, Brett and {Storesund}, Rob and {St{\"u}rmer}, Julian and {Suominen}, Nick and {Tehero}, Jerez and {Von Boeckmann}, Tod and {Wages}, Keith and {Weisfeiler}, Marie and {Wilcox}, Mavourneen and {Wizinowich}, Peter and {Wolfenberger}, Anna},
+        title = "{System design of the Keck Planet Finder}",
+    booktitle = {Ground-based and Airborne Instrumentation for Astronomy X},
+         year = 2024,
+       editor = {{Bryant}, Julia J. and {Motohara}, Kentaro and {Vernet}, Jo{\"e}l. R.~D.},
+       series = {Society of Photo-Optical Instrumentation Engineers (SPIE) Conference Series},
+       volume = {13096},
+        month = jul,
+          eid = {1309609},
+        pages = {1309609},
+          doi = {10.1117/12.3017841},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2024SPIE13096E..09G},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+```
