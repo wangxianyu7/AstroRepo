@@ -3,6 +3,83 @@
 https://blocks.jkniest.dev/
 ```
 
+### RM SNR
+```
+import numpy as np
+
+def compute_rm_snr(time, rv, rverr, jitter, best_model_func,
+                   baseline=None, exposure_time=0.0, oversample=5):
+    """
+    Compute RM SNR given observational data and best-fit model, 
+    with optional exposure-time averaging.
+
+    Parameters
+    ----------
+    time : array
+        Observation times.
+    rv : array
+        Observed RVs (not used in SNR, only model is needed).
+    rverr : array
+        RV uncertainties (per point).
+    jitter : float
+        Additional jitter term [same units as RV].
+    best_model_func : callable
+        Function f(t) returning best-fit RV model at given time(s).
+    baseline : array or None
+        Baseline RV model without RM (same length as time).
+        If None, subtracts median of out-of-transit best_model.
+    exposure_time : float, optional
+        Exposure/integration time per observation (same units as time).
+        If 0, no averaging is done.
+    oversample : int, optional
+        Oversampling factor for exposure-time averaging.
+
+    Returns
+    -------
+    snr : float
+        Signal-to-noise ratio of the RM detection.
+    """
+
+    sigma_eff = np.sqrt(rverr**2 + jitter**2)
+
+    # Compute model values with optional exposure-time averaging
+    model_vals = []
+    for t in time:
+        if exposure_time > 0:
+            sub_times = np.linspace(t - exposure_time/2,
+                                    t + exposure_time/2,
+                                    oversample)
+            sub_model = best_model_func(sub_times)
+            model_vals.append(np.mean(sub_model))
+        else:
+            model_vals.append(best_model_func(t))
+    model_vals = np.array(model_vals)
+
+    # baseline
+    if baseline is None:
+        baseline_val = np.median(model_vals)
+        rm_signal = model_vals - baseline_val
+    else:
+        rm_signal = model_vals - baseline
+
+    # SNR
+    snr_sq = np.sum((rm_signal / sigma_eff)**2)
+    snr = np.sqrt(snr_sq)
+
+    return snr
+
+
+
+
+snr = compute_rm_snr(time, rv, rverr, jitter=2.0,
+                     best_model_func=best_model_func,
+                     exposure_time=0.008,  # 比如 0.008 d ≈ 12 min
+                     oversample=10)
+print(f"RM SNR = {snr:.2f}")
+
+
+```
+
 
 ### Bayestar and SFD2011 Av
 ```
