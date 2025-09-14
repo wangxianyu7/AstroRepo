@@ -3,8 +3,39 @@
 https://blocks.jkniest.dev/
 ```
 
-### RM SNR
+### Gaia batch query
+
+```Python
+def get_dr3_from_dr2(dr2_ids, tablename):
+    from astroquery.gaia import Gaia
+    Gaia.login(user="xxx", password="xxx")
+    df = pd.DataFrame({"dr2_source_id": dr2_ids})
+    df.to_csv("dr2_list.csv", index=False)
+
+    job = Gaia.upload_table(upload_resource="dr2_list.csv",
+                            table_name=tablename,
+                            format="csv")
+
+    query = f"""
+    SELECT ul.dr2_source_id, nb.dr3_source_id, nb.angular_distance
+    FROM gaiadr3.dr2_neighbourhood AS nb
+    JOIN {tablename} AS ul
+    ON nb.dr2_source_id = ul.dr2_source_id
+    """
+
+    job = Gaia.launch_job_async(query)
+    results = job.get_results()
+
+    df_match = results.to_pandas()
+    dr3_source_id = df_match['dr3_source_id'].tolist()
+    Gaia.logout()
+    return dr3_source_id
+
 ```
+
+
+### RM SNR
+```Python
 import numpy as np
 
 def compute_rm_snr(time, rv, rverr, jitter, best_model_func,
@@ -82,7 +113,7 @@ print(f"RM SNR = {snr:.2f}")
 
 
 ### Bayestar and SFD2011 Av
-```
+```Python
 import astropy.units as u
 from astropy.coordinates import SkyCoord
 from dustmaps.bayestar import BayestarQuery, fetch
@@ -145,7 +176,7 @@ print(f"A_V = {Av:.3f} ± {Av_e:.3f}")
 
 
 ### Get psi using coPsi
-```
+```Python
 import coPsi
 
 
