@@ -3,6 +3,71 @@
 https://blocks.jkniest.dev/
 ```
 
+### Realignment Timescale
+```Python
+def tau_CE(a_over_Rs, Mp_MJ, Ms_Msun):
+    """
+    Calculate tau_CE (convective envelope damping timescale).
+    
+    Parameters
+    ----------
+    a_over_Rs : float
+        Scaled semi-major axis a/R*
+    Mp_MJ : float
+        Planet mass in Jupiter masses
+    Ms_Msun : float
+        Stellar mass in Solar masses
+        
+    Returns
+    -------
+    tau_years : float
+        Timescale in years
+    tau_Gyr : float
+        Timescale in Gyr
+    """
+    Mjup_to_Msun = 9.546e-4
+    Mp_Msun = Mp_MJ * Mjup_to_Msun
+    
+    inv_tau = (1/(10 * 1e9)) * (Mp_Msun/Ms_Msun)**2 * (a_over_Rs/40)**(-6)
+    tau_years = 1/inv_tau
+    tau_Gyr = tau_years / 1e9
+    return tau_years, tau_Gyr
+def tau_RA(a_over_Rs, Mp_MJ, Ms_Msun):
+    """
+    Calculate tau_RA (radiative damping timescale).
+
+    Parameters
+    ----------
+    a_over_Rs : float
+        Scaled semi-major axis a/R*
+    Mp_MJ : float
+        Planet mass in Jupiter masses
+    Ms_Msun : float
+        Stellar mass in Solar masses
+
+    Returns
+    -------
+    tau_years : float
+        Timescale in years
+    tau_Gyr : float
+        Timescale in Gyr
+    """
+    Mjup_to_Msun = 9.546e-4
+    Mp_Msun = Mp_MJ * Mjup_to_Msun
+
+    # Formula: 1/tau_RA
+    inv_tau = (1/(1.25 * 5e9)) * (Mp_Msun/Ms_Msun)**2 \
+              * (1 + Mp_Msun/Ms_Msun)**(5/6) \
+              * (a_over_Rs/6)**(-17/2)
+
+    tau_years = 1/inv_tau
+    tau_Gyr = tau_years / 1e9
+    return tau_years, tau_Gyr
+
+
+```
+
+
 ### Gaia batch query
 
 ```Python
