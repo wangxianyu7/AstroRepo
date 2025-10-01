@@ -56,7 +56,7 @@ def tau_RA(a_over_Rs, Mp_MJ, Ms_Msun):
     Mp_Msun = Mp_MJ * Mjup_to_Msun
 
     # Formula: 1/tau_RA
-    inv_tau = (1/(1.25 * 5e9)) * (Mp_Msun/Ms_Msun)**2 \
+    inv_tau = (1/(1.25 * e9)) * (Mp_Msun/Ms_Msun)**2 \
               * (1 + Mp_Msun/Ms_Msun)**(5/6) \
               * (a_over_Rs/6)**(-17/2)
 
