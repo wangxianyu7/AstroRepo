@@ -3,6 +3,26 @@
 https://blocks.jkniest.dev/
 ```
 
+### Round to 2 sigs
+```Python
+def round_and_get_decimals(x, sig=2):
+    """
+    Round x to 'sig' significant figures and return (rounded_value, decimals_kept).
+    Uses traditional round-half-up behavior (e.g., 12.55 -> 12.6).
+    Always keeps enough decimals to preserve the desired significant figures.
+    """
+    if x == 0:
+        return 0.0, 1
+    if np.abs(x) > 1:
+        return np.round(x, 1), 1
+    for i in range(100):
+        if np.abs(x * 10**i) >= 1:
+            return np.round(x, i+1), i + 1
+
+
+```
+
+
 ### Realignment Timescale
 ```Python
 def tau_CE(a_over_Rs, Mp_MJ, Ms_Msun):
