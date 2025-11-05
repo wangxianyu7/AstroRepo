@@ -1,3 +1,7 @@
+### software-citation-station
+
+- https://www.tomwagg.com/software-citation-station/
+
 ### MR ploter
 - https://github.com/castro-gzlz/mr-plotter
 
