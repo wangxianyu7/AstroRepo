@@ -3,6 +3,18 @@
 https://blocks.jkniest.dev/
 ```
 
+
+### more themes for marp
+```Python
+import os
+csses = [x for x in os.listdir('/Users/wangxianyu/Downloads/obsidian-marp-slides-main/vault/themes') if x.endswith('.css')]
+for css in csses:
+    print(css)
+    text = open(f'/Users/wangxianyu/Downloads/obsidian-marp-slides-main/vault/themes/{css}', 'r').read()
+    print('this.themeSet.add(' + repr(text.replace('\'', '"')) + '),')
+# add this into main.js
+```
+
 ### Round to 2 sigs
 ```Python
 def round_and_get_decimals(x, sig=2):
