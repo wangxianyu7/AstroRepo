@@ -4,6 +4,204 @@ https://blocks.jkniest.dev/
 ```
 
 
+### plotly orbits
+
+```Python
+import rebound
+import numpy as np
+import plotly.graph_objects as go
+
+def get_orbit_trace_from_rebound(particle, N=100):
+    """
+    利用 Rebound 计算粒子的完整轨道路径。
+    修正点：分开写 sim.add() 和获取粒子对象。
+    """
+    sim_temp = rebound.Simulation()
+    sim_temp.add(m=1) # Index 0: 临时的中心天体
+    
+    xs, ys, zs = [], [], []
+    
+    # 遍历真近点角 f (True Anomaly) 来描绘轨道形状
+    f_range = np.linspace(0, 2*np.pi, N)
+    
+    # 获取参数
+    p_a = particle.a
+    p_e = particle.e
+    p_inc = particle.inc
+    p_Omega = particle.Omega
+    p_omega = particle.omega
+    
+    for f in f_range:
+        # 1. 添加粒子 (不赋值给变量，因为 add 返回 None)
+        sim_temp.add(
+            a=p_a, 
+            e=p_e, 
+            inc=p_inc, 
+            Omega=p_Omega, 
+            omega=p_omega, 
+            f=f
+        )
+        
+        # 2. 显式获取刚刚添加的粒子 (Index 1)
+        p_temp = sim_temp.particles[1]
+        
+        xs.append(p_temp.x)
+        ys.append(p_temp.y)
+        zs.append(p_temp.z)
+        
+        # 3. 移除该粒子以便下一次循环 (保持 sim 只有 Sun + 1 Planet)
+        sim_temp.remove(index=1)
+        
+    return xs, ys, zs
+
+def calculate_angles(sim, star_spin_axis):
+    """
+    计算并打印各个角度信息
+    """
+    S_hat = star_spin_axis / np.linalg.norm(star_spin_axis)
+    
+    results = []
+    
+    for i in range(1, sim.N):
+        p = sim.particles[i]
+        r = np.array([p.x, p.y, p.z])
+        v = np.array([p.vx, p.vy, p.vz])
+        L = np.cross(r, v)
+        L_hat = L / np.linalg.norm(L)
+        
+        # 计算恒星倾角
+        cos_psi = np.dot(S_hat, L_hat)
+        psi = np.degrees(np.arccos(np.clip(cos_psi, -1, 1)))
+        
+        results.append({
+            "name": f"Planet {i}",
+            "L_hat": L_hat,
+            "obliquity": psi
+        })
+        
+    return results
+
+def visualize_system_rebound():
+    # --- 1. 初始化 Rebound 模拟 ---
+    sim = rebound.Simulation()
+    sim.units = ('AU', 'yr', 'Msun')
+    sim.add(m=1.0) 
+    
+    # --- 添加行星 ---
+    # Planet b (近地)
+    sim.add(m=1e-3, a=1.0, e=0.02, inc=np.radians(5), Omega=0, omega=0)
+    # Planet c (中等倾角)
+    sim.add(m=1e-3, a=1.8, e=0.1, inc=np.radians(30), Omega=np.radians(90), omega=np.radians(45))
+    # Planet d (高倾角)
+    sim.add(m=1e-3, a=3.0, e=0.4, inc=np.radians(85), Omega=np.radians(180), omega=np.radians(90))
+
+    # --- 2. 定义恒星自转轴 ---
+    spin_inc = np.radians(20) 
+    spin_azimuth = np.radians(0)
+    
+    Sx = np.sin(spin_inc) * np.cos(spin_azimuth)
+    Sy = np.sin(spin_inc) * np.sin(spin_azimuth)
+    Sz = np.cos(spin_inc)
+    star_spin_axis = np.array([Sx, Sy, Sz]) * 2.5 
+
+    # --- 3. 计算角度 ---
+    planet_info = calculate_angles(sim, star_spin_axis)
+    
+    # --- 4. Plotly 绘图 ---
+    fig = go.Figure()
+
+    # 恒星
+    fig.add_trace(go.Scatter3d(
+        x=[0], y=[0], z=[0],
+        mode='markers',
+        marker=dict(size=15, color='orange', line=dict(color='red', width=2)),
+        name='Star'
+    ))
+
+    # 恒星自转轴
+    fig.add_trace(go.Scatter3d(
+        x=[0, star_spin_axis[0]], 
+        y=[0, star_spin_axis[1]], 
+        z=[0, star_spin_axis[2]],
+        mode='lines+markers',
+        line=dict(color='red', width=6),
+        marker=dict(size=4, color='red'),
+        name='Stellar Spin Axis'
+    ))
+
+    # 行星轨道
+    colors = ['cyan', 'magenta', 'lime']
+    
+    for idx, p_info in enumerate(planet_info):
+        p_idx = idx + 1
+        particle = sim.particles[p_idx]
+        color = colors[idx % len(colors)]
+        
+        path_x, path_y, path_z = get_orbit_trace_from_rebound(particle)
+        
+        label_text = f"Planet {p_idx}<br>Obliquity: {p_info['obliquity']:.1f}°"
+        
+        # 轨道路径
+        fig.add_trace(go.Scatter3d(
+            x=path_x, y=path_y, z=path_z,
+            mode='lines',
+            line=dict(color=color, width=4),
+            name=f'Orbit P{p_idx}',
+            hovertext=label_text
+        ))
+        
+        # 行星当前位置
+        fig.add_trace(go.Scatter3d(
+            x=[particle.x], y=[particle.y], z=[particle.z],
+            mode='markers',
+            marker=dict(size=6, color=color),
+            showlegend=False
+        ))
+        
+        # 轨道法线
+        L_vec = p_info['L_hat'] * 1.5
+        fig.add_trace(go.Scatter3d(
+            x=[0, L_vec[0]], y=[0, L_vec[1]], z=[0, L_vec[2]],
+            mode='lines',
+            line=dict(color=color, width=2, dash='dash'),
+            name=f'Normal P{p_idx}',
+            visible='legendonly'
+        ))
+
+    # 标题和布局
+    if len(planet_info) >= 2:
+        L1 = planet_info[0]['L_hat']
+        L2 = planet_info[1]['L_hat']
+        mut_inc = np.degrees(np.arccos(np.clip(np.dot(L1, L2), -1, 1)))
+        title_text = f"Exoplanet Architecture (Rebound Engine)<br>Mutual Inclination (P1-P2): {mut_inc:.1f}°"
+    else:
+        title_text = "Exoplanet Architecture"
+
+    fig.update_layout(
+        title=title_text,
+        scene=dict(
+            xaxis_title='X [AU]',
+            yaxis_title='Y [AU]',
+            zaxis_title='Z [AU]',
+            aspectmode='data',
+            camera=dict(eye=dict(x=1.6, y=1.6, z=0.8)),
+            xaxis=dict(backgroundcolor="rgb(20, 20, 20)", gridcolor="gray", showbackground=True),
+            yaxis=dict(backgroundcolor="rgb(20, 20, 20)", gridcolor="gray", showbackground=True),
+            zaxis=dict(backgroundcolor="rgb(20, 20, 20)", gridcolor="gray", showbackground=True),
+        ),
+        paper_bgcolor="black",
+        font=dict(color="white"),
+        margin=dict(l=0, r=0, b=0, t=50)
+    )
+    
+    fig.show()
+
+if __name__ == "__main__":
+    visualize_system_rebound()
+
+```
+
+
 ### more themes for marp
 ```Python
 import os
