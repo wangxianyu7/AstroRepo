@@ -4,6 +4,24 @@ https://blocks.jkniest.dev/
 ```
 
 
+### Extract HST LC from Iraclis product
+
+```Python
+
+import pickle
+import matplotlib.pyplot as plt
+results = pickle.load(open('fitting_results.pickle', 'rb'))
+bjd_tdb = results['lightcurves']['white']['input_time_series']['bjd_tdb']
+results['lightcurves']['white']['output_time_series'].keys()
+detrended_lc = results['lightcurves']['white']['output_time_series']['detrended_lc']
+systematics = results['lightcurves']['white']['output_time_series']['systematics']
+raw_lc_error = results['lightcurves']['white']['input_time_series']['raw_lc_error']/systematics
+plt.figure(figsize=(10, 6))
+plt.errorbar(bjd_tdb, detrended_lc, yerr=raw_lc_error, fmt='o', markersize=4, label='Detrended Light Curve', color='orange', ecolor='lightgray', capsize=2)
+```
+
+
+
 ### plotly orbits
 
 ```Python
