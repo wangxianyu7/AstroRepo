@@ -835,3 +835,188 @@ archivePrefix = {arXiv},
 }
 ```
 </details>
+
+### 🟠 Tools, models, and algorithms
+
+\texttt{iSpec} \citep{Blanco2014, Blanco2019}
+<details>
+<summary>BibTex</summary>
+  
+```
+@ARTICLE{Blanco2014,
+       author = {{Blanco-Cuaresma}, S. and {Soubiran}, C. and {Heiter}, U. and {Jofr{\'e}}, P.},
+        title = "{Determining stellar atmospheric parameters and chemical abundances of FGK stars with iSpec}",
+      journal = {\aap},
+     keywords = {stars: atmospheres, stars: abundances, methods: data analysis, Astrophysics - Instrumentation and Methods for Astrophysics, Astrophysics - Solar and Stellar Astrophysics},
+         year = 2014,
+        month = sep,
+       volume = {569},
+          eid = {A111},
+        pages = {A111},
+          doi = {10.1051/0004-6361/201423945},
+archivePrefix = {arXiv},
+       eprint = {1407.2608},
+ primaryClass = {astro-ph.IM},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2014A&A...569A.111B},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+@ARTICLE{Blanco2019,
+       author = {{Blanco-Cuaresma}, Sergi},
+        title = "{Modern stellar spectroscopy caveats}",
+      journal = {\mnras},
+     keywords = {techniques: spectroscopic, stars: abundances, stars: atmospheres, stars: fundamental parameters, Astrophysics - Solar and Stellar Astrophysics, Astrophysics - Instrumentation and Methods for Astrophysics},
+         year = 2019,
+        month = jun,
+       volume = {486},
+       number = {2},
+        pages = {2075-2101},
+          doi = {10.1093/mnras/stz549},
+archivePrefix = {arXiv},
+       eprint = {1902.09558},
+ primaryClass = {astro-ph.SR},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2019MNRAS.486.2075B},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+```
+</details>
+
+SPECTRUM radiative transfer code \citep{Gray1994}, the MARCS atmosphere model \citep{gustafsson2008_MARCS}, and the sixth version of the GES atomic line list \citep{Heiter2021_GES}
+
+<details>
+<summary>BibTex</summary>
+  
+```
+
+
+@ARTICLE{Gray1994,
+       author = {{Gray}, R.~O. and {Corbally}, C.~J.},
+        title = "{The Calibration of MK Spectral Classes Using Spectral Synthesis. I. The Effective Temperature Calibration of Dwarf Stars}",
+      journal = {\aj},
+     keywords = {Atmospheric Models, Calibrating, Classifications, Dwarf Stars, Standards, Stellar Atmospheres, Stellar Models, Stellar Spectra, Stellar Temperature, Visible Spectrum, Applications Programs (Computers), Astronomical Spectroscopy, Charge Coupled Devices, Ibm Personal Computers, Light (Visible Radiation), Spectrographs, Stellar Gravitation, Astronomy, STARS: PECULIAR, STARS: FUNDAMENTAL PARAMETERS},
+         year = 1994,
+        month = feb,
+       volume = {107},
+        pages = {742},
+          doi = {10.1086/116893},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/1994AJ....107..742G},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+@ARTICLE{gustafsson2008_MARCS,
+    author = {{Gustafsson}, B. and {Edvardsson}, B. and {Eriksson}, K. and {J{\o}rgensen}, U.~G. and {Nordlund}, {\r{A}}. and {Plez}, B.},
+    title = "{A grid of MARCS model atmospheres for late-type stars. I. Methods and general properties}",
+    journal = {\aap},
+    keywords = {stars: atmospheres, Sun: abundances, stars: fundamental parameters, stars: general, stars: late-type, stars: supergiants, Astrophysics},
+    year = 2008,
+    month = aug,
+    volume = {486},
+    number = {3},
+    pages = {951-970},
+    doi = {10.1051/0004-6361:200809724},
+    archivePrefix = {arXiv},
+    eprint = {0805.0554},
+    primaryClass = {astro-ph},
+    adsurl = {https://ui.adsabs.harvard.edu/abs/2008A&A...486..951G},
+    adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+
+@article{Heiter2021_GES,
+       author = {{Heiter}, U. and {Lind}, K. and {Bergemann}, M. and {Asplund}, M. and {Mikolaitis}, {\v{S}}. and {Barklem}, P.~S. and {Masseron}, T. and {de Laverny}, P. and {Magrini}, L. and {Edvardsson}, B. and {J{\"o}nsson}, H. and {Pickering}, J.~C. and {Ryde}, N. and {Bayo Ar{\'a}n}, A. and {Bensby}, T. and {Casey}, A.~R. and {Feltzing}, S. and {Jofr{\'e}}, P. and {Korn}, A.~J. and {Pancino}, E. and {Damiani}, F. and {Lanzafame}, A. and {Lardo}, C. and {Monaco}, L. and {Morbidelli}, L. and {Smiljanic}, R. and {Worley}, C. and {Zaggia}, S. and {Randich}, S. and {Gilmore}, G.~F.},
+        title = "{Atomic data for the Gaia-ESO Survey}",
+      journal = {\aap},
+     keywords = {atomic data, stars: abundances, stars: late-type, surveys, Astrophysics - Instrumentation and Methods for Astrophysics, Astrophysics - Solar and Stellar Astrophysics},
+         year = 2021,
+        month = jan,
+       volume = {645},
+          eid = {A106},
+        pages = {A106},
+          doi = {10.1051/0004-6361/201936291},
+archivePrefix = {arXiv},
+       eprint = {2011.02049},
+ primaryClass = {astro-ph.IM},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2021A&A...645A.106H},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+```
+</details>
+
+ Levenberg-Marquardt nonlinear least-squares fitting algorithm \citep{Markwardt2009}
+
+ <details>
+<summary>BibTex</summary>
+  
+```
+
+@INPROCEEDINGS{Markwardt2009,
+       author = {{Markwardt}, C.~B.},
+        title = "{Non-linear Least-squares Fitting in IDL with MPFIT}",
+     keywords = {Astrophysics - Instrumentation and Methods for Astrophysics},
+    booktitle = {Astronomical Data Analysis Software and Systems XVIII},
+         year = 2009,
+       editor = {{Bohlender}, D.~A. and {Durand}, D. and {Dowler}, P.},
+       series = {Astronomical Society of the Pacific Conference Series},
+       volume = {411},
+        month = sep,
+        pages = {251},
+archivePrefix = {arXiv},
+       eprint = {0902.2850},
+ primaryClass = {astro-ph.IM},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2009ASPC..411..251M},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+
+```
+</details>
+
+MESA Isochrones \& Stellar Tracks (MIST) model \citep{Choi2016mist, Dotter2016mist}
+
+<details>
+<summary>BibTex</summary>
+  
+```
+
+@ARTICLE{Dotter2016mist,
+       author = {{Dotter}, Aaron},
+        title = "{MESA Isochrones and Stellar Tracks (MIST) 0: Methods for the Construction of Stellar Isochrones}",
+      journal = {\apjs},
+     keywords = {methods: numerical, stars: evolution, Astrophysics - Solar and Stellar Astrophysics, Astrophysics - Instrumentation and Methods for Astrophysics},
+         year = 2016,
+        month = jan,
+       volume = {222},
+       number = {1},
+          eid = {8},
+        pages = {8},
+          doi = {10.3847/0067-0049/222/1/8},
+archivePrefix = {arXiv},
+       eprint = {1601.05144},
+ primaryClass = {astro-ph.SR},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2016ApJS..222....8D},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+@ARTICLE{Choi2016mist,
+       author = {{Choi}, Jieun and {Dotter}, Aaron and {Conroy}, Charlie and {Cantiello}, Matteo and {Paxton}, Bill and {Johnson}, Benjamin D.},
+        title = "{Mesa Isochrones and Stellar Tracks (MIST). I. Solar-scaled Models}",
+      journal = {\apj},
+     keywords = {stars: evolution, stars: general, stars: interiors, Astrophysics - Solar and Stellar Astrophysics},
+         year = 2016,
+        month = jun,
+       volume = {823},
+       number = {2},
+          eid = {102},
+        pages = {102},
+          doi = {10.3847/0004-637X/823/2/102},
+archivePrefix = {arXiv},
+       eprint = {1604.08592},
+ primaryClass = {astro-ph.SR},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2016ApJ...823..102C},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+
+```
+</details>
