@@ -3,6 +3,90 @@
 https://blocks.jkniest.dev/
 ```
 
+### Exoclock midtims
+
+```Python
+import numpy as np
+import os
+# https://osf.io/wpjtn/files/fd54n
+data = np.loadtxt('all_mid_time_data.txt', dtype=str, skiprows=1)
+names = data[:,0]
+name_uniq = np.unique(names)
+
+name_host_pl = []
+
+for i in range(len(name_uniq)):
+    name = name_uniq[i]
+    hostname = name[:-1].strip()
+    hostname = hostname.replace('EPIC', 'EPIC ')
+    hostname = hostname.replace('GJ', 'GJ ')
+    hostname = hostname.replace('HD', 'HD ')
+    hostname = hostname.replace('TIC', 'TIC ')
+    hostname = hostname.replace('LHS', 'LHS ')
+    hostname = hostname.replace('LTT', 'LTT ')
+    hostname = hostname.replace('LP', 'LP ')
+    hostname = hostname.replace('HIP', 'HIP ')
+    hostname = hostname.replace('HR', 'HR ')
+    hostname = hostname.replace('L98', 'L 98')
+    hostname = hostname.replace('G9', 'G 9')
+    hostname = hostname.replace('TOI-2152A', 'TOI-2152')
+    if 'piMen' in hostname:
+        hostname = 'HD 39091'
+        
+    if hostname[-1] == 'A' or hostname[-1] == 'B' or hostname[-1] == 'N':
+        hostname = hostname[:-1] + ' ' + hostname[-1]
+    if hostname.endswith('Cnc'):
+        hostname = hostname[:-3] + ' Cnc'
+    if hostname.endswith('Men'):
+        hostname = hostname[:-3] + ' Men'
+    pl_letter = name[-1]
+    
+    
+    if name.endswith('.01'):
+        pl_letter = 'b'
+        hostname = name[:-3].strip()
+    if name.endswith('.02'):
+        pl_letter = 'c'
+        hostname = name[:-3].strip()
+        
+        
+    tmp_ps = pscomppars_table.query('hostname == "'+hostname+'" and pl_letter == "'+pl_letter+'"')
+
+    if len(tmp_ps) == 0:
+        print('No planet found for', name, hostname, pl_letter)
+        if hostname == 'Kepler-854':
+            tic= 'TIC 275570329'
+    else:
+        tic = tmp_ps['tic_id'].values[0]
+    
+    # print('Processing', name, hostname, pl_letter, tic)
+    name_host_pl.append((name, hostname, pl_letter, tic))
+    # Transit_MidTimes_Exoclock_2022
+    
+name_host_pl = np.asarray(name_host_pl, dtype=str)
+# Hostname,TIC ,pl_letter,Tmid (BJD_TDB),Tmid unc.,source,ID,IsTESS
+# Transit_MidTimes_Exoclock_2025.csv
+with open('Transit_MidTimes_Exoclock_2025.csv', 'w') as f:
+    print('Hostname,TIC,pl_letter,Tmid (BJD_TDB),Tmid unc.,source,ID,IsTESS', file=f)
+    for i in range(len(data)):
+        host = name_host_pl[name_host_pl[:,0] == data[i,0]][0][1]
+        tic = name_host_pl[name_host_pl[:,0] == data[i,0]][0][3]
+        pl_letter = name_host_pl[name_host_pl[:,0] == data[i,0]][0][2]
+        
+        tmid = float(data[i,1])
+        tmid_unc = float(data[i,2])
+        source = data[i,3]
+        ID = data[i,4]
+        if source == 'space':
+            is_tess = 'Yes'
+        else:
+            is_tess = 'No'
+        print(host, tic, pl_letter, tmid, tmid_unc, source, ID, is_tess,sep=',', file=f)
+    
+
+```
+
+
 
 ### Extract HST LC from Iraclis product
 
