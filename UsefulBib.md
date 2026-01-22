@@ -562,7 +562,7 @@ archivePrefix = {arXiv},
 ```
 </details>
 
-compact multis tend to be aligned \citep{Albrecht2013}
+Compact multis tend to be aligned \citep{Albrecht2013}
 
 <details>
 <summary>BibTex</summary>
@@ -589,5 +589,249 @@ archivePrefix = {arXiv},
 
 
 
+```
+</details>
+
+### 🟠 Ground-based transit surveys
+SuperWASP, \citealt{Pollacco2006}; HATNet, \citealt{Bakos2004}; HATSouth, \citealt{Bakos2013}; TrES, \citealt{Alonso2004}; KELT, \citealt{Pepper2007}; XO, \citealt{McCullough2005} and, CSTAR, \citealt{Wang2014})
+
+<details>
+<summary>BibTex</summary>
+  
+```
+
+@ARTICLE{Pollacco2006,
+       author = {{Pollacco}, D.~L. and {Skillen}, I. and {Collier Cameron}, A. and
+         {Christian}, D.~J. and {Hellier}, C. and {Irwin}, J. and
+         {Lister}, T.~A. and {Street}, R.~A. and {West}, R.~G. and
+         {Anderson}, D.~R. and {Clarkson}, W.~I. and {Deeg}, H. and {Enoch}, B. and
+         {Evans}, A. and {Fitzsimmons}, A. and {Haswell}, C.~A. and
+         {Hodgkin}, S. and {Horne}, K. and {Kane}, S.~R. and {Keenan}, F.~P. and
+         {Maxted}, P.~F.~L. and {Norton}, A.~J. and {Osborne}, J. and
+         {Parley}, N.~R. and {Ryans}, R.~S.~I. and {Smalley}, B. and
+         {Wheatley}, P.~J. and {Wilson}, D.~M.},
+        title = "{The WASP Project and the SuperWASP Cameras}",
+      journal = {\pasp},
+     keywords = {Instrumentation: Photometers, Stars: Planetary Systems, Techniques: Photometric, Astrophysics},
+         year = "2006",
+        month = "Oct",
+       volume = {118},
+       number = {848},
+        pages = {1407-1418},
+          doi = {10.1086/508556},
+archivePrefix = {arXiv},
+       eprint = {astro-ph/0608454},
+ primaryClass = {astro-ph},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2006PASP..118.1407P},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+@ARTICLE{Bakos2004,
+       author = {{Bakos}, G. and {Noyes}, R.~W. and {Kov{\'a}cs}, G. and {Stanek}, K.~Z. and
+         {Sasselov}, D.~D. and {Domsa}, I.},
+        title = "{Wide-Field Millimagnitude Photometry with the HAT: A Tool for Extrasolar Planet Detection}",
+      journal = {\pasp},
+     keywords = {Instrumentation: Miscellaneous, Telescopes, Techniques: Photometric, planetary systems, Stars: Variables: Other, Methods: Data Analysis, Astrophysics},
+         year = "2004",
+        month = "Mar",
+       volume = {116},
+       number = {817},
+        pages = {266-277},
+          doi = {10.1086/382735},
+archivePrefix = {arXiv},
+       eprint = {astro-ph/0401219},
+ primaryClass = {astro-ph},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2004PASP..116..266B},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+@ARTICLE{Bakos2013,
+       author = {{Bakos}, G. {\'A}. and {Csubry}, Z. and {Penev}, K. and {Bayliss}, D. and
+         {Jord{\'a}n}, A. and {Afonso}, C. and {Hartman}, J.~D. and
+         {Henning}, T. and {Kov{\'a}cs}, G. and {Noyes}, R.~W. and
+         {B{\'e}ky}, B. and {Suc}, V. and {Cs{\'a}k}, B. and {Rabus}, M. and
+         {L{\'a}z{\'a}r}, J. and {Papp}, I. and {S{\'a}ri}, P. and {Conroy}, P. and
+         {Zhou}, G. and {Sackett}, P.~D. and {Schmidt}, B. and {Mancini}, L. and
+         {Sasselov}, D.~D. and {Ueltzhoeffer}, K.},
+        title = "{HATSouth: A Global Network of Fully Automated Identical Wide-Field Telescopes}",
+      journal = {\pasp},
+     keywords = {Astrophysics - Earth and Planetary Astrophysics, Astrophysics - Instrumentation and Methods for Astrophysics, Astrophysics - Solar and Stellar Astrophysics},
+         year = "2013",
+        month = "Feb",
+       volume = {125},
+       number = {924},
+        pages = {154},
+          doi = {10.1086/669529},
+archivePrefix = {arXiv},
+       eprint = {1206.1391},
+ primaryClass = {astro-ph.EP},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2013PASP..125..154B},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+
+@ARTICLE{Alonso2004,
+       author = {{Alonso}, Roi and {Brown}, Timothy M. and {Torres}, Guillermo and
+         {Latham}, David W. and {Sozzetti}, Alessandro and {Mandushev}, Georgi and
+         {Belmonte}, Juan A. and {Charbonneau}, David and {Deeg}, Hans J. and
+         {Dunham}, Edward W. and {O'Donovan}, Francis T. and
+         {Stefanik}, Robert P.},
+        title = "{TrES-1: The Transiting Planet of a Bright K0 V Star}",
+      journal = {\apjl},
+     keywords = {Stars: Binaries: Eclipsing, Stars: Planetary Systems, Stars: Individual: Alphanumeric: GSC 02652-01324, Techniques: Photometric, Techniques: Radial Velocities, Astrophysics},
+         year = "2004",
+        month = "Oct",
+       volume = {613},
+       number = {2},
+        pages = {L153-L156},
+          doi = {10.1086/425256},
+archivePrefix = {arXiv},
+       eprint = {astro-ph/0408421},
+ primaryClass = {astro-ph},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2004ApJ...613L.153A},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+@INBOOK{Pepper2007,
+       author = {{Pepper}, J. and {Pogge}, R. and {Depoy}, D.~L. and {Marshall}, J.~L. and
+         {Stanek}, K. and {Stutz}, A. and {Trueblood}, M. and {Trueblood}, P.},
+        title = "{Early Results from the KELT Transit Survey}",
+     keywords = {Astrophysics},
+    booktitle = {Transiting Extrasolar Planets Workshop ASP Conference Series, Vol. 366, Proceedings of the conference held 25-28 September, 2006 at the Max Planck Institute for Astronomy in Heidelberg, Germany. Edited by C. Afonso, D. Weldrake, and Th. Henning. San Francisco: Astronomical Society of the Pacific, 2007., p.27},
+         year = "2007",
+       editor = {{Afonso}, C. and {Weldrake}, D. and {Henning}, Th.},
+       volume = {366},
+       series = {Astronomical Society of the Pacific Conference Series},
+        pages = {27},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2007ASPC..366...27P},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+@ARTICLE{Wang2014,
+       author = {{Wang}, Songhu and {Zhang}, Hui and {Zhou}, Ji-Lin and {Zhou}, Xu and
+         {Yang}, Ming and {Wang}, Lifan and {Bayliss}, D. and {Zhou}, G. and
+         {Ashley}, M.~C.~B. and {Fan}, Zhou and {Feng}, Long-Long and
+         {Gong}, Xuefei and {Lawrence}, J.~S. and {Liu}, Huigen and
+         {Liu}, Qiang and {Luong-Van}, D.~M. and {Ma}, Jun and {Meng}, Zeyang and
+         {Storey}, J.~W.~V. and {Wittenmyer}, R.~A. and {Wu}, Zhenyu and
+         {Yan}, Jun and {Yang}, Huigen and {Yang}, Ji and {Yang}, Jiayi and
+         {Yuan}, Xiangyan and {Zhang}, Tianmeng and {Zhu}, Zhenxi and {Zou}, Hu},
+        title = "{Planetary Transit Candidates in the CSTAR Field: Analysis of the 2008 Data}",
+      journal = {\apjs},
+     keywords = {methods: data analysis, planetary systems, surveys, techniques: photometric, Astrophysics - Earth and Planetary Astrophysics},
+         year = "2014",
+        month = "Apr",
+       volume = {211},
+       number = {2},
+          eid = {26},
+        pages = {26},
+          doi = {10.1088/0067-0049/211/2/26},
+archivePrefix = {arXiv},
+       eprint = {1403.0086},
+ primaryClass = {astro-ph.EP},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2014ApJS..211...26W},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+@article{McCullough2005,
+	doi = {10.1086/432024},
+	url = {https://doi.org/10.1086%2F432024},
+	year = 2005,
+	month = {aug},
+	publisher = {{IOP} Publishing},
+	volume = {117},
+	number = {834},
+	pages = {783--795},
+	author = {P.~R. McCullough and J.~E. Stys and J.~A. Valenti and S.~W. Fleming and K.~A. Janes and J.~N. Heasley},
+	title = {The {XO} Project: Searching for Transiting Extrasolar Planet Candidates},
+	journal = {Publications of the Astronomical Society of the Pacific}
+}
+
+
+```
+</details>
+
+### 🟠 Space missions
+Kepler \citep{Borucki2010Sci},K2 \citep{Howell2014} and TESS \citep{Ricker2015}
+
+<details>
+<summary>BibTex</summary>
+  
+```
+
+@ARTICLE{Borucki2010Sci,
+       author = {{Borucki}, William J. and {Koch}, David and {Basri}, Gibor and {Batalha}, Natalie and {Brown}, Timothy and {Caldwell}, Douglas and {Caldwell}, John and {Christensen-Dalsgaard}, J{\o}rgen and {Cochran}, William D. and {DeVore}, Edna and {Dunham}, Edward W. and {Dupree}, Andrea K. and {Gautier}, Thomas N. and {Geary}, John C. and {Gilliland}, Ronald and {Gould}, Alan and {Howell}, Steve B. and {Jenkins}, Jon M. and {Kondo}, Yoji and {Latham}, David W. and {Marcy}, Geoffrey W. and {Meibom}, S{\o}ren and {Kjeldsen}, Hans and {Lissauer}, Jack J. and {Monet}, David G. and {Morrison}, David and {Sasselov}, Dimitar and {Tarter}, Jill and {Boss}, Alan and {Brownlee}, Don and {Owen}, Toby and {Buzasi}, Derek and {Charbonneau}, David and {Doyle}, Laurance and {Fortney}, Jonathan and {Ford}, Eric B. and {Holman}, Matthew J. and {Seager}, Sara and {Steffen}, Jason H. and {Welsh}, William F. and {Rowe}, Jason and {Anderson}, Howard and {Buchhave}, Lars and {Ciardi}, David and {Walkowicz}, Lucianne and {Sherry}, William and {Horch}, Elliott and {Isaacson}, Howard and {Everett}, Mark E. and {Fischer}, Debra and {Torres}, Guillermo and {Johnson}, John Asher and {Endl}, Michael and {MacQueen}, Phillip and {Bryson}, Stephen T. and {Dotson}, Jessie and {Haas}, Michael and {Kolodziejczak}, Jeffrey and {Van Cleve}, Jeffrey and {Chandrasekaran}, Hema and {Twicken}, Joseph D. and {Quintana}, Elisa V. and {Clarke}, Bruce D. and {Allen}, Christopher and {Li}, Jie and {Wu}, Haley and {Tenenbaum}, Peter and {Verner}, Ekaterina and {Bruhweiler}, Frederick and {Barnes}, Jason and {Prsa}, Andrej},
+        title = "{Kepler Planet-Detection Mission: Introduction and First Results}",
+      journal = {Science},
+     keywords = {ASTRONOMY},
+         year = 2010,
+        month = feb,
+       volume = {327},
+       number = {5968},
+        pages = {977},
+          doi = {10.1126/science.1185402},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2010Sci...327..977B},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+
+@ARTICLE{Howell2014,
+       author = {{Howell}, Steve B. and {Sobeck}, Charlie and {Haas}, Michael and
+         {Still}, Martin and {Barclay}, Thomas and {Mullally}, Fergal and
+         {Troeltzsch}, John and {Aigrain}, Suzanne and {Bryson}, Stephen T. and
+         {Caldwell}, Doug and {Chaplin}, William J. and {Cochran}, William D. and
+         {Huber}, Daniel and {Marcy}, Geoffrey W. and {Miglio}, Andrea and
+         {Najita}, Joan R. and {Smith}, Marcie and {Twicken}, J.~D. and
+         {Fortney}, Jonathan J.},
+        title = "{The K2 Mission: Characterization and Early Results}",
+      journal = {\pasp},
+     keywords = {Astrophysics - Instrumentation and Methods for Astrophysics, Astrophysics - Earth and Planetary Astrophysics},
+         year = "2014",
+        month = "Apr",
+       volume = {126},
+       number = {938},
+        pages = {398},
+          doi = {10.1086/676406},
+archivePrefix = {arXiv},
+       eprint = {1402.5163},
+ primaryClass = {astro-ph.IM},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2014PASP..126..398H},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+
+@ARTICLE{Ricker2015,
+       author = {{Ricker}, George R. and {Winn}, Joshua N. and {Vanderspek}, Roland and
+         {Latham}, David W. and {Bakos}, G{\'a}sp{\'a}r {\'A}. and
+         {Bean}, Jacob L. and {Berta-Thompson}, Zachory K. and
+         {Brown}, Timothy M. and {Buchhave}, Lars and {Butler}, Nathaniel R. and
+         {Butler}, R. Paul and {Chaplin}, William J. and {Charbonneau}, David and
+         {Christensen-Dalsgaard}, J{\o}rgen and {Clampin}, Mark and
+         {Deming}, Drake and {Doty}, John and {De Lee}, Nathan and
+         {Dressing}, Courtney and {Dunham}, Edward W. and {Endl}, Michael and
+         {Fressin}, Francois and {Ge}, Jian and {Henning}, Thomas and
+         {Holman}, Matthew J. and {Howard}, Andrew W. and {Ida}, Shigeru and
+         {Jenkins}, Jon M. and {Jernigan}, Garrett and {Johnson}, John Asher and
+         {Kaltenegger}, Lisa and {Kawai}, Nobuyuki and {Kjeldsen}, Hans and
+         {Laughlin}, Gregory and {Levine}, Alan M. and {Lin}, Douglas and
+         {Lissauer}, Jack J. and {MacQueen}, Phillip and {Marcy}, Geoffrey and
+         {McCullough}, Peter R. and {Morton}, Timothy D. and {Narita}, Norio and
+         {Paegert}, Martin and {Palle}, Enric and {Pepe}, Francesco and
+         {Pepper}, Joshua and {Quirrenbach}, Andreas and {Rinehart}, Stephen A. and
+         {Sasselov}, Dimitar and {Sato}, Bun'ei and {Seager}, Sara and
+         {Sozzetti}, Alessandro and {Stassun}, Keivan G. and {Sullivan}, Peter and
+         {Szentgyorgyi}, Andrew and {Torres}, Guillermo and {Udry}, Stephane and
+         {Villasenor}, Joel},
+        title = "{Transiting Exoplanet Survey Satellite (TESS)}",
+      journal = {Journal of Astronomical Telescopes, Instruments, and Systems},
+         year = "2015",
+        month = "Jan",
+       volume = {1},
+          eid = {014003},
+        pages = {014003},
+          doi = {10.1117/1.JATIS.1.1.014003},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2015JATIS...1a4003R},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
 ```
 </details>
