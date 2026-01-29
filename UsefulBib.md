@@ -323,6 +323,53 @@ archivePrefix = {arXiv},
 ```
 </details>
 
+
+gravitational star-disk torques
+
+
+
+<details>
+<summary>BibTex</summary>
+  
+```
+@article{Batygin2012,
+ adsnote = {Provided by the SAO/NASA Astrophysics Data System},
+ adsurl = {https://ui.adsabs.harvard.edu/abs/2012Natur.491..418B},
+ author = {{Batygin}, Konstantin},
+ doi = {10.1038/nature11560},
+ journal = {\nat},
+ month = {November},
+ number = {7424},
+ pages = {418-420},
+ title = {{A primordial origin for misalignments between stellar spin axes and planetary orbits}},
+ volume = {491},
+ year = {2012}
+}
+@ARTICLE{Su2025,
+       author = {{Su}, Yubo and {Lai}, Dong},
+        title = "{Stellar Obliquity Excitation via Disk-dispersal-driven Resonances in Binaries}",
+      journal = {\apj},
+     keywords = {Exoplanet systems, Protoplanetary disks, 484, 1300, Earth and Planetary Astrophysics, Solar and Stellar Astrophysics},
+         year = 2025,
+        month = oct,
+       volume = {991},
+       number = {2},
+          eid = {172},
+        pages = {172},
+          doi = {10.3847/1538-4357/adfcbf},
+archivePrefix = {arXiv},
+       eprint = {2411.08094},
+ primaryClass = {astro-ph.EP},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2025ApJ...991..172S},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+```
+</details>
+
+
+
+
+
 Stellar companion tilting \citep{Borderies1984, Lubow2000, Batygin2012, Matsakos2017}
 
 
