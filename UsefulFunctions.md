@@ -3,6 +3,24 @@
 https://blocks.jkniest.dev/
 ```
 
+
+### Stellar inclination (Quick but not very correct)
+
+
+```Python
+import astropy.constants as const
+import astropy.units as u
+
+vsini = 4 * u.km/u.s
+st_radsun = 0.81 * u.R_sun
+prot = 11 * u.day
+sini = (2 * np.pi * st_radsun / prot / vsini)
+sini = sini.to(u.dimensionless_unscaled)
+ideg = np.degrees(np.arcsin(sini))
+ideg
+
+```
+
 ### Exoclock midtims
 
 ```Python
