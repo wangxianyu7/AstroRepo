@@ -4,6 +4,14 @@ https://blocks.jkniest.dev/
 ```
 
 
+### mkticsed
+
+```python
+ticid = '68577662'
+mkticsed, ticid, priorfile=ticid+'.priors', sedfile=ticid+'.sed'
+```
+
+
 ### Stellar inclination (Quick but not very correct)
 
 
