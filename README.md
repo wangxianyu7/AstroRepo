@@ -2,6 +2,6 @@
 Some useful functions and links!
 
 
-Contemplate critical questions, master essential methods.
+<!-- Contemplate critical questions, master essential methods.-->
 
-![tmp](Picture1.png)
+<!--![tmp](Picture1.png)-->
