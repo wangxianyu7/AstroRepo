@@ -17,6 +17,7 @@
 - https://etc.eso.org/
 - https://research.iac.es/OOCC/observing-tools/exposure-time-calculators/
 - HARPS-N official: https://www.astro.unige.ch/~buchschn/
+- MAROON-X: https://www.gemini.edu/instrumentation/maroon-x/exposure-time-estimation
 
 ### Stellar Inclination (Masuda & Winn 2020)
 - https://github.com/mjfields/cosi
